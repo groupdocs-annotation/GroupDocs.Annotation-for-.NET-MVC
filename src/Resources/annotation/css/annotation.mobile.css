@@ -1,0 +1,106 @@
+@media (max-width: 1024px) {
+	.gd-comments-sidebar-expanded {
+		top: 101px;		
+	}
+	
+	.gd-annotations-toggle:checked + .gd-lbl-toggle + .gd-embed-annotation-tools {
+		width: 116px;
+	}
+	
+	.gd-tools-container {    
+		padding: 0px 0px 0px 33px;
+	}
+	
+	.gd-lbl-toggle {
+        top: 48%;
+		left: 13px;
+	}
+	
+	.gd-annotations-toggle:checked + .gd-lbl-toggle {
+		left: 89px;
+	}
+	
+	.gd-annotations-comments-toggle:checked + .gd-lbl-comments-toggle {
+		left: 3px;
+	}
+	
+	.gd-annotations-comments-toggle:checked + .gd-lbl-comments-toggle + .gd-comments-sidebar-expanded {
+		width: 100%;
+	}
+
+	.gd-com-heading {
+		font-size: 37px !important;
+	}
+	
+	#gd-save-comments {
+		width: 94%;
+		height: 68px;    
+		font-size: 40px;
+	}
+	
+	.gd-lbl-toggle::before {
+		border-top: 44px solid transparent;
+		border-bottom: 44px solid transparent;
+		border-left: 13px solid currentColor;
+	}
+	
+	.gd-lbl-comments-toggle {
+        top: 49%;
+	}	
+	
+	.gd-embed-annotation-tools .gd-tool-field {
+		width: 50px;
+		height: 50px;
+	}
+	
+	.gd-embed-annotation-tools .gd-tool-field-tooltip {
+		left: 87px !important;
+	}
+	
+	.gd-lbl-comments-toggle::before {		
+		border-top: 44px solid transparent;
+		border-bottom: 44px solid transparent;
+		border-right: 13px solid currentColor;
+	}	
+	
+	.gd-text-area-toolbar {
+		visibility: visible !important;
+	}
+	
+	.fa-commenting-o, .fa-trash-o {
+		font-size: 51px
+	}
+	
+	.gd-comment-text-wrapper {
+		width: 96%;
+		height: 220px;
+	}
+	
+	.gd-delete-comment {
+        right: 38px;
+	}
+	
+	.gd-comment-text {
+        width: 100%;
+		height: 150px;
+		font-size: 48px;
+	}
+	
+	.gd-comment-user-name {
+		width: 100%;
+		height: 57px;
+		font-size: 42px;
+	}
+	
+	.gd-save-button {		
+		width: 210px;
+		height: 64px;		
+		font-size: 42px;
+	}
+	
+	.gd-comment-time {
+        top: 13px;
+		left: 141px;
+        font-size: 39px !important;
+	}
+}
