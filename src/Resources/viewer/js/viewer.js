@@ -357,7 +357,7 @@ NAV BAR CONTROLS
 					offsetTop: 150
 				});
 				// check if this is last rearch result instance
-				if(search_position >= getAnnotationSearchMatches()){
+				if(search_position >= getTotalSearchMatches()){
 					// deactivate next button
 				}else{
 					// increment search position
@@ -368,7 +368,7 @@ NAV BAR CONTROLS
 			}
 			count++;
 		});
-		setSearchMatchCount(search_position, getAnnotationSearchMatches());
+		setSearchMatchCount(search_position, getTotalSearchMatches());
 	});
 
 	//////////////////////////////////////////////////
@@ -402,7 +402,7 @@ NAV BAR CONTROLS
 			// store last instance
 			prev = $(this);
 		});
-		setSearchMatchCount(search_position, getAnnotationSearchMatches());
+		setSearchMatchCount(search_position, getTotalSearchMatches());
 	});
 
 	//////////////////////////////////////////////////
@@ -1129,7 +1129,7 @@ function highlightSearch(text) {
 		    // update to new content
 		    $this.replaceWith(content);
 		});
-		var totalSearchMatches = getAnnotationSearchMatches();
+		var totalSearchMatches = getTotalSearchMatches();
 		setSearchMatchCount(0, totalSearchMatches);
 		if(totalSearchMatches > 0){
 		    $('#gd-nav-search-next').click();
@@ -1176,7 +1176,7 @@ function getZoomValue(){
 /**
 * Get total matches count from search
 */
-function getAnnotationSearchMatches(){
+function getTotalSearchMatches(){
     return $('.gd-highlight').length;
 }
 
