@@ -204,13 +204,15 @@ $(document).ready(function(){
 					annotation = null;
 					break;
 				case "textField":					
-					++annotationsCounter;						
-					$.fn.drawFieldAnnotation.drawTextField($(e.target).parent()[0], annotationsList, annotation, annotationsCounter, "textField", e);							
+					++annotationsCounter;	
+					$.fn.drawFieldAnnotation($(e.target).parent()[0]);
+					$.fn.drawFieldAnnotation.drawTextField(annotationsList, annotation, annotationsCounter, "textField", e);							
 					annotation = null;	
 					break;
 				case "watermark":					
-					++annotationsCounter;					
-					$.fn.drawFieldAnnotation.drawTextField($(e.target).parent()[0], annotationsList, annotation, annotationsCounter, "watermark", e);							
+					++annotationsCounter;			
+					$.fn.drawFieldAnnotation($(e.target).parent()[0]);					
+					$.fn.drawFieldAnnotation.drawTextField(annotationsList, annotation, annotationsCounter, "watermark", e);							
 					annotation = null;	
 					break;
 				case "textReplacement":					

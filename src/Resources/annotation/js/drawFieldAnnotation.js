@@ -96,12 +96,15 @@
 	var annotationInnerHtml = null;
 	var currentPrefix = "";
 	var idNumber = null;
+	var zoomLevel = 1;
+	var canvas = null;
 	
 	/**
 	 * Draw field annotation	
 	 */
-	$.fn.drawFieldAnnotation = function() {
-		
+	$.fn.drawFieldAnnotation = function(documentPage) {
+		canvas = documentPage;
+		zoomLevel = (typeof $(canvas).css("zoom") == "undefined") ? 1 : $(canvas).css("zoom");		
 	}
 	
 	/**
@@ -118,8 +121,7 @@
 		 * @param {String} prefix - Current annotation prefix
 		 * @param {Onbect} ev - Current event
 		 */
-		drawTextField: function(canvas, annotationsList, annotation, annotationsCounter, prefix, ev) {	
-			event.stopPropagation();
+		drawTextField: function(annotationsList, annotation, annotationsCounter, prefix, ev) {				
 			// close comments bar
 			$('#gd-annotations-comments-toggle').prop('checked', false);
 			// get mouse position
@@ -127,11 +129,11 @@
 			currentPrefix = prefix;
 			idNumber = annotationsCounter;
 			// calculate coordinates
-			var canvasTopOffset = $(canvas).offset().top * $(canvas).css("zoom");
-			var x = mouse.x - ($(canvas).offset().left * $(canvas).css("zoom")) - (parseInt($(canvas).css("margin-left")) * 2);
+			var canvasTopOffset = $(canvas).offset().top * zoomLevel;
+			var x = mouse.x - ($(canvas).offset().left * zoomLevel) - (parseInt($(canvas).css("margin-left")) * 2);
 			var y = mouse.y - canvasTopOffset - (parseInt($(canvas).css("margin-top")) * 2);
-			zoomCorrection.x = ($(canvas).offset().left * $(canvas).css("zoom")) - $(canvas).offset().left;
-			zoomCorrection.y = ($(canvas).offset().top * $(canvas).css("zoom")) - $(canvas).offset().top;
+			zoomCorrection.x = ($(canvas).offset().left * zoomLevel) - $(canvas).offset().left;
+			zoomCorrection.y = ($(canvas).offset().top * zoomLevel) - $(canvas).offset().top;
 			annotation.id = annotationsCounter;			
 			// set start point coordinates
 			startX = mouse.x;
@@ -140,7 +142,7 @@
 			element = document.createElement('div');
 			element.className = 'gd-annotation';  			
 			element.innerHTML = getTextFieldAnnotationHtml(annotationsCounter);	
-			var canvasTopOffset = $(canvas).offset().top * $(canvas).css("zoom");
+			var canvasTopOffset = $(canvas).offset().top * zoomLevel;
 			element.style.left = x + "px";
 			element.style.top = y + "px";
 			// draw annotation
@@ -167,7 +169,7 @@
 		 * @param {int} annotationsCounter - Current annotation number
 		 * @param {String} prefix - Current annotation prefix
 		 */
-		importTextField: function(canvas, annotationsList, annotation, annotationsCounter, prefix) {			
+		importTextField: function(annotationsList, annotation, annotationsCounter, prefix) {			
 			$('#gd-annotations-comments-toggle').prop('checked', false);			
 			currentPrefix = prefix;
 			annotationsCounter;			

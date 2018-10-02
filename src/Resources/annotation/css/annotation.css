@@ -33,6 +33,7 @@ ANNOTATIONS TOOL BAR
 	width: 136px;    
     position: absolute;
     top: 28%;
+	left: 0px;
 }
 
 .gd-annotations-toggle {
@@ -48,6 +49,7 @@ ANNOTATIONS TOOL BAR
 .gd-lbl-toggle {   
     color: #959da5;
     top: 42%;
+    left: 3px;
     cursor: pointer;     	
     position: absolute;  
 }

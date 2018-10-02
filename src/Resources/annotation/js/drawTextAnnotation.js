@@ -37,7 +37,7 @@ $(document).ready(function () {
     var annotationInnerHtml = null;
     var lineInnerHtml = null;
     var currentPrefix = "";
-    var idNumber = null;    
+    var idNumber = null;  
     var userMouseUp = ('ontouchend' in document.documentElement) ? 'touchend' : 'mouseup';
     var userMouseMove = ('ontouchmove' in document.documentElement) ? 'touchmove' : 'mousemove';
 
@@ -52,6 +52,7 @@ $(document).ready(function () {
 	 */
     $.fn.drawTextAnnotation = function (canvas, annotationsList, annotation, annotationsCounter, prefix, ev) {
         currentPrefix = prefix;
+		var zoomLevel = (typeof $(canvas).css("zoom") == "undefined") ? 1 : $(canvas).css("zoom");
         // get current annotation id
         idNumber = annotationsCounter;
         // get mouse position
@@ -69,8 +70,8 @@ $(document).ready(function () {
             element.className = 'gd-annotation';
             element.innerHTML = getHtmlResizeHandles();
             // calculate start point coordinates according to the document page
-            var canvasTopOffset = $(canvas).offset().top * $(canvas).css("zoom");
-            var x = mouse.x - ($(canvas).offset().left * $(canvas).css("zoom")) - (parseInt($(canvas).css("margin-left")) * 2);
+            var canvasTopOffset = $(canvas).offset().top * zoomLevel;
+            var x = mouse.x - ($(canvas).offset().left * zoomLevel) - (parseInt($(canvas).css("margin-left")) * 2);
             var y = mouse.y - (canvasTopOffset + (parseInt($(canvas).css("margin-top")) * 2));
             // draw the annotation
             switch (currentPrefix) {
