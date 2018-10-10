@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GroupDocs.Annotation.MVC.Products.Common.Config;
+using System;
 using System.IO;
 using System.Reflection;
 
@@ -9,7 +10,7 @@ namespace GroupDocs.Annotation.MVC.AppDomainGenerator
     /// </summary>
     public class DomainGenerator
     {
-        private Products.Common.Config.GlobalConfiguration globalConfiguration;
+        private GlobalConfiguration globalConfiguration;
         public Type CurrentType;
 
         /// <summary>
@@ -17,7 +18,7 @@ namespace GroupDocs.Annotation.MVC.AppDomainGenerator
         /// </summary>
         public DomainGenerator(string assemblyName, string className)
         {
-            globalConfiguration = new Products.Common.Config.GlobalConfiguration();           
+            globalConfiguration = new GlobalConfiguration();           
             // Get assembly path
             string assemblyPath = this.GetAssemblyPath(assemblyName);
             // Initiate GroupDocs license class

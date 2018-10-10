@@ -4,27 +4,32 @@ using System.IO;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Importer
 {
-    public abstract class BaseImporter
+    public class BaseImporter
     {
-        protected Stream documentStream;
+        protected FileStream documentStream;
         protected AnnotationImageHandler annotator;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="documentStream">Stream</param>
-        /// <param name="annotator">AnnotationImageHandler</param>
-        public BaseImporter(Stream documentStream, AnnotationImageHandler annotator)
+        /// <param name="documentStream"></param>
+        /// <param name="annotator"></param>
+        public BaseImporter(FileStream documentStream, AnnotationImageHandler annotator)
         {
             this.documentStream = documentStream;
             this.annotator = annotator;
         }
 
         /// <summary>
-        /// Import annotations
+        /// Import the annotations from document
         /// </summary>
+        /// <param name="docType">int</param>
         /// <returns>AnnotationInfo[]</returns>
-        public abstract AnnotationInfo[] ImportAnnotations();
+        public AnnotationInfo[] ImportAnnotations(DocumentType docType)
+        {
+            AnnotationInfo[] annotations = annotator.ImportAnnotations(documentStream, docType);
+            return annotations;
+        }
 
     }
 }

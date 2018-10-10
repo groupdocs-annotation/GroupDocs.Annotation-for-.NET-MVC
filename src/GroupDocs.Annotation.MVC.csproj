@@ -152,6 +152,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AnnotationController.cs" />
+    <Compile Include="Products\Annotation\Annotator\AbstractBoxAnnotator.cs" />
+    <Compile Include="Products\Annotation\Annotator\AbstractSvgAnnotator.cs" />
+    <Compile Include="Products\Annotation\Annotator\AbstractTextAnnotator.cs" />
+    <Compile Include="Products\Annotation\Annotator\AnnotatorFactory.cs" />
     <Compile Include="Products\Annotation\Annotator\AreaAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\ArrowAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\BaseAnnotator.cs" />
@@ -168,21 +172,18 @@
     <Compile Include="Products\Annotation\Annotator\WatermarkAnnotator.cs" />
     <Compile Include="Products\Annotation\Config\AnnotationConfiguration.cs" />
     <Compile Include="Products\Annotation\Controllers\AnnotationApiController.cs" />
+    <Compile Include="Products\Annotation\Entity\Request\TextCoordinatesRequest.cs" />
     <Compile Include="Products\Annotation\Entity\Web\AnnotatedDocumentEntity.cs" />
     <Compile Include="Products\Annotation\Entity\Web\AnnotationDataEntity.cs" />
     <Compile Include="Products\Annotation\Entity\Web\CommentsEntity.cs" />
     <Compile Include="Products\Annotation\Entity\Web\AnnotationPostedDataEntity.cs" />
     <Compile Include="Products\Annotation\Entity\Web\TextRowEntity.cs" />
     <Compile Include="Products\Annotation\Importer\BaseImporter.cs" />
-    <Compile Include="Products\Annotation\Importer\WordImporter.cs" />
-    <Compile Include="Products\Annotation\Importer\SlidesImporter.cs" />
-    <Compile Include="Products\Annotation\Importer\PdfImporter.cs" />
-    <Compile Include="Products\Annotation\Importer\ImageImporter.cs" />
-    <Compile Include="Products\Annotation\Importer\DiagramImporter.cs" />
-    <Compile Include="Products\Annotation\Importer\CellsImporter.cs" />
+    <Compile Include="Products\Annotation\Util\AnnotationMapper.cs" />
     <Compile Include="Products\Annotation\Util\Directory\DirectoryUtils.cs" />
     <Compile Include="Products\Annotation\Util\Directory\FilesDirectoryUtils.cs" />
     <Compile Include="Products\Annotation\Util\Directory\OutputDirectoryUtils.cs" />
+    <Compile Include="Products\Annotation\Util\DocumentTypesConverter.cs" />
     <Compile Include="Products\Common\Config\ApplicationConfiguration.cs" />
     <Compile Include="Products\Common\Config\GlobalConfiguration.cs" />
     <Compile Include="Products\Common\Config\ServerConfiguration.cs" />
@@ -193,6 +194,8 @@
     <Compile Include="Products\Common\Entity\Web\LoadedPageEntity.cs" />
     <Compile Include="Products\Common\Entity\Web\UploadedDocumentEntity.cs" />
     <Compile Include="Products\Common\Resources\Resources.cs" />
+    <Compile Include="Products\Common\Util\Comparator\FileNameComparator.cs" />
+    <Compile Include="Products\Common\Util\Comparator\FileTypeComparator.cs" />
     <Compile Include="Products\Common\Util\Directory\IDirectoryUtils.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -357,7 +357,7 @@ NAV BAR CONTROLS
 					offsetTop: 150
 				});
 				// check if this is last rearch result instance
-				if(search_position >= getTotalSearchMatches()){
+				if(search_position >= getAnnotationSearchMatches()){
 					// deactivate next button
 				}else{
 					// increment search position
@@ -368,7 +368,7 @@ NAV BAR CONTROLS
 			}
 			count++;
 		});
-		setSearchMatchCount(search_position, getTotalSearchMatches());
+		setSearchMatchCount(search_position, getAnnotationSearchMatches());
 	});
 
 	//////////////////////////////////////////////////
@@ -402,7 +402,7 @@ NAV BAR CONTROLS
 			// store last instance
 			prev = $(this);
 		});
-		setSearchMatchCount(search_position, getTotalSearchMatches());
+		setSearchMatchCount(search_position, getAnnotationSearchMatches());
 	});
 
 	//////////////////////////////////////////////////
@@ -427,7 +427,7 @@ NAV BAR CONTROLS
 		var pagesAttr = $('#gd-page-num').text().split('/');
 		// get last page number
 		var lastPageNumber = parseInt(pagesAttr[1]);
-		
+
 		if(page == lastPageNumber){
 		    appendHtmlContent(page, documentGuid, "", documentData[page - 2].width, documentData[page - 2].height);
 		    appendHtmlContent(page, documentGuid, "", documentData[page - 1].width, documentData[page - 1].height);
@@ -1129,7 +1129,7 @@ function highlightSearch(text) {
 		    // update to new content
 		    $this.replaceWith(content);
 		});
-		var totalSearchMatches = getTotalSearchMatches();
+		var totalSearchMatches = getAnnotationSearchMatches();
 		setSearchMatchCount(0, totalSearchMatches);
 		if(totalSearchMatches > 0){
 		    $('#gd-nav-search-next').click();
@@ -1176,7 +1176,7 @@ function getZoomValue(){
 /**
 * Get total matches count from search
 */
-function getTotalSearchMatches(){
+function getAnnotationSearchMatches(){
     return $('.gd-highlight').length;
 }
 
@@ -1636,7 +1636,7 @@ function getHtmlFileBrowser(){
 						    '<td class="gd-filetree-up gd-go-up">...</td>'+
 						    '<td></td>'+
 						    '<td></td>'+
-						'</tr>'
+						'</tr>' +
 						// list of files
 					'</tbody>'+
 				'</table>'+

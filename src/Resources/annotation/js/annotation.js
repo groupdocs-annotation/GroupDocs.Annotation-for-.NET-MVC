@@ -21,8 +21,7 @@ var annotation = {
 	top: 0,
 	width: 0,
 	height: 0,
-	pageNumber: 0,	
-	documentType: "",
+	pageNumber: 0,
 	svgPath: "",
 	text: "",
 	font: "Arial",
@@ -41,8 +40,8 @@ $(document).ready(function(){
     ******************************************************************
     NAV BAR CONTROLS
     ******************************************************************
-    */    
-    
+    */
+
     //////////////////////////////////////////////////
     // Disable default download event
     //////////////////////////////////////////////////
@@ -52,7 +51,7 @@ $(document).ready(function(){
     // Add SVG to all pages DIVs
     //////////////////////////////////////////////////
     $.initialize(".gd-page-image", function () {
-        // ensure that the closed comments tab doesn't 
+        // ensure that the closed comments tab doesn't
         // have active class when another document is opened
         if ($(".gd-annotations-comments-wrapper").hasClass("active")) {
             $(".gd-annotations-comments-wrapper").toggleClass("active");
@@ -158,8 +157,7 @@ $(document).ready(function(){
 								top: 0,
 								width: 0,
 								height: 0,
-								pageNumber: 0,								
-								documentType: "",
+								pageNumber: 0,
 								svgPath: "",
 								text: "",
 								font: "Arial",
@@ -204,15 +202,15 @@ $(document).ready(function(){
 					annotation = null;
 					break;
 				case "textField":					
-					++annotationsCounter;	
+					++annotationsCounter;
 					$.fn.drawFieldAnnotation($(e.target).parent()[0]);
-					$.fn.drawFieldAnnotation.drawTextField(annotationsList, annotation, annotationsCounter, "textField", e);							
+					$.fn.drawFieldAnnotation.drawTextField(annotationsList, annotation, annotationsCounter, "textField", e);
 					annotation = null;	
 					break;
 				case "watermark":					
-					++annotationsCounter;			
-					$.fn.drawFieldAnnotation($(e.target).parent()[0]);					
-					$.fn.drawFieldAnnotation.drawTextField(annotationsList, annotation, annotationsCounter, "watermark", e);							
+					++annotationsCounter;
+					$.fn.drawFieldAnnotation($(e.target).parent()[0]);
+					$.fn.drawFieldAnnotation.drawTextField(annotationsList, annotation, annotationsCounter, "watermark", e);
 					annotation = null;	
 					break;
 				case "textReplacement":					
@@ -457,7 +455,7 @@ function setTextAnnotationCoordinates(mouseX, mouseY) {
 		x: 0, 
 		y: 0,
 		height: 0
-	};
+	};		
 	// check if the mouse position is less or bigger than the first or last text row
 	if(mouseY < rows[0].lineTop) {
 		mouseY = rows[0].lineTop;
@@ -466,7 +464,7 @@ function setTextAnnotationCoordinates(mouseX, mouseY) {
 	}
 	// get most suitable row (vertical position)
 	for(var i = 0; i < rows.length; i++){		
-		if(mouseY >= rows[i].lineTop && mouseY <= rows[i + 1].lineTop){
+		if(mouseY >= rows[i].lineTop && rows[i + 1] && mouseY <= rows[i + 1].lineTop){
 			// set row top position and height
 			correctCoordinates.y = rows[i].lineTop;
 			correctCoordinates.height = rows[i].lineHeight;
@@ -492,15 +490,21 @@ function setTextAnnotationCoordinates(mouseX, mouseY) {
  * Annotate current document
  */
 function annotate() {   
-	// set current document guid - used to check if the other document were opened   
-    var url = getApplicationPath('annotate');     
-	annotationsList[0].documentType = getDocumentFormat(documentGuid).format;	
+	// set current document guid - used to check if the other document were opened
+    var url = getApplicationPath('annotate');
+	var annotationsToAdd = [];
+	$.each(annotationsList, function(index, annotationToAdd){
+		if(!annotationToAdd.imported){
+			annotationsToAdd.push(annotationToAdd);
+		}
+	});
     // current document guid is taken from the viewer.js globals
     var data = {
         guid: documentGuid.replace(/\\/g, "//"),
         password: password,
 		htmlMode: false,
-        annotationsData: annotationsList
+        annotationsData: annotationsToAdd,
+		documentType: getDocumentFormat(documentGuid).format
     };
     // annotate the document
     $.ajax({
@@ -613,7 +617,7 @@ function saveComment(){
 function addComment(currentAnnotation){
     $("#gd-annotation-comments").html("");
 	// check if annotation contains comments
-	if(currentAnnotation.comments != null && currentAnnotation.comments.length > 0){		
+	if(currentAnnotation && currentAnnotation.comments && currentAnnotation.comments.length > 0){
 		$.each(currentAnnotation.comments, function(index, comment){
 			if (index == 0){
 				$("#gd-annotation-comments").append(getCommentBaseHtml);
@@ -638,7 +642,8 @@ function addComment(currentAnnotation){
  * @param {Object} currentAnnotation - currently added annotation
  */
 function makeResizable (currentAnnotation){	
-	var annotationType = currentAnnotation.type;	
+	var annotationType = currentAnnotation.type;
+
 	$(".gd-annotation").each(function(imdex, element){
 		if(!$(element).hasClass("svg")){
 			if(parseInt($(element).find(".annotation").attr("id").replace ( /[^\d.]/g, '' )) == currentAnnotation.id){
@@ -646,7 +651,7 @@ function makeResizable (currentAnnotation){
 				$(element).draggable({
 					// set restriction for image dragging area to current document page
 					containment: "#gd-page-" + currentAnnotation.pageNumber,	
-					stop: function(event, image){			
+					stop: function(event, image){
 						if(annotationType == "text" || annotationType == "textStrikeout"){
 							var coordinates = setTextAnnotationCoordinates(image.position.left, image.position.top)
 							currentAnnotation.left = coordinates.x;
@@ -654,7 +659,7 @@ function makeResizable (currentAnnotation){
 						} else {
 							currentAnnotation.left = image.position.left;
 							currentAnnotation.top = image.position.top;					
-						}
+						}	
 					},		
 				}).resizable({
 					// set restriction for image resizing to current document page
@@ -824,14 +829,13 @@ function getCommentBaseHtml(){
  * @param {Object} button - Clicked download button
  */
 function download (button){
-    var annotated = false;  
-	var documentName = documentGuid.match(/[-_\w]+[.][\w]+$/i)[0];
+    var annotated = false;
     if($(button).attr("id") == "gd-annotated-download"){
         annotated = true;       
-    } 
-    if(typeof documentName != "undefined" && documentName != ""){
+    }
+    if(typeof documentGuid != "undefined" && documentGuid != ""){
          // Open download dialog
-         window.location.assign(getApplicationPath("downloadDocument/?path=") + documentName + "&annotated=" + annotated);
+         window.location.assign(getApplicationPath("downloadDocument/?path=") + documentGuid + "&annotated=" + annotated);
     } else {
          // open error popup
          printMessage("Please open document first");

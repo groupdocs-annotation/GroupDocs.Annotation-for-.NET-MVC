@@ -37,7 +37,7 @@ $(document).ready(function () {
     var annotationInnerHtml = null;
     var lineInnerHtml = null;
     var currentPrefix = "";
-    var idNumber = null;  
+    var idNumber = null;
     var userMouseUp = ('ontouchend' in document.documentElement) ? 'touchend' : 'mouseup';
     var userMouseMove = ('ontouchmove' in document.documentElement) ? 'touchmove' : 'mousemove';
 
@@ -171,8 +171,10 @@ $(document).ready(function () {
                 // set annotation data
                 annotation.width = parseFloat(element.style.width.replace("px", ""));
                 annotation.height = parseFloat(element.style.height.replace("px", ""));
-                annotationInnerHtml.style.width = parseFloat(element.style.width) + "px";
-                annotationInnerHtml.style.height = parseFloat(element.style.height) + "px";
+                if (annotationInnerHtml) {
+                    annotationInnerHtml.style.width = parseFloat(element.style.width) + "px";
+                    annotationInnerHtml.style.height = parseFloat(element.style.height) + "px";
+                }
             }
         });
     }
@@ -198,9 +200,9 @@ $(document).ready(function () {
 
         switch (currentPrefix) {
             case "textStrikeout":
-                element.style.left = startCoordinates.x + "px";
-                element.style.top = startCoordinates.y + "px";
-                element.style.height = startCoordinates.height + "px";
+                element.style.left = annotation.left + "px";
+                element.style.top = annotation.top + "px";
+                element.style.height = annotation.height + "px"
                 annotationInnerHtml = getTextLineAnnotationHtml();
                 annotationInnerHtml.style.height = annotation.height + "px";
                 annotationInnerHtml.style.width = annotation.width + "px";
@@ -230,6 +232,7 @@ $(document).ready(function () {
         element.appendChild(annotationInnerHtml);
         if (lineInnerHtml != null) {
             element.appendChild(lineInnerHtml);
+			lineInnerHtml = null;
         }
         canvas.prepend(element);
         // add annotation into the annotations list

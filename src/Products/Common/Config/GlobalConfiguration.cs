@@ -11,16 +11,16 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Config
         public ApplicationConfiguration Application;
         public CommonConfiguration Common;       
         public AnnotationConfiguration Annotation;
-
+   
         /// <summary>
         /// Get all configurations
         /// </summary>
         public GlobalConfiguration()
         {
             Server = new ServerConfiguration();
-            Application = new ApplicationConfiguration();            
+            Application = new ApplicationConfiguration();           
             Common = new CommonConfiguration();
-            Annotation = new AnnotationConfiguration();
+            Annotation = new AnnotationConfiguration();        
         }
     }
 }

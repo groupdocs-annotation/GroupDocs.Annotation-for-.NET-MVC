@@ -50,7 +50,7 @@ ANNOTATIONS TOOL BAR
     color: #959da5;
     top: 42%;
     left: 3px;
-    cursor: pointer;     	
+    cursor: pointer;
     position: absolute;  
 }
 .gd-lbl-toggle::before {

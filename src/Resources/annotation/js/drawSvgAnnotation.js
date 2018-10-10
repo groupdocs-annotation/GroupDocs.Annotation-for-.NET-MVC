@@ -42,11 +42,11 @@
 		currentAnnotation = annotation;
 		// get coordinates correction - this is required since the document page is zoomed
 		zoomCorrection.x = ($(canvas).offset().left * zoomLevel) - $(canvas).offset().left;
-		zoomCorrection.y = ($(canvas).offset().top * zoomLevel) - $(canvas).offset().top;	
-		canvasTopOffset = $(canvas).offset().top * zoomLevel;	
+		zoomCorrection.y = ($(canvas).offset().top * zoomLevel) - $(canvas).offset().top;
+		canvasTopOffset = $(canvas).offset().top * zoomLevel;
 		currentPrefix = prefix;
 	}
-	
+
 	/**
 	* Extend plugin
 	**/
@@ -100,7 +100,7 @@
 				'class': 'gd-annotation annotation svg'						  
 			};
 			// initiate svg object
-			var line = null;		
+			var line = null;
 			line = svgList[canvas.id].polyline().attr(option);			
 			line.draw(event);			
 			// set mouse move event handler
@@ -126,19 +126,32 @@
 					// prepare SVG path string, important note: all point coordinates except the first one are not coordinates, 
 					//but the number of pixels that need to be added or subtracted from the previous point in order to obtain the amount of displacement.
 					// This is required by the GRoupDocs.Annotation library to draw the SVG path
-					$.each(line.node.points, function(index, point){										
-						if(index == 0){
-							currentAnnotation.svgPath = currentAnnotation.svgPath + point.x + "," + point.y + "l";							
-							previousX = point.x;
-							previousY = point.y;
-						} else {				
-							previousX =  point.x - previousX;
-							previousY =  point.y - previousY;
-							currentAnnotation.svgPath = currentAnnotation.svgPath + previousX + "," + previousY + "l";	
-							previousX = point.x;
-							previousY = point.y;							
-						}
-					});
+                	if (line.node.points.numberOfItems) { // for safari
+                        for (i = 0; i < line.node.points.numberOfItems; i++) {
+							var point = line.node.points.getItem(i);
+                            if (i == 0) {
+                                currentAnnotation.svgPath = currentAnnotation.svgPath + point.x + "," + point.y + "l";
+                            } else {
+                                previousX = point.x - previousX;
+                                previousY = point.y - previousY;
+                                currentAnnotation.svgPath = currentAnnotation.svgPath + previousX + "," + previousY + "l";
+                            }
+                            previousX = point.x;
+                            previousY = point.y;
+                        }
+					} else { // for other browsers
+                        $.each(line.node.points, function (index, point) {
+                            if (index == 0) {
+                                currentAnnotation.svgPath = currentAnnotation.svgPath + point.x + "," + point.y + "l";
+                            } else {
+                                previousX = point.x - previousX;
+                                previousY = point.y - previousY;
+                                currentAnnotation.svgPath = currentAnnotation.svgPath + previousX + "," + previousY + "l";
+                            }
+                            previousX = point.x;
+                            previousY = point.y;
+                        });
+                    }
 					currentAnnotation.svgPath = currentAnnotation.svgPath.slice(0,-1);
 					// add annotation into the annotations list
 					annotationsList.push(currentAnnotation);
@@ -168,7 +181,7 @@
 							  
 			};
 			// draw start point
-			var path = null;		 
+			var path = null;
 			path = svgList[canvas.id].path("M" + x + "," + y + " L" + x + "," + y).attr(option);			
 			// set mouse move event handler
 			svgList[canvas.id].on(userMouseMove, event => {
@@ -229,7 +242,7 @@
 				'data-id': currentAnnotation.id 
 			};
 			// draw start point
-			var path = null;		 
+			var path = null;
 			path = svgList[canvas.id].path("M" + x + "," + y + " L" + x + "," + y).attr(option);	
 			// add text svg element - used to display the distance value
 			var text = null;
@@ -386,10 +399,10 @@
 				'font-size': "12px",
 				'data-id': currentAnnotation.id 
 			};
-			var text = null;	
+			var text = null;
 			// prepare svg path coordinates
-			var svgPath = annotation.svgPath.split(" ")[0];						
-			var points = annotation.svgPath.replace("M", "").split('l');
+			var svgPath = annotation.svgPath.split("L")[0];
+			var points = annotation.svgPath.replace("M", "").split('L');
 			var x = parseFloat(points[0].split(",")[0]);
 			var y = parseFloat(points[0].split(",")[1]);
 			// recalculate path points coordinates from the offset values back to the coordinates values
