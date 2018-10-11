@@ -27,7 +27,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             AnnotationInfo polylineAnnotation = base.InitAnnotationInfo();
             polylineAnnotation.PenColor = 1201033;
             polylineAnnotation.PenWidth = (byte)2;
-            polylineAnnotation.SvgPath = annotationData.svgPath;
+            polylineAnnotation.SvgPath = annotationData.svgPath;           
             return polylineAnnotation;
         }
         
@@ -72,7 +72,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         
         protected override Rectangle GetBox()
         {
-            return new Rectangle(0, 0, 0, 0);
+            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
         }
         
         protected override AnnotationType GetType()
