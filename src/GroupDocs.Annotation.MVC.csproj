@@ -48,14 +48,6 @@
       <HintPath>..\packages\GroupDocs.Annotation.18.8.0\lib\GroupDocs.Annotation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="GroupDocs.Signature, Version=18.6.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
-      <HintPath>..\packages\GroupDocs.Signature.18.6.0\lib\GroupDocs.Signature.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="GroupDocs.Viewer, Version=18.7.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
-      <HintPath>..\packages\GroupDocs.Viewer.18.7.0\lib\GroupDocs.Viewer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>

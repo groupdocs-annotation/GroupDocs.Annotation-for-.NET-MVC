@@ -59,31 +59,7 @@ namespace GroupDocs.Annotation.MVC.AppDomainGenerator
             // Initiate class from the loaded assembly
             Type type = assembly.GetType(className);
             return type;
-        }
-
-        /// <summary>
-        /// Set GroupDocs.Viewer license
-        /// </summary>
-        /// <param name="type">Type</param>
-        public void SetViewerLicense(Type type)
-        {
-            // Initiate License class
-            var obj = (GroupDocs.Viewer.License)Activator.CreateInstance(type);
-            // Set license
-            obj.SetLicense(globalConfiguration.Application.LicensePath);
-        }
-
-        /// <summary>
-        /// Set GroupDocs.Signature license
-        /// </summary>
-        /// <param name="type">Type</param>
-        public void SetSignatureLicense(Type type)
-        {
-            // Initiate license class
-            var obj = (GroupDocs.Signature.License)Activator.CreateInstance(type);
-            // Set license
-            obj.SetLicense(globalConfiguration.Application.LicensePath);
-        }
+        }        
 
         /// <summary>
         /// Set GroupDocs.Annotation license
