@@ -34,6 +34,7 @@ ANNOTATIONS TOOL BAR
     position: absolute;
     top: 28%;
 	left: 0px;
+    z-index: 99999;
 }
 
 .gd-annotations-toggle {
@@ -332,8 +333,9 @@ ANNOTATIONS COMMENTS BAR
 }
 
 .gd-annotations-comments-wrapper.active {
-	width: 300px;
+	width: 310px;
 	display: block;
+    z-index: 99999;
 }
 
 .gd-comments-content{

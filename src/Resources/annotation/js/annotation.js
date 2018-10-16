@@ -59,7 +59,8 @@ $(document).ready(function(){
 	    // set text rows data to null
 		rows = null;
 		// append svg element to each page, this is required to draw svg based annotations
-		$('div.gd-page').each(function(index, page){
+		$('div.gd-page').each(function (index, page) {
+		    $(page).css("zoom", "1");
 			// initiate svg object
 			if(svgList == null) {
 				svgList	= {};
