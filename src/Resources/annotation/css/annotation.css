@@ -334,8 +334,7 @@ ANNOTATIONS COMMENTS BAR
 
 .gd-annotations-comments-wrapper.active {
 	width: 310px;
-	display: block;
-    z-index: 99999;
+	display: block;    
 }
 
 .gd-comments-content{

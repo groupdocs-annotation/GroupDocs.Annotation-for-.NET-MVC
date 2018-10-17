@@ -24,8 +24,7 @@
 		y: 0
 	};
 	
-	var canvas = null;
-	var zoomLevel = 1;
+	var canvas = null;	
 	var currentAnnotation = null;
 	var canvasTopOffset = null;
 	var currentPrefix = "";
@@ -40,6 +39,9 @@
 		canvas = documentPage;
 		zoomLevel = (typeof $(canvas).css("zoom") == "undefined") ? 1 : $(canvas).css("zoom");
 		currentAnnotation = annotation;
+		if(zoomLevel == "100%"){
+			zoomLevel = 1;
+		}
 		// get coordinates correction - this is required since the document page is zoomed
 		zoomCorrection.x = ($(canvas).offset().left * zoomLevel) - $(canvas).offset().left;
 		zoomCorrection.y = ($(canvas).offset().top * zoomLevel) - $(canvas).offset().top;
@@ -58,7 +60,7 @@
 		drawPoint: function(event){			
 			mouse = getMousePosition(event);
 			// get current x and y coordinates
-			var x = mouse.x - ($(canvas).offset().left * zoomLevel) - (parseInt($(canvas).css("margin-left")) * 2);
+			var x = mouse.x - $(canvas).offset().left - (parseInt($(canvas).css("margin-left")) * 2);
 			var y = mouse.y - canvasTopOffset - (parseInt($(canvas).css("margin-top")) * 2);	
 			// set annotation data
 			currentAnnotation.id = annotationsCounter;	
@@ -88,7 +90,7 @@
 		drawPolyline: function(event){
 			mouse = getMousePosition(event);	
 			// get x and y coordinates
-			var x = mouse.x - ($(canvas).offset().left * zoomLevel) - (parseInt($(canvas).css("margin-left")) * 2);
+			var x = mouse.x - $(canvas).offset().left - (parseInt($(canvas).css("margin-left")) * 2);
 			var y = mouse.y - canvasTopOffset - (parseInt($(canvas).css("margin-top")) * 2);	
 			currentAnnotation.id = annotationsCounter;		
 			// set polyline draw options
@@ -104,14 +106,14 @@
 			line = svgList[canvas.id].polyline().attr(option);			
 			line.draw(event);			
 			// set mouse move event handler
-			svgList[canvas.id].on(userMouseMove, event => {
+			svgList[canvas.id].on(userMouseMove, function(event){
 			  if (line) {
 				// draw line to next point coordinates
 				line.draw('point', event);
 			  }
 			})
 			// set mouse up event handler
-			svgList[canvas.id].on(userMouseUp, event => {
+			svgList[canvas.id].on(userMouseUp, function(event){
 				if (line && currentPrefix == "polyline") {
 					// stop draw
 					line.draw('stop', event);				
@@ -168,7 +170,7 @@
 		drawArrow: function(event){
 			mouse = getMousePosition(event);	
 			// get coordinates
-			var x = mouse.x - ($(canvas).offset().left * zoomLevel) - (parseInt($(canvas).css("margin-left")) * 2);
+			var x = mouse.x - $(canvas).offset().left - (parseInt($(canvas).css("margin-left")) * 2);
 			var y = mouse.y - canvasTopOffset - (parseInt($(canvas).css("margin-top")) * 2);	
 			currentAnnotation.id = annotationsCounter;	
 			// set draw options
@@ -184,11 +186,11 @@
 			var path = null;
 			path = svgList[canvas.id].path("M" + x + "," + y + " L" + x + "," + y).attr(option);			
 			// set mouse move event handler
-			svgList[canvas.id].on(userMouseMove, event => {
+			svgList[canvas.id].on(userMouseMove, function(event){
 				if (path) {
 					// get current coordinates after mouse move
 					mouse = getMousePosition(event);
-					var endX = mouse.x - ($(canvas).offset().left * zoomLevel) - (parseInt($(canvas).css("margin-left")) * 2);
+					var endX = mouse.x - $(canvas).offset().left - (parseInt($(canvas).css("margin-left")) * 2);
 					var endY = mouse.y - canvasTopOffset - (parseInt($(canvas).css("margin-top")) * 2);
 					// update svg with the end point and draw line between
 					path.plot("M" + x + "," + y + " L" + endX + "," + endY);
@@ -202,7 +204,7 @@
 				}
 			})
 			// set mouse up event handler
-			svgList[canvas.id].on(userMouseUp, event => {
+			svgList[canvas.id].on(userMouseUp, function(event){
 				if (path && currentPrefix == "arrow") {	
 					// set annotation data
 					currentAnnotation.left = x;
@@ -224,7 +226,7 @@
 		drawDistance: function(event){
 			// get coordinates
 			mouse = getMousePosition(event);	
-			var x = mouse.x - ($(canvas).offset().left * zoomLevel) - (parseInt($(canvas).css("margin-left")) * 2);
+			var x = mouse.x - $(canvas).offset().left - (parseInt($(canvas).css("margin-left")) * 2);
 			var y = mouse.y - canvasTopOffset - (parseInt($(canvas).css("margin-top")) * 2);	
 			currentAnnotation.id = annotationsCounter;	
 			// set draw options
@@ -248,11 +250,11 @@
 			var text = null;
 			text = svgList[canvas.id].text("0px").attr(textOptions);
 			// set mouse move event
-			svgList[canvas.id].on(userMouseMove, event => {
+			svgList[canvas.id].on(userMouseMove, function(event){
 				if (path) {
 					// get end coordinates
 					mouse = getMousePosition(event);
-					var endX = mouse.x - ($(canvas).offset().left * zoomLevel) - (parseInt($(canvas).css("margin-left")) * 2);
+					var endX = mouse.x - $(canvas).offset().left - (parseInt($(canvas).css("margin-left")) * 2);
 					var endY = mouse.y - canvasTopOffset - (parseInt($(canvas).css("margin-top")) * 2);
 					// draw the last point and the line between
 					path.plot("M" + x + "," + y + " L" + endX + "," + endY);
@@ -275,7 +277,7 @@
 				}
 			})
 			// set mouse up event
-			svgList[canvas.id].on(userMouseUp, event => {
+			svgList[canvas.id].on(userMouseUp, function(event){
 				if (path) {
 					currentAnnotation.left = x;
 					currentAnnotation.top = y;	

@@ -95,16 +95,15 @@
     var element = null;
 	var annotationInnerHtml = null;
 	var currentPrefix = "";
-	var idNumber = null;
-	var zoomLevel = 1;
+	var idNumber = null;	
 	var canvas = null;
 
 	/**
 	 * Draw field annotation	
 	 */
 	$.fn.drawFieldAnnotation = function(documentPage) {
-		canvas = documentPage;
-		zoomLevel = (typeof $(canvas).css("zoom") == "undefined") ? 1 : $(canvas).css("zoom");
+		canvas = documentPage;		
+		canvas = documentPage;		
 	}
 	
 	/**
@@ -128,11 +127,11 @@
 			currentPrefix = prefix;
 			idNumber = annotationsCounter;
 			// calculate coordinates
-			var canvasTopOffset = $(canvas).offset().top * zoomLevel;
-			var x = mouse.x - ($(canvas).offset().left * zoomLevel) - (parseInt($(canvas).css("margin-left")) * 2);
+			var canvasTopOffset = $(canvas).offset().top;
+			var x = mouse.x - $(canvas).offset().left - (parseInt($(canvas).css("margin-left")) * 2);
 			var y = mouse.y - canvasTopOffset - (parseInt($(canvas).css("margin-top")) * 2);
-			zoomCorrection.x = ($(canvas).offset().left * zoomLevel) - $(canvas).offset().left;
-			zoomCorrection.y = ($(canvas).offset().top * zoomLevel) - $(canvas).offset().top;
+			zoomCorrection.x = $(canvas).offset().left - $(canvas).offset().left;
+			zoomCorrection.y = $(canvas).offset().top - $(canvas).offset().top;
 			annotation.id = annotationsCounter;			
 			// set start point coordinates
 			startX = mouse.x;
@@ -141,7 +140,7 @@
 			element = document.createElement('div');
 			element.className = 'gd-annotation';  			
 			element.innerHTML = getTextFieldAnnotationHtml(annotationsCounter);	
-			var canvasTopOffset = $(canvas).offset().top * zoomLevel;
+			var canvasTopOffset = $(canvas).offset().top;
 			element.style.left = x + "px";
 			element.style.top = y + "px";
 			// draw annotation

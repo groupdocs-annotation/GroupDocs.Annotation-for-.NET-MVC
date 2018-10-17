@@ -5,6 +5,34 @@
  * @author Aspose Pty Ltd
  * @version 1.0.0
  */
+ 
+//////////////////////////////////////////////////
+// Fix required by Edge browser to support prepend function
+//////////////////////////////////////////////////  
+ (function (arr) {
+  arr.forEach(function (item) {
+    if (item.hasOwnProperty('prepend')) {
+      return;
+    }
+    Object.defineProperty(item, 'prepend', {
+      configurable: true,
+      enumerable: true,
+      writable: true,
+      value: function prepend() {
+        var argArr = Array.prototype.slice.call(arguments),
+          docFrag = document.createDocumentFragment();
+
+        argArr.forEach(function (argItem) {
+          var isNode = argItem instanceof Node;
+          docFrag.appendChild(isNode ? argItem : document.createTextNode(String(argItem)));
+        });
+
+        this.insertBefore(docFrag, this.firstChild);
+      }
+    });
+  });
+})([Element.prototype, Document.prototype, DocumentFragment.prototype]);
+
 $(document).ready(function () {
     //////////////////////////////////////////////////
     // enter text event
@@ -51,8 +79,7 @@ $(document).ready(function () {
 	 * @param {Object} ev - Current event
 	 */
     $.fn.drawTextAnnotation = function (canvas, annotationsList, annotation, annotationsCounter, prefix, ev) {
-        currentPrefix = prefix;
-		var zoomLevel = (typeof $(canvas).css("zoom") == "undefined") ? 1 : $(canvas).css("zoom");
+        currentPrefix = prefix;		
         // get current annotation id
         idNumber = annotationsCounter;
         // get mouse position
@@ -70,8 +97,8 @@ $(document).ready(function () {
             element.className = 'gd-annotation';
             element.innerHTML = getHtmlResizeHandles();
             // calculate start point coordinates according to the document page
-            var canvasTopOffset = $(canvas).offset().top * zoomLevel;
-            var x = mouse.x - ($(canvas).offset().left * zoomLevel) - (parseInt($(canvas).css("margin-left")) * 2);
+            var canvasTopOffset = $(canvas).offset().top;
+            var x = mouse.x - $(canvas).offset().left - (parseInt($(canvas).css("margin-left")) * 2);
             var y = mouse.y - (canvasTopOffset + (parseInt($(canvas).css("margin-top")) * 2));
             // draw the annotation
             switch (currentPrefix) {
