@@ -27,7 +27,9 @@
 	.gd-annotations-comments-toggle:checked + .gd-lbl-comments-toggle + .gd-comments-sidebar-expanded {
 		width: 100%;
 	}
-
+    .gd-annotations-comments-wrapper.active {
+        z-index: 999999;
+    }
 	.gd-com-heading {
 		font-size: 37px !important;
 	}

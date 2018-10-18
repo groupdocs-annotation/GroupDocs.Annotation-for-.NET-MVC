@@ -66,9 +66,7 @@ $(document).ready(function () {
     var lineInnerHtml = null;
     var currentPrefix = "";
     var idNumber = null;
-    var userMouseUp = ('ontouchend' in document.documentElement) ? 'touchend' : 'mouseup';
-    var userMouseMove = ('ontouchmove' in document.documentElement) ? 'touchmove' : 'mousemove';
-
+   
     /**
 	 * Draw text annotation
 	 * @param {Object} canvas - document page to add annotation
@@ -165,7 +163,9 @@ $(document).ready(function () {
         }
         // set mouse up event
         // this handler used to get annotation width and height after draw process
-        $(canvas).on(userMouseUp, function (e) {
+        $('#gd-panzoom').bind('touchend mouseup', $(canvas), function (e) {
+            e.stopPropagation();
+            e.preventDefault();
             if (element != null && e.target.tagName != "TEXTAREA") {
                 if (currentPrefix == "textReplacement") {
                     element.appendChild(getTextReplaceAnnotationHtml(idNumber));
@@ -186,7 +186,8 @@ $(document).ready(function () {
 
         // set mouse move event
         // this handler used to get annotation width and height while draw process
-        $(canvas).on(userMouseMove, function (e) {
+        $('#gd-panzoom').bind('touchmove mousemove', $(canvas), function (e) {           
+            e.preventDefault();
             mouse = getMousePosition(e);
             if (element !== null) {
                 if (currentPrefix == "text") {
