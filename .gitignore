@@ -6,3 +6,8 @@
 /App_Data/temp
 /App_Data/SignatureData
 /App_Data/Output
+src/Resources/*
+!src/Resources/.gitkeep
+node_modules
+src/package-lock.json
+/src/node 

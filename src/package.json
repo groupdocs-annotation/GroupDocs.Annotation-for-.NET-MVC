@@ -1,0 +1,27 @@
+{
+  "name": "groupdocs.annotation-for-.net-mvc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/groupdocs-annotation/GroupDocs.Annotation-for-.NET-MVC.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/groupdocs-annotation/GroupDocs.Annotation-for-.NET-MVC/issues"
+  },
+  "homepage": "https://github.com/groupdocs-annotation/GroupDocs.Annotation-for-.NET-MVC#readme",
+  "dependencies": {
+    "@groupdocs.examples.jquery/annotation": "^0.4.17",
+    "@groupdocs.examples.jquery/common": "^0.4.16",
+    "@groupdocs.examples.jquery/viewer": "^0.4.15"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.0"
+  }
+}
