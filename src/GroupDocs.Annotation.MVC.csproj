@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,9 +45,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GroupDocs.Annotation, Version=18.9.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
-      <HintPath>..\packages\GroupDocs.Annotation.18.9.0\lib\GroupDocs.Annotation.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="GroupDocs.Annotation, Version=18.10.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\GroupDocs.Annotation.18.10.0\lib\GroupDocs.Annotation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -317,8 +317,8 @@
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
   <Target Name="BeforeBuild">
-      <Exec Command="..\packages\NodeBin.5.2.0\node-5.2.0\node.exe ..\packages\NodeBin.5.2.0\npm-2.14.13\bin\npm-cli.js install" />
-      <Exec Command="..\packages\NodeBin.5.2.0\node-5.2.0\node.exe .\node_modules\gulp\bin\gulp.js build" />
+    <Exec Command="..\packages\NodeBin.5.2.0\node-5.2.0\node.exe ..\packages\NodeBin.5.2.0\npm-2.14.13\bin\npm-cli.js install" />
+    <Exec Command="..\packages\NodeBin.5.2.0\node-5.2.0\node.exe .\node_modules\gulp\bin\gulp.js build" />
   </Target>
   <Target Name="AfterBuild">
   </Target>

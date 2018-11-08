@@ -1,5 +1,5 @@
 # GroupDocs.Annotation for .NET MVC Example
-###### version 1.10.0
+###### version 1.11.0
 
 
 ## System Requirements

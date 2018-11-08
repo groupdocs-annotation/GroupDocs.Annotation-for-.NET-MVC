@@ -62,7 +62,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 AnnotationReplyInfo reply = distanceAnnotation.Replies[0];
                 if (reply != null)
                 {
-                    reply.Message = String.Format("{1} {2}", annotationData.text, reply.Message);
+                    reply.Message = String.Format("{0} {1}", annotationData.text, reply.Message);
                 }
             }
             else
