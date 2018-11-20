@@ -15,7 +15,7 @@ GroupDocs.Annotation UI suite is a native, simple, fully configurable and optimi
 
 
 ## Demo Video
-Coming soon
+https://www.youtube.com/watch?v=TVb7GwSNDqw
 
 
 ## Features
