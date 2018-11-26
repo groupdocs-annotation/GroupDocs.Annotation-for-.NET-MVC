@@ -51,7 +51,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             config.StoragePath = DirectoryUtils.FilesDirectory.GetPath();
             // set directory to store annotted documents
             GlobalConfiguration.Annotation.OutputDirectory = DirectoryUtils.OutputDirectory.GetPath();
-            // initialize total instance for the Image mode
+            // initialize Annotation instance for the Image mode
             AnnotationImageHandler = new AnnotationImageHandler(config);
         }
 
@@ -105,7 +105,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             }
             catch (System.Exception ex)
             {
-                // set exception message
+                // set System.Exception message
                 return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex));
             }
         }
@@ -129,18 +129,17 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 string fileName = System.IO.Path.GetFileName(documentGuid);
                 FileInfo fi = new FileInfo(documentGuid);
                 DirectoryInfo parentDir = fi.Directory;
-
+              
                 string documentPath = "";
                 string parentDirName = parentDir.Name;
                 if (parentDir.FullName == GlobalConfiguration.Annotation.FilesDirectory.Replace("/", "\\"))
                 {
                     documentPath = fileName;
-                }
-                else
+                } else
                 {
                     documentPath = Path.Combine(parentDirName, fileName);
                 }
-
+                
                 documentDescription = AnnotationImageHandler.GetDocumentInfo(documentPath, password);
                 string documentType = documentDescription.DocumentType;
                 string fileExtension = Path.GetExtension(documentGuid);
@@ -180,7 +179,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             }
             catch (System.Exception ex)
             {
-                // set exception message
+                // set System.Exception message
                 return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex));
             }
         }
@@ -331,7 +330,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             }
             catch (System.Exception ex)
             {
-                // set exception message
+                // set System.Exception message
                 return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex));
             }
         }
@@ -384,7 +383,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             }
             catch (System.Exception ex)
             {
-                // set exception message
+                // set System.Exception message
                 return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex));
             }
         }
@@ -455,7 +454,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     // Add annotation to the document
                     DocumentType type = DocumentTypesConverter.GetDocumentType(documentType);
                     // Save result stream to file.
-
+                   
                     string path = GlobalConfiguration.Annotation.OutputDirectory + Path.DirectorySeparatorChar + fileName;
                     Stream cleanDoc = new FileStream(documentGuid, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
                     Stream result = AnnotationImageHandler.ExportAnnotationsToDocument(cleanDoc, annotations, type);
@@ -482,7 +481,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             }
             catch (System.Exception ex)
             {
-                // set exception message
+                // set System.Exception message
                 return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex));
             }
             return Request.CreateResponse(HttpStatusCode.OK, annotatedDocument);

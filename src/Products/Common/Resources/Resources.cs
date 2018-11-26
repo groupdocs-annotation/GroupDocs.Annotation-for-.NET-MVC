@@ -47,36 +47,36 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Resources
         }
 
         /// <summary>
-        /// Generate exception
+        /// Generate System.Exception
         /// </summary>
-        /// <param name="ex">Exception</param>
-        /// <returns>ExceptionEntity</returns>
+        /// <param name="ex">System.Exception</param>
+        /// <returns>System.ExceptionEntity</returns>
         public ExceptionEntity GenerateException(System.Exception ex)
         {
-            // Initiate Exception entity
+            // Initiate System.Exception entity
             ExceptionEntity exceptionEntity = new ExceptionEntity();
-            // set exception data
+            // set System.Exception data
             exceptionEntity.message = ex.Message;
-            exceptionEntity.exception = ex;
+            exceptionEntity.Exception = ex;
             return exceptionEntity;
         }
 
         /// <summary>
-        /// Generate exception for password error
+        /// Generate System.Exception for password error
         /// </summary>
-        /// <param name="ex">Exception</param>
+        /// <param name="ex">System.Exception</param>
         /// <param name="password">string</param>
-        /// <returns>ExceptionEntity</returns>
+        /// <returns>System.ExceptionEntity</returns>
         public ExceptionEntity GenerateException(System.Exception ex, String password)
         {
-            // Initiate exception
+            // Initiate System.Exception
             ExceptionEntity exceptionEntity = new ExceptionEntity();
-            // Check if exception message contains password and password is empty
+            // Check if System.Exception message contains password and password is empty
             if (ex.Message.Contains("password") && String.IsNullOrEmpty(password))
             {
                 exceptionEntity.message = "Password Required";
             }
-            // Check if exception contains password and password is set
+            // Check if System.Exception contains password and password is set
             else if (ex.Message.Contains("password") && !String.IsNullOrEmpty(password))
             {
                 exceptionEntity.message = "Incorrect password";
@@ -84,7 +84,7 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Resources
             else
             {
                 exceptionEntity.message = ex.Message;
-                exceptionEntity.exception = ex;
+                exceptionEntity.Exception = ex;
             }
             return exceptionEntity;
         }

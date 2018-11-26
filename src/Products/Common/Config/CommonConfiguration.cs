@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GroupDocs.Annotation.MVC.Products.Common.Util.Parser;
+using System;
 using System.Collections.Specialized;
 using System.Configuration;
 
@@ -22,13 +23,15 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Config
         /// </summary>
         public CommonConfiguration()
         {
-            // get Common configuration section from the web.config           
-            isPageSelector = Convert.ToBoolean(commonConfiguration["isPageSelector"]);           
-            isDownload = Convert.ToBoolean(commonConfiguration["isDownload"]);
-            isUpload = Convert.ToBoolean(commonConfiguration["isUpload"]);
-            isPrint = Convert.ToBoolean(commonConfiguration["isPrint"]);
-            isBrowse = Convert.ToBoolean(commonConfiguration["isBrowse"]);         
-            isRewrite = Convert.ToBoolean(commonConfiguration["isRewrite"]);
+            YamlParser parser = new YamlParser();
+            dynamic configuration = parser.GetConfiguration("common");
+            ConfigurationValuesGetter valuesGetter = new ConfigurationValuesGetter(configuration);
+            isPageSelector = valuesGetter.GetBooleanPropertyValue("pageSelector", isPageSelector);
+            isDownload = valuesGetter.GetBooleanPropertyValue("download", isDownload);
+            isUpload = valuesGetter.GetBooleanPropertyValue("upload", isUpload);
+            isPrint = valuesGetter.GetBooleanPropertyValue("print", isPrint);
+            isBrowse = valuesGetter.GetBooleanPropertyValue("browse", isBrowse);
+            isRewrite = valuesGetter.GetBooleanPropertyValue("rewrite", isRewrite);
         }
     }
 }

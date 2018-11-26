@@ -1,5 +1,4 @@
-﻿using GroupDocs.Annotation.MVC.Products.Common.Config;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 
@@ -10,7 +9,7 @@ namespace GroupDocs.Annotation.MVC.AppDomainGenerator
     /// </summary>
     public class DomainGenerator
     {
-        private GlobalConfiguration globalConfiguration;
+        private Products.Common.Config.GlobalConfiguration globalConfiguration;
         public Type CurrentType;
 
         /// <summary>
@@ -18,11 +17,11 @@ namespace GroupDocs.Annotation.MVC.AppDomainGenerator
         /// </summary>
         public DomainGenerator(string assemblyName, string className)
         {
-            globalConfiguration = new GlobalConfiguration();           
+            globalConfiguration = new Products.Common.Config.GlobalConfiguration();
             // Get assembly path
             string assemblyPath = this.GetAssemblyPath(assemblyName);
             // Initiate GroupDocs license class
-            CurrentType = this.CreateDomain(assemblyName + "Domain", assemblyPath, className);            
+            CurrentType = this.CreateDomain(assemblyName + "Domain", assemblyPath, className);
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace GroupDocs.Annotation.MVC.AppDomainGenerator
             // Initiate class from the loaded assembly
             Type type = assembly.GetType(className);
             return type;
-        }        
+        }      
 
         /// <summary>
         /// Set GroupDocs.Annotation license
@@ -70,7 +69,15 @@ namespace GroupDocs.Annotation.MVC.AppDomainGenerator
             // Initiate license class
             var obj = (GroupDocs.Annotation.Common.License.License)Activator.CreateInstance(type);
             // Set license
-            obj.SetLicense(globalConfiguration.Application.LicensePath);
+            SetLicense(obj);
+        }        
+
+        private void SetLicense(dynamic obj)
+        {
+            if (!String.IsNullOrEmpty(globalConfiguration.Application.LicensePath))
+            {
+                obj.SetLicense(globalConfiguration.Application.LicensePath);
+            }
         }
     }
 }

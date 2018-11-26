@@ -69,7 +69,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
                     CommentsEntity comment = new CommentsEntity();
                     AnnotationReplyInfo reply = replies[m];
                     comment.text = reply.Message;
-                    comment.time = reply.RepliedOn.ToString();
+                    comment.time = reply.RepliedOn.ToString("yyyy-MM-dd HH:mm:ss");
                     comment.userName = reply.UserName;
                     comments[m] = comment;
                 }
