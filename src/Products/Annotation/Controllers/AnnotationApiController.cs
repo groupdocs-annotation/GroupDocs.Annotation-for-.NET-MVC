@@ -62,7 +62,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// <param name="postedData">SignaturePostedDataEntity</param>
         /// <returns>List of files and directories</returns>
         [HttpPost]
-        [Route("annotation/loadFileTree")]
+        [Route("loadFileTree")]
         public HttpResponseMessage loadFileTree(AnnotationPostedDataEntity fileTreeRequest)
         {
             string relDirPath = fileTreeRequest.path;
@@ -116,7 +116,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// <param name="loadDocumentRequest">AnnotationPostedDataEntity</param>
         /// <returns>Document description</returns>
         [HttpPost]
-        [Route("annotation/loadDocumentDescription")]
+        [Route("loadDocumentDescription")]
         public HttpResponseMessage loadDocumentDescription(AnnotationPostedDataEntity loadDocumentRequest)
         {
             try
@@ -129,17 +129,18 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 string fileName = System.IO.Path.GetFileName(documentGuid);
                 FileInfo fi = new FileInfo(documentGuid);
                 DirectoryInfo parentDir = fi.Directory;
-              
+
                 string documentPath = "";
                 string parentDirName = parentDir.Name;
                 if (parentDir.FullName == GlobalConfiguration.Annotation.FilesDirectory.Replace("/", "\\"))
                 {
                     documentPath = fileName;
-                } else
+                }
+                else
                 {
                     documentPath = Path.Combine(parentDirName, fileName);
                 }
-                
+
                 documentDescription = AnnotationImageHandler.GetDocumentInfo(documentPath, password);
                 string documentType = documentDescription.DocumentType;
                 string fileExtension = Path.GetExtension(documentGuid);
@@ -190,7 +191,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// <param name="loadDocumentPageRequest"></param>
         /// <returns>Document page image</returns>
         [HttpPost]
-        [Route("annotation/loadDocumentPage")]
+        [Route("loadDocumentPage")]
         public HttpResponseMessage loadDocumentPage(AnnotationPostedDataEntity loadDocumentPageRequest)
         {
             try
@@ -241,7 +242,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// <param name="annotated">bool</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("annotation/downloadDocument")]
+        [Route("downloadDocument")]
         public HttpResponseMessage DownloadDocument(string path, bool annotated)
         {
             // prepare response message
@@ -271,7 +272,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// </summary>      
         /// <returns>Uploaded document object</returns>
         [HttpPost]
-        [Route("annotation/uploadDocument")]
+        [Route("uploadDocument")]
         public HttpResponseMessage UploadDocument()
         {
             try
@@ -340,7 +341,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// </summary>      
         /// <returns>Text coordinates object</returns>
         [HttpPost]
-        [Route("annotation/textCoordinates")]
+        [Route("textCoordinates")]
         public HttpResponseMessage TextCoordinates(TextCoordinatesRequest textCoordinatesRequest)
         {
             string password = "";
@@ -392,7 +393,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// </summary>      
         /// <returns>Annotated document info</returns>
         [HttpPost]
-        [Route("annotation/annotate")]
+        [Route("annotate")]
         public HttpResponseMessage Annotate(AnnotationPostedDataEntity annotateDocumentRequest)
         {
             AnnotatedDocumentEntity annotatedDocument = new AnnotatedDocumentEntity();
@@ -454,7 +455,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     // Add annotation to the document
                     DocumentType type = DocumentTypesConverter.GetDocumentType(documentType);
                     // Save result stream to file.
-                   
+
                     string path = GlobalConfiguration.Annotation.OutputDirectory + Path.DirectorySeparatorChar + fileName;
                     Stream cleanDoc = new FileStream(documentGuid, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
                     Stream result = AnnotationImageHandler.ExportAnnotationsToDocument(cleanDoc, annotations, type);
