@@ -140,7 +140,20 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 {
                     documentPath = Path.Combine(parentDirName, fileName);
                 }
-
+                List<PageImage> pageImages = null;
+                ImageOptions imageOptions = new ImageOptions();
+                // set password for protected document
+                if (!String.IsNullOrEmpty(password))
+                {
+                    imageOptions.Password = password;
+                }
+                if (GlobalConfiguration.Annotation.PreloadPageCount == 0)
+                {
+                    Stream document = File.Open(documentGuid, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    pageImages = AnnotationImageHandler.GetPages(document, imageOptions);
+                    document.Dispose();
+                    document.Close();
+                }
                 documentDescription = AnnotationImageHandler.GetDocumentInfo(documentPath, password);
                 string documentType = documentDescription.DocumentType;
                 string fileExtension = Path.GetExtension(documentGuid);
@@ -172,6 +185,19 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     if (annotations != null && annotations.Length > 0)
                     {
                         description.annotations = AnnotationMapper.instance.mapForPage(annotations, description.number);
+                    }
+                    if (pageImages != null)
+                    {
+                        byte[] bytes;
+                        using (MemoryStream memoryStream = new MemoryStream())
+                        {
+                            Stream imageStream = pageImages[i].Stream;
+                            imageStream.Position = 0;
+                            imageStream.CopyTo(memoryStream);
+                            bytes = memoryStream.ToArray();
+                        }
+                        string encodedImage = Convert.ToBase64String(bytes);
+                        description.data = encodedImage;
                     }
                     pagesDescription.Add(description);
                 }

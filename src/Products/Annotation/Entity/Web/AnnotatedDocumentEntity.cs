@@ -6,5 +6,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web
     {
         public string guid;
         public AnnotationDataEntity[] annotations;
+        public string data;
     }
 }
