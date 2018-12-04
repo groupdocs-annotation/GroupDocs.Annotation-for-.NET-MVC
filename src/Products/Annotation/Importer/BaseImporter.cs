@@ -7,6 +7,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Importer
     public class BaseImporter
     {
         protected FileStream documentStream;
+        protected string password;
         protected AnnotationImageHandler annotator;
 
         /// <summary>
@@ -14,10 +15,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Importer
         /// </summary>
         /// <param name="documentStream"></param>
         /// <param name="annotator"></param>
-        public BaseImporter(FileStream documentStream, AnnotationImageHandler annotator)
+        public BaseImporter(FileStream documentStream, AnnotationImageHandler annotator, string password)
         {
             this.documentStream = documentStream;
             this.annotator = annotator;
+            this.password = password;
         }
 
         /// <summary>
@@ -27,7 +29,16 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Importer
         /// <returns>AnnotationInfo[]</returns>
         public AnnotationInfo[] ImportAnnotations(DocumentType docType)
         {
-            AnnotationInfo[] annotations = annotator.ImportAnnotations(documentStream, docType);
+            AnnotationInfo[] annotations = null;
+
+            if (docType.Equals(DocumentType.Images))
+            {
+               annotations = annotator.ImportAnnotations(documentStream, docType);
+            }
+            else
+            {
+               annotations = annotator.ImportAnnotations(documentStream, docType, password);
+            }           
             return annotations;
         }
 
