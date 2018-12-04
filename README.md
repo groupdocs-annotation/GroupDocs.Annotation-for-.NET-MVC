@@ -2,6 +2,8 @@
 # GroupDocs.Annotation for .NET MVC Example
 ###### version 1.13.0
 
+[![Build status](https://ci.appveyor.com/api/projects/status/tj9md854bn7mqw44/branch/master?svg=true)](https://ci.appveyor.com/project/egorovpavel/groupdocs-annotation-for-net-mvc/branch/master)
+
 
 ## System Requirements
 - .NET Framework 4.5
