@@ -337,58 +337,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         }
 
         /// <summary>
-        /// Get text coordinates document
-        /// </summary>      
-        /// <returns>Text coordinates object</returns>
-        [HttpPost]
-        [Route("textCoordinates")]
-        public HttpResponseMessage TextCoordinates(TextCoordinatesRequest textCoordinatesRequest)
-        {
-            string password = "";
-            try
-            {
-                // get/set parameters
-                String documentGuid = textCoordinatesRequest.guid;
-                password = textCoordinatesRequest.password;
-                int pageNumber = textCoordinatesRequest.pageNumber;
-                // get document info
-                string fileName = System.IO.Path.GetFileName(documentGuid);
-                FileInfo fi = new FileInfo(documentGuid);
-                DirectoryInfo parentDir = fi.Directory;
-
-                string documentPath = "";
-                string parentDirName = parentDir.Name;
-                if (parentDir.FullName == GlobalConfiguration.Annotation.FilesDirectory.Replace("/", "\\"))
-                {
-                    documentPath = fileName;
-                }
-                else
-                {
-                    documentPath = Path.Combine(parentDirName, fileName);
-                }
-                DocumentInfoContainer info = AnnotationImageHandler.GetDocumentInfo(documentPath, password);
-                // get all rows info for specific page
-                List<RowData> rows = info.Pages[pageNumber - 1].Rows;
-                // initiate list of the TextRowEntity
-                List<TextRowEntity> textCoordinates = new List<TextRowEntity>();
-                // get each row info
-                for (int i = 0; i < rows.Count; i++)
-                {
-                    TextRowEntity textRow = new TextRowEntity();
-                    textRow.textCoordinates = info.Pages[pageNumber - 1].Rows[i].TextCoordinates;
-                    textRow.lineTop = info.Pages[pageNumber - 1].Rows[i].LineTop;
-                    textRow.lineHeight = info.Pages[pageNumber - 1].Rows[i].LineHeight;
-                    textCoordinates.Add(textRow);
-                }
-                return Request.CreateResponse(HttpStatusCode.OK, textCoordinates);
-            }
-            catch (System.Exception ex)
-            {
-                // set exception message
-                return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex));
-            }
-        }
-        /// <summary>
         /// Annotate document
         /// </summary>      
         /// <returns>Annotated document info</returns>

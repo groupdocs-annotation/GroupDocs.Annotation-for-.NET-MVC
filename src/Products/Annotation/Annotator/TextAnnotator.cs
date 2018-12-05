@@ -63,7 +63,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         
         protected Rectangle getBox()
         {
-            return new Rectangle(annotationData.left / 4, annotationData.top, annotationData.width, annotationData.height);
+            return new Rectangle(annotationData.left / 4, pageData.Height - annotationData.top, annotationData.width, annotationData.height);
         }
         
         protected override AnnotationType GetType()
