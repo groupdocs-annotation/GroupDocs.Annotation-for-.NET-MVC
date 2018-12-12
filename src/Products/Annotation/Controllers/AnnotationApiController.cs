@@ -51,7 +51,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             config.StoragePath = DirectoryUtils.FilesDirectory.GetPath();
             // set directory to store annotted documents
             GlobalConfiguration.Annotation.OutputDirectory = DirectoryUtils.OutputDirectory.GetPath();
-            // initialize Annotation instance for the Image mode
+            // initialize total instance for the Image mode
             AnnotationImageHandler = new AnnotationImageHandler(config);
         }
 
@@ -376,8 +376,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 {
                     documentType = "image";
                 }
-                // initiate annotator object               
-                System.Exception notSupportedException = null;
+                // initiate annotator object  
+                string notSupportedMessage = "";
                 for (int i = 0; i < annotationsData.Length; i++)
                 {
                     // create annotator
@@ -386,12 +386,15 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     // add annotation, if current annotation type isn't supported by the current document type it will be ignored
                     try
                     {
-                        annotations.Add(AnnotatorFactory.createAnnotator(annotationData, pageData).GetAnnotationInfo(documentType));
-                    }
-                    catch (NotSupportedException ex)
-                    {
-                        notSupportedException = ex;
-                        continue;
+                        BaseAnnotator annotator = AnnotatorFactory.createAnnotator(annotationData, pageData);
+                        if (annotator.IsSupported(documentType))
+                        {
+                            annotations.Add(annotator.GetAnnotationInfo(documentType));
+                        }
+                        else
+                        {
+                            notSupportedMessage = annotator.Message;
+                        }
                     }
                     catch (System.Exception ex)
                     {
@@ -402,12 +405,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 // Add annotation to the document
                 DocumentType type = DocumentTypesConverter.GetDocumentType(documentType);
                 // Save result stream to file.
-
                 string path = GlobalConfiguration.Annotation.OutputDirectory + Path.DirectorySeparatorChar + fileName;
                 if (File.Exists(path))
                 {
                     RemoveAnnotations(path);
-                }              
+                }
                 // check if annotations array contains at least one annotation to add
                 if (annotations.Count != 0)
                 {
@@ -425,10 +427,10 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                         fileStream.Close();
                     }
                 }
-                else if (notSupportedException != null)
+                else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(notSupportedException));
-                }                
+                    return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(new NotSupportedException(notSupportedMessage)));
+                }
                 annotatedDocument = new AnnotatedDocumentEntity()
                 {
                     guid = path,
@@ -462,10 +464,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             }
         }
 
-        /// <summary>
-        /// Delete all annotations from the document
-        /// </summary>
-        /// <param name="path"></param>
         public void RemoveAnnotations(string path)
         {
             try

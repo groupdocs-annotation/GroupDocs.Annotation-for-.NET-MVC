@@ -48,22 +48,22 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         
         public override AnnotationInfo AnnotateCells()
         {
-            throw new NotSupportedException(String.Format(MESSAGE, annotationData.type));
+            throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
         
         public override AnnotationInfo AnnotateSlides()
         {
-            throw new NotSupportedException(String.Format(MESSAGE, annotationData.type));
+            throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
         
         public override AnnotationInfo AnnotateImage()
         {
-            throw new NotSupportedException(String.Format(MESSAGE, annotationData.type));
+            throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
 
         public override AnnotationInfo AnnotateDiagram()
         {
-            throw new NotSupportedException(String.Format(MESSAGE, annotationData.type));
+            throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
         
         protected override Rectangle GetBox()
