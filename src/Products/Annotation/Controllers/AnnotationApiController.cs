@@ -62,7 +62,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// <param name="postedData">SignaturePostedDataEntity</param>
         /// <returns>List of files and directories</returns>
         [HttpPost]
-        [Route("annotation/loadFileTree")]
+        [Route("loadFileTree")]
         public HttpResponseMessage loadFileTree(AnnotationPostedDataEntity fileTreeRequest)
         {
             string relDirPath = fileTreeRequest.path;
@@ -116,7 +116,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// <param name="loadDocumentRequest">AnnotationPostedDataEntity</param>
         /// <returns>Document description</returns>
         [HttpPost]
-        [Route("annotation/loadDocumentDescription")]
+        [Route("loadDocumentDescription")]
         public HttpResponseMessage loadDocumentDescription(AnnotationPostedDataEntity loadDocumentRequest)
         {
             try
@@ -191,7 +191,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// <param name="loadDocumentPageRequest"></param>
         /// <returns>Document page image</returns>
         [HttpPost]
-        [Route("annotation/loadDocumentPage")]
+        [Route("loadDocumentPage")]
         public HttpResponseMessage loadDocumentPage(AnnotationPostedDataEntity loadDocumentPageRequest)
         {
             try
@@ -242,7 +242,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// <param name="annotated">bool</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("annotation/downloadDocument")]
+        [Route("downloadDocument")]
         public HttpResponseMessage DownloadDocument(string path, bool annotated)
         {
             // prepare response message
@@ -272,7 +272,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// </summary>      
         /// <returns>Uploaded document object</returns>
         [HttpPost]
-        [Route("annotation/uploadDocument")]
+        [Route("uploadDocument")]
         public HttpResponseMessage UploadDocument()
         {
             try
@@ -341,7 +341,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// </summary>      
         /// <returns>Annotated document info</returns>
         [HttpPost]
-        [Route("annotation/annotate")]
+        [Route("annotate")]
         public HttpResponseMessage Annotate(AnnotationPostedDataEntity annotateDocumentRequest)
         {
             AnnotatedDocumentEntity annotatedDocument = new AnnotatedDocumentEntity();
