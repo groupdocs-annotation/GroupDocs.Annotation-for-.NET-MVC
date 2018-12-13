@@ -167,6 +167,7 @@
     <Compile Include="Products\Annotation\Annotator\WatermarkAnnotator.cs" />
     <Compile Include="Products\Annotation\Config\AnnotationConfiguration.cs" />
     <Compile Include="Products\Annotation\Controllers\AnnotationApiController.cs" />
+    <Compile Include="Products\Annotation\Entity\Annotations.cs" />
     <Compile Include="Products\Annotation\Entity\Request\TextCoordinatesRequest.cs" />
     <Compile Include="Products\Annotation\Entity\Web\AnnotatedDocumentEntity.cs" />
     <Compile Include="Products\Annotation\Entity\Web\AnnotationDataEntity.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Products\Annotation\Util\Directory\FilesDirectoryUtils.cs" />
     <Compile Include="Products\Annotation\Util\Directory\OutputDirectoryUtils.cs" />
     <Compile Include="Products\Annotation\Util\DocumentTypesConverter.cs" />
+    <Compile Include="Products\Annotation\Util\SupportedAnnotations.cs" />
     <Compile Include="Products\Common\Config\ApplicationConfiguration.cs" />
     <Compile Include="Products\Common\Config\ConfigurationValuesGetter.cs" />
     <Compile Include="Products\Common\Config\GlobalConfiguration.cs" />

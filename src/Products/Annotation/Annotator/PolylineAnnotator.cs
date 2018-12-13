@@ -13,7 +13,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         
         public override AnnotationInfo AnnotateWord()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            AnnotationInfo polylineAnnotation = InitAnnotationInfo();
+            return polylineAnnotation;
         }
         
         public override AnnotationInfo AnnotatePdf()

@@ -1,4 +1,5 @@
 ﻿using GroupDocs.Annotation.Domain;
+using GroupDocs.Annotation.Domain.Containers;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using System;
 
@@ -14,13 +15,13 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationInfo AnnotateWord()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            AnnotationInfo distanceAnnotation = InitAnnotationInfo();
+            return distanceAnnotation;
         }
 
         public override AnnotationInfo AnnotatePdf()
         {
             AnnotationInfo distanceAnnotation = InitAnnotationInfo();
-
             return distanceAnnotation;
         }
 

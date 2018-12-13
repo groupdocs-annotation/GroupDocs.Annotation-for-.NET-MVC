@@ -1,4 +1,5 @@
-﻿using GroupDocs.Annotation.Domain;
+﻿
+using GroupDocs.Annotation.Domain;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using System;
 
@@ -52,8 +53,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
             annotation.fontSize = (float)fontSize;
             annotation.height = annotationInfo.Box.Height;
             annotation.left = annotationInfo.Box.X;
-            annotation.pageNumber = (int)annotationInfo.PageNumber + 1;
-            annotation.svgPath = annotationInfo.SvgPath;
+            annotation.pageNumber = (int)annotationInfo.PageNumber + 1;           
+            annotation.svgPath = (annotationInfo.SvgPath != null) ? annotationInfo.SvgPath.Replace("l", "L") : null;
             string text = (annotationInfo.Text == null) ? annotationInfo.FieldText : annotationInfo.Text;
             annotation.text = text;
             annotation.top = annotationInfo.Box.Y;
