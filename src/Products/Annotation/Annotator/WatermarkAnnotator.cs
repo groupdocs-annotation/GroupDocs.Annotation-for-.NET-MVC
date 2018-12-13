@@ -14,7 +14,10 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         
         public override AnnotationInfo AnnotateWord()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            // init possible types of annotations
+            AnnotationInfo watermarkAnnotation = InitAnnotationInfo();
+            watermarkAnnotation.AnnotationPosition = new Point(annotationData.left, annotationData.top);
+            return watermarkAnnotation;
         }
 
         public override AnnotationInfo AnnotatePdf()
