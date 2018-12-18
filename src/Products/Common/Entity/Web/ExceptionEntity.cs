@@ -1,11 +1,13 @@
-﻿namespace GroupDocs.Annotation.MVC.Products.Common.Entity.Web
+﻿using System;
+
+namespace GroupDocs.Annotation.MVC.Products.Common.Entity.Web
 {
     /// <summary>
-    /// System.Exception entity
+    /// Exception entity
     /// </summary>
     public class ExceptionEntity
     {
         public string message { get; set; }
-        public System.Exception Exception { get; set; }
+        public System.Exception exception { get; set; }
     }
 }

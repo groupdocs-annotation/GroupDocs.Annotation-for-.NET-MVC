@@ -2,10 +2,10 @@
 {
     public class Annotations
     {
-        public string[] Cells = {
+        internal string[] Cells = {
             "text"
         };
-        public string[] Diagram = {
+        internal string[] Diagram = {
             "area",
             "point",           
             "polyline",
@@ -15,7 +15,7 @@
             "resourcesRedaction",           
             "distance"
         };
-        public string[] Word = {
+        internal string[] Word = {
             "area",
             "point",
             "textStrikeout",
@@ -30,7 +30,7 @@
             "distance",
             "text"
         };
-        public string[] Pdf = {
+        internal string[] Pdf = {
             "area",
             "point",
             "textStrikeout",
@@ -45,7 +45,7 @@
             "distance",
             "text"
         };
-        public string[] Image = {
+        internal string[] Image = {
             "area",
             "point",
             "textStrikeout",
@@ -59,7 +59,7 @@
             "distance",
             "text"
         };
-        public string[] Slides = {
+        internal string[] Slides = {
             "area",
             "point",
             "textStrikeout",

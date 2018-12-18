@@ -16,7 +16,7 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Resources
         /// <param name="directory">Directory where to search files</param>
         /// <param name="fileName">Uploaded file name</param>
         /// <returns></returns>
-        public string GetFreeFileName(string directory, string fileName)
+        public static string GetFreeFileName(string directory, string fileName)
         {
             string resultFileName = "";
             try
@@ -47,36 +47,36 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Resources
         }
 
         /// <summary>
-        /// Generate System.Exception
+        /// Generate exception
         /// </summary>
-        /// <param name="ex">System.Exception</param>
-        /// <returns>System.ExceptionEntity</returns>
+        /// <param name="ex">Exception</param>
+        /// <returns>ExceptionEntity</returns>
         public ExceptionEntity GenerateException(System.Exception ex)
         {
-            // Initiate System.Exception entity
+            // Initiate Exception entity
             ExceptionEntity exceptionEntity = new ExceptionEntity();
-            // set System.Exception data
+            // set exception data
             exceptionEntity.message = ex.Message;
-            exceptionEntity.Exception = ex;
+            exceptionEntity.exception = ex;
             return exceptionEntity;
         }
 
         /// <summary>
-        /// Generate System.Exception for password error
+        /// Generate exception for password error
         /// </summary>
-        /// <param name="ex">System.Exception</param>
+        /// <param name="ex">Exception</param>
         /// <param name="password">string</param>
-        /// <returns>System.ExceptionEntity</returns>
+        /// <returns>ExceptionEntity</returns>
         public ExceptionEntity GenerateException(System.Exception ex, String password)
         {
-            // Initiate System.Exception
+            // Initiate exception
             ExceptionEntity exceptionEntity = new ExceptionEntity();
-            // Check if System.Exception message contains password and password is empty
+            // Check if exception message contains password and password is empty
             if (ex.Message.Contains("password") && String.IsNullOrEmpty(password))
             {
                 exceptionEntity.message = "Password Required";
             }
-            // Check if System.Exception contains password and password is set
+            // Check if exception contains password and password is set
             else if (ex.Message.Contains("password") && !String.IsNullOrEmpty(password))
             {
                 exceptionEntity.message = "Incorrect password";
@@ -84,7 +84,7 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Resources
             else
             {
                 exceptionEntity.message = ex.Message;
-                exceptionEntity.Exception = ex;
+                exceptionEntity.exception = ex;
             }
             return exceptionEntity;
         }

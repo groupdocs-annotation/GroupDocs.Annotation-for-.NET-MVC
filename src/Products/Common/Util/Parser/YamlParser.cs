@@ -1,6 +1,9 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Specialized;
 using System.IO;
+using System.Reflection;
 using YamlDotNet.Serialization;
 
 namespace GroupDocs.Annotation.MVC.Products.Common.Util.Parser

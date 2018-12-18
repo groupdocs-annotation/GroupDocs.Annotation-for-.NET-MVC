@@ -9,8 +9,8 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Config
     {
         public ServerConfiguration Server;
         public ApplicationConfiguration Application;
-        public CommonConfiguration Common;       
-        public AnnotationConfiguration Annotation;       
+        public CommonConfiguration Common;
+        public AnnotationConfiguration Annotation;
 
         /// <summary>
         /// Get all configurations
@@ -18,9 +18,9 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Config
         public GlobalConfiguration()
         {            
             Server = new ServerConfiguration();
-            Application = new ApplicationConfiguration();            
+            Application = new ApplicationConfiguration();
             Common = new CommonConfiguration();
-            Annotation = new AnnotationConfiguration();            
+            Annotation = new AnnotationConfiguration();
         }
     }
 }

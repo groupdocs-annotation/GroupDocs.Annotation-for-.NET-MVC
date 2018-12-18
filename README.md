@@ -1,6 +1,6 @@
 ![Alt text](https://raw.githubusercontent.com/groupdocs-annotation/groupdocs-annotation.github.io/master/resources/image/banner.png "GroupDocs.Annotation")
 # GroupDocs.Annotation for .NET MVC Example
-###### version 1.17.0
+###### version 1.18.0
 
 [![Build status](https://ci.appveyor.com/api/projects/status/tj9md854bn7mqw44/branch/master?svg=true)](https://ci.appveyor.com/project/egorovpavel/groupdocs-annotation-for-net-mvc/branch/master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c27a7fb14b20448b86aa9e6e881f977f)](https://www.codacy.com/app/egorovpavel/GroupDocs.Annotation-for-.NET-MVC?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=groupdocs-annotation/GroupDocs.Annotation-for-.NET-MVC&amp;utm_campaign=Badge_Grade)
