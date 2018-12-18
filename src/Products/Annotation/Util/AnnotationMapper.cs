@@ -10,7 +10,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
         /// <summary>
         /// Instance of mapper
         /// </summary>
-        public static AnnotationMapper instance = new AnnotationMapper();
+        public static readonly AnnotationMapper instance = new AnnotationMapper();
 
         private AnnotationMapper()
         {

@@ -173,6 +173,7 @@
     <Compile Include="Products\Annotation\Entity\Web\AnnotationDataEntity.cs" />
     <Compile Include="Products\Annotation\Entity\Web\CommentsEntity.cs" />
     <Compile Include="Products\Annotation\Entity\Web\AnnotationPostedDataEntity.cs" />
+    <Compile Include="Products\Annotation\Entity\Web\PageDataDescriptionEntity.cs" />
     <Compile Include="Products\Annotation\Entity\Web\TextRowEntity.cs" />
     <Compile Include="Products\Annotation\Importer\BaseImporter.cs" />
     <Compile Include="Products\Annotation\Util\AnnotationMapper.cs" />
@@ -189,7 +190,9 @@
     <Compile Include="Products\Common\Entity\Web\DocumentDescriptionEntity.cs" />
     <Compile Include="Products\Common\Entity\Web\ExceptionEntity.cs" />
     <Compile Include="Products\Common\Entity\Web\FileDescriptionEntity.cs" />
+    <Compile Include="Products\Common\Entity\Web\LoadDocumentEntity.cs" />
     <Compile Include="Products\Common\Entity\Web\LoadedPageEntity.cs" />
+    <Compile Include="Products\Common\Entity\Web\PageDescriptionEntity.cs" />
     <Compile Include="Products\Common\Entity\Web\UploadedDocumentEntity.cs" />
     <Compile Include="Products\Common\Resources\Resources.cs" />
     <Compile Include="Products\Common\Util\Comparator\FileNameComparator.cs" />

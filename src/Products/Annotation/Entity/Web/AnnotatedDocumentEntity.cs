@@ -3,10 +3,10 @@ using System.Collections.Generic;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web
 {
-    public class AnnotatedDocumentEntity : DocumentDescriptionEntity
+    public class AnnotatedDocumentEntity : PageDescriptionEntity
     {
         public string guid;
-        public AnnotationDataEntity[] annotations;
+        public List<PageDataDescriptionEntity> pages = new List<PageDataDescriptionEntity>();
         public string[] supportedAnnotations;
     }
 }
