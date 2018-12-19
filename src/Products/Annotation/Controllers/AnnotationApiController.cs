@@ -52,7 +52,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 StoragePath = DirectoryUtils.FilesDirectory.GetPath()
             };
             // set directory to store annotted documents
-            GlobalConfiguration.Annotation.OutputDirectory = DirectoryUtils.OutputDirectory.GetPath();
+            GlobalConfiguration.Annotation.SetOutputDirectory(DirectoryUtils.OutputDirectory.GetPath());
             // initialize Annotation instance for the Image mode
             AnnotationImageHandler = new AnnotationImageHandler(config);
         }
@@ -136,7 +136,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
                 string documentPath = "";
                 string parentDirName = parentDir.Name;
-                if (parentDir.FullName == GlobalConfiguration.Annotation.FilesDirectory.Replace("/", "\\"))
+                if (parentDir.FullName == GlobalConfiguration.Annotation.GetFilesDirectory().Replace("/", "\\"))
                 {
                     documentPath = fileName;
                 }
@@ -151,7 +151,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 {
                     imageOptions.Password = password;
                 }
-                if (GlobalConfiguration.Annotation.PreloadPageCount == 0)
+                if (GlobalConfiguration.Annotation.GetPreloadPageCount() == 0)
                 {
                     Stream document = File.Open(documentGuid, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
                     pageImages = AnnotationImageHandler.GetPages(document, imageOptions);
@@ -315,7 +315,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             {
                 string url = HttpContext.Current.Request.Form["url"];
                 // get documents storage path
-                string documentStoragePath = GlobalConfiguration.Annotation.FilesDirectory;
+                string documentStoragePath = GlobalConfiguration.Annotation.GetFilesDirectory();
                 bool rewrite = bool.Parse(HttpContext.Current.Request.Form["rewrite"]);
                 string fileSavePath = "";
                 if (string.IsNullOrEmpty(url))
@@ -400,7 +400,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
                 string documentPath = "";
                 string parentDirName = parentDir.Name;
-                if (parentDir.FullName == GlobalConfiguration.Annotation.FilesDirectory.Replace("/", "\\"))
+                if (parentDir.FullName == GlobalConfiguration.Annotation.GetFilesDirectory().Replace("/", "\\"))
                 {
                     documentPath = fileName;
                 }
@@ -443,7 +443,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 // Add annotation to the document
                 DocumentType type = DocumentTypesConverter.GetDocumentType(documentType);
                 // Save result stream to file.
-                string path = GlobalConfiguration.Annotation.OutputDirectory + Path.DirectorySeparatorChar + fileName;
+                string path = GlobalConfiguration.Annotation.GetOutputDirectory() + Path.DirectorySeparatorChar + fileName;
                 if (File.Exists(path))
                 {
                     RemoveAnnotations(path);
@@ -511,7 +511,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 {
                     resultStream = AnnotationImageHandler.RemoveAnnotationStream(inputStream);
                     resultStream.Position = 0;
-                    tempFilePath = Resources.GetFreeFileName(GlobalConfiguration.Annotation.OutputDirectory, Path.GetFileName(path));
+                    tempFilePath = Resources.GetFreeFileName(GlobalConfiguration.Annotation.GetOutputDirectory(), Path.GetFileName(path));
                     using (Stream tempFile = File.Create(tempFilePath))
                     {
                         resultStream.Seek(0, SeekOrigin.Begin);

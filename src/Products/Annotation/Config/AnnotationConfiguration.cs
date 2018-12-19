@@ -11,25 +11,25 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
     /// </summary>
     public class AnnotationConfiguration
     {
-        public string FilesDirectory = "DocumentSamples/Annotation";
-        public string OutputDirectory = "";
-        public string DefaultDocument = "";
-        public int PreloadPageCount = 0;
-        public bool isTextAnnotation = true;
-        public bool isAreaAnnotation = true;
-        public bool isPointAnnotation = true;
-        public bool isTextStrikeoutAnnotation = true;
-        public bool isPolylineAnnotation = true;
-        public bool isTextFieldAnnotation = true;
-        public bool isWatermarkAnnotation = true;
-        public bool isTextReplacementAnnotation = true;
-        public bool isArrowAnnotation = true;
-        public bool isTextRedactionAnnotation = true;
-        public bool isResourcesRedactionAnnotation = true;
-        public bool isTextUnderlineAnnotation = true;
-        public bool isDistanceAnnotation = true;
-        public bool isDownloadOriginal = true;
-        public bool isDownloadAnnotated = true;     
+        private string FilesDirectory = "DocumentSamples/Annotation";
+        private string OutputDirectory = "";
+        private string DefaultDocument = "";
+        private int PreloadPageCount = 0;
+        private bool isTextAnnotation = true;
+        private bool isAreaAnnotation = true;
+        private bool isPointAnnotation = true;
+        private bool isTextStrikeoutAnnotation = true;
+        private bool isPolylineAnnotation = true;
+        private bool isTextFieldAnnotation = true;
+        private bool isWatermarkAnnotation = true;
+        private bool isTextReplacementAnnotation = true;
+        private bool isArrowAnnotation = true;
+        private bool isTextRedactionAnnotation = true;
+        private bool isResourcesRedactionAnnotation = true;
+        private bool isTextUnderlineAnnotation = true;
+        private bool isDistanceAnnotation = true;
+        private bool isDownloadOriginal = true;
+        private bool isDownloadAnnotated = true;     
 
         /// <summary>
         /// Get annotation configuration section from the Web.config
@@ -74,6 +74,195 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
                 && path.IndexOfAny(System.IO.Path.GetInvalidPathChars().ToArray()) == -1
                 && Path.IsPathRooted(path)
                 && !Path.GetPathRoot(path).Equals(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal);
+        }
+
+        public void SetFilesDirectory(string filesDirectory) {
+            this.FilesDirectory = filesDirectory;
+        }
+
+        public string GetFilesDirectory()
+        {
+            return FilesDirectory;
+        }
+
+        public void SetOutputDirectory(string outputDirectory)
+        {
+            this.OutputDirectory = outputDirectory;
+        }
+
+        public string GetOutputDirectory()
+        {
+            return OutputDirectory;
+        }
+
+        public void SetDefaultDocument(string defaultDocument)
+        {
+            this.DefaultDocument = defaultDocument;
+        }
+
+        public string GetDefaultDocument()
+        {
+            return DefaultDocument;
+        }
+
+        public void SetPreloadPageCount(int preloadPageCount)
+        {
+            this.PreloadPageCount = preloadPageCount;
+        }
+
+        public int GetPreloadPageCount()
+        {
+            return PreloadPageCount;
+        }
+
+        public void SetIsTextAnnotation(bool isTextAnnotation)
+        {
+            this.isTextAnnotation = isTextAnnotation;
+        }
+
+        public bool GetIsTextAnnotation()
+        {
+            return isTextAnnotation;
+        }
+
+        public void SetIsAreaAnnotation(bool isAreaAnnotation)
+        {
+            this.isAreaAnnotation = isAreaAnnotation;
+        }
+
+        public bool GetIsAreaAnnotation()
+        {
+            return isAreaAnnotation;
+        }
+
+        public void SetIsPointAnnotation(bool isPointAnnotation)
+        {
+            this.isPointAnnotation = isPointAnnotation;
+        }
+
+        public bool GetIsPointAnnotation()
+        {
+            return isPointAnnotation;
+        }
+
+        public void SetIsTextStrikeoutAnnotation(bool isTextStrikeoutAnnotation)
+        {
+            this.isTextStrikeoutAnnotation = isTextStrikeoutAnnotation;
+        }
+
+        public bool GetIsTextStrikeoutAnnotation()
+        {
+            return isTextStrikeoutAnnotation;
+        }
+
+        public void SetIsPolylineAnnotation(bool isPolylineAnnotation)
+        {
+            this.isPolylineAnnotation = isPolylineAnnotation;
+        }
+
+        public bool GetIsPolylineAnnotation()
+        {
+            return isPolylineAnnotation;
+        }
+
+        public void SetIsTextFieldAnnotation(bool isTextFieldAnnotation)
+        {
+            this.isTextFieldAnnotation = isTextFieldAnnotation;
+        }
+
+        public bool GetIsTextFieldAnnotation()
+        {
+            return isTextFieldAnnotation;
+        }
+
+        public void SetIsWatermarkAnnotation(bool isWatermarkAnnotation)
+        {
+            this.isWatermarkAnnotation = isWatermarkAnnotation;
+        }
+
+        public bool GetIsWatermarkAnnotation()
+        {
+            return isWatermarkAnnotation;
+        }
+
+        public void SetIsTextReplacementAnnotation(bool isTextReplacementAnnotation)
+        {
+            this.isTextReplacementAnnotation = isTextReplacementAnnotation;
+        }
+
+        public bool GetIsTextReplacementAnnotation()
+        {
+            return isTextReplacementAnnotation;
+        }
+
+        public void SetIsArrowAnnotation(bool isArrowAnnotation)
+        {
+            this.isArrowAnnotation = isArrowAnnotation;
+        }
+
+        public bool GetIsArrowAnnotation()
+        {
+            return isArrowAnnotation;
+        }
+
+        public void SetIsTextRedactionAnnotation(bool isTextRedactionAnnotation)
+        {
+            this.isTextRedactionAnnotation = isTextRedactionAnnotation;
+        }
+
+        public bool GetIsTextRedactionAnnotation()
+        {
+            return isTextRedactionAnnotation;
+        }
+
+        public void SetIsResourcesRedactionAnnotation(bool isResourcesRedactionAnnotation)
+        {
+            this.isResourcesRedactionAnnotation = isResourcesRedactionAnnotation;
+        }
+
+        public bool GetIsResourcesRedactionAnnotation()
+        {
+            return isResourcesRedactionAnnotation;
+        }
+
+        public void SetIsTextUnderlineAnnotation(bool isTextUnderlineAnnotation)
+        {
+            this.isTextUnderlineAnnotation = isTextUnderlineAnnotation;
+        }
+
+        public bool GetIsTextUnderlineAnnotation()
+        {
+            return isTextUnderlineAnnotation;
+        }
+
+        public void SetIsDistanceAnnotation(bool isDistanceAnnotation)
+        {
+            this.isDistanceAnnotation = isDistanceAnnotation;
+        }
+
+        public bool GetIsDistanceAnnotation()
+        {
+            return isDistanceAnnotation;
+        }
+
+        public void SetIsDownloadOriginal(bool isDownloadOriginal)
+        {
+            this.isDownloadOriginal = isDownloadOriginal;
+        }
+
+        public bool GetIsDownloadOriginal()
+        {
+            return isDownloadOriginal;
+        }
+
+        public void SetIsDownloadAnnotated(bool isDownloadAnnotated)
+        {
+            this.isDownloadAnnotated = isDownloadAnnotated;
+        }
+
+        public bool GetIsDownloadAnnotated()
+        {
+            return isDownloadAnnotated;
         }
     }
 }
