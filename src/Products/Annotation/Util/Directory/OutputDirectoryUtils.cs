@@ -9,8 +9,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util.Directory
     /// </summary>
     public class OutputDirectoryUtils : IDirectoryUtils
     {
-        private string OUTPUT_FOLDER = "/Annotated";
-        private AnnotationConfiguration AnnotationConfiguration;
+        private readonly string OUTPUT_FOLDER = "/Annotated";
+        private readonly AnnotationConfiguration AnnotationConfiguration;
 
         /// <summary>
         /// Constructor
@@ -21,13 +21,13 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util.Directory
             AnnotationConfiguration = annotationConfiguration;
 
             // create output directories
-            if (String.IsNullOrEmpty(annotationConfiguration.OutputDirectory))
+            if (String.IsNullOrEmpty(annotationConfiguration.GetOutputDirectory()))
             {
-                annotationConfiguration.OutputDirectory = annotationConfiguration.FilesDirectory + OUTPUT_FOLDER;
+                annotationConfiguration.SetOutputDirectory(annotationConfiguration.GetFilesDirectory() + OUTPUT_FOLDER);
             }
 
-            if (!System.IO.Directory.Exists(annotationConfiguration.OutputDirectory)) {
-                System.IO.Directory.CreateDirectory(annotationConfiguration.OutputDirectory);
+            if (!System.IO.Directory.Exists(annotationConfiguration.GetOutputDirectory())) {
+                System.IO.Directory.CreateDirectory(annotationConfiguration.GetOutputDirectory());
             }
         }
 
@@ -37,7 +37,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util.Directory
         /// <returns>string</returns>
         public string GetPath()
         {
-            return AnnotationConfiguration.OutputDirectory;
+            return AnnotationConfiguration.GetOutputDirectory();
         }
     }
 }

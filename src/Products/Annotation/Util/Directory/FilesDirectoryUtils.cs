@@ -6,7 +6,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util.Directory
     public class FilesDirectoryUtils : IDirectoryUtils
     {
 
-        public AnnotationConfiguration AnnotationConfiguration;
+        private readonly AnnotationConfiguration AnnotationConfiguration;
 
         /// <summary>
         /// Constructor
@@ -23,7 +23,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util.Directory
         /// <returns>string</returns>
         public string GetPath()
         {
-            return AnnotationConfiguration.FilesDirectory;
+            return AnnotationConfiguration.GetFilesDirectory();
         }
     }
 }
