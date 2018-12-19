@@ -6,7 +6,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util.Directory
     public class FilesDirectoryUtils : IDirectoryUtils
     {
 
-        private AnnotationConfiguration AnnotationConfiguration;
+        private readonly AnnotationConfiguration AnnotationConfiguration;
 
         /// <summary>
         /// Constructor

@@ -45,7 +45,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 case "distance":
                     return new DistanceAnnotator(annotationData, pageData);
                 default:
-                    throw new NullReferenceException("Wrong annotation data without annotation type!");
+                    throw new ArgumentNullException("Wrong annotation data without annotation type!");
             }
         }
     }

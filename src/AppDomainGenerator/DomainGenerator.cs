@@ -10,7 +10,7 @@ namespace GroupDocs.Annotation.MVC.AppDomainGenerator
     public class DomainGenerator
     {
         private readonly Products.Common.Config.GlobalConfiguration globalConfiguration;
-        private Type CurrentType;
+        private readonly Type CurrentType;
 
         /// <summary>
         /// Constructor
