@@ -178,7 +178,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
                 description.guid = documentGuid;
                 description.supportedAnnotations = new SupportedAnnotations().GetSupportedAnnotations(documentType);
-               
+
                 // get info about each document page
                 for (int i = 0; i < documentDescription.Pages.Count; i++)
                 {
@@ -455,7 +455,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     Stream result = AnnotationImageHandler.ExportAnnotationsToDocument(cleanDoc, annotations, type);
                     cleanDoc.Dispose();
                     cleanDoc.Close();
-                    // Save result stream to file.                       
+                    // Save result stream to file.               
+                    if (annotateDocumentRequest.print)
+                    {
+                        path = path.Replace(System.IO.Path.GetFileNameWithoutExtension(path), System.IO.Path.GetFileNameWithoutExtension(path) + "Temp");
+                    }
                     using (FileStream fileStream = new FileStream(path, FileMode.Create))
                     {
                         byte[] buffer = new byte[result.Length];
@@ -471,7 +475,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 }
                 annotatedDocument = new AnnotatedDocumentEntity();
                 annotatedDocument.guid = path;
-                
+                if (annotateDocumentRequest.print)
+                {
+                    annotatedDocument.pages = GetAnnotatedPagesForPrint(path, password);
+                    File.Delete(path);
+                }
             }
             catch (System.Exception ex)
             {
@@ -496,6 +504,43 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 return new BaseImporter(documentStream, AnnotationImageHandler, password).ImportAnnotations(docType);
             }
             catch (System.Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private List<PageDataDescriptionEntity> GetAnnotatedPagesForPrint(string path, string password)
+        {
+            AnnotatedDocumentEntity description = new AnnotatedDocumentEntity();
+            try
+            {
+
+                Stream document = File.Open(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                List<PageImage> pageImages = AnnotationImageHandler.GetPages(document, new ImageOptions());
+                document.Dispose();
+                document.Close();
+                for (int i = 0; i < pageImages.Count; i++)
+                {
+                    PageDataDescriptionEntity page = new PageDataDescriptionEntity();
+                    if (pageImages != null)
+                    {
+                        byte[] bytes;
+                        using (MemoryStream memoryStream = new MemoryStream())
+                        {
+                            Stream imageStream = pageImages[i].Stream;
+                            imageStream.Position = 0;
+                            imageStream.CopyTo(memoryStream);
+                            bytes = memoryStream.ToArray();
+                        }
+                        string encodedImage = Convert.ToBase64String(bytes);
+                        page.SetData(encodedImage);
+                    }
+                    description.pages.Add(page);
+                }
+
+                return description.pages;
+            }
+            catch (FileNotFoundException ex)
             {
                 throw ex;
             }
