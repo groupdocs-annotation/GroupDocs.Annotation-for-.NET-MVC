@@ -477,7 +477,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 annotatedDocument.guid = path;
                 if (annotateDocumentRequest.print)
                 {
-                    annotatedDocument.pages = GetAnnotatedPagesForPrint(path, password);
+                    annotatedDocument.pages = GetAnnotatedPagesForPrint(path);
                     File.Delete(path);
                 }
             }
@@ -509,7 +509,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             }
         }
 
-        private List<PageDataDescriptionEntity> GetAnnotatedPagesForPrint(string path, string password)
+        private List<PageDataDescriptionEntity> GetAnnotatedPagesForPrint(string path)
         {
             AnnotatedDocumentEntity description = new AnnotatedDocumentEntity();
             try
