@@ -45,8 +45,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GroupDocs.Annotation, Version=18.10.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
-      <HintPath>..\packages\GroupDocs.Annotation.18.10.0\lib\GroupDocs.Annotation.dll</HintPath>
+    <Reference Include="GroupDocs.Annotation, Version=18.12.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\GroupDocs.Annotation.18.12.0\lib\GroupDocs.Annotation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -237,7 +237,6 @@
     <Content Include="Resources\annotation\images\watermark.png" />
     <Content Include="Resources\annotation\images\watermark_active.png" />
     <Content Include="Resources\annotation\js\annotation.js" />
-    <Content Include="Resources\annotation\js\drawFieldAnnotation.js" />
     <Content Include="Resources\annotation\js\drawSvgAnnotation.js" />
     <Content Include="Resources\annotation\js\drawTextAnnotation.js" />
     <Content Include="Resources\annotation\js\svg.draw.js" />
