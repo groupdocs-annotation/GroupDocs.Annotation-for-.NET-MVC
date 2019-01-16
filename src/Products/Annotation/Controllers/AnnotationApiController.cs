@@ -131,20 +131,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 password = loadDocumentRequest.password;
                 DocumentInfoContainer documentDescription;
                 // get document info container              
-                string fileName = System.IO.Path.GetFileName(documentGuid);
-                FileInfo fi = new FileInfo(documentGuid);
-                DirectoryInfo parentDir = fi.Directory;
-
-                string documentPath = "";
-                string parentDirName = parentDir.Name;
-                if (parentDir.FullName == GlobalConfiguration.Annotation.GetFilesDirectory().Replace("/", "\\"))
-                {
-                    documentPath = fileName;
-                }
-                else
-                {
-                    documentPath = Path.Combine(parentDirName, fileName);
-                }
+                string documentPath = GetDocumentPath(documentGuid);
                 List<PageImage> pageImages = null;
                 ImageOptions imageOptions = new ImageOptions();
                 // set password for protected document
@@ -217,7 +204,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 // set exception message
                 return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex, password));
             }
-        }
+        }      
 
         /// <summary>
         /// Get document page
@@ -228,21 +215,22 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         [Route("loadDocumentPage")]
         public HttpResponseMessage LoadDocumentPage(AnnotationPostedDataEntity loadDocumentPageRequest)
         {
+            string password = "";
             try
             {
                 // get/set parameters
                 string documentGuid = loadDocumentPageRequest.guid;
                 int pageNumber = loadDocumentPageRequest.page;
-                string password = loadDocumentPageRequest.password;
-                LoadedPageEntity loadedPage = new LoadedPageEntity();
+                password = loadDocumentPageRequest.password;
+                PageDescriptionEntity loadedPage = new PageDescriptionEntity();
                 ImageOptions imageOptions = new ImageOptions()
                 {
                     PageNumber = pageNumber,
                     CountPagesToConvert = 1,
                     Password = password
                 };
+                string documentPath = GetDocumentPath(documentGuid);               
                 // get page image
-
                 byte[] bytes;
                 using (MemoryStream memoryStream = new MemoryStream())
                 {
@@ -250,6 +238,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     {
                         List<PageImage> images = AnnotationImageHandler.GetPages(document, imageOptions);
                         Stream imageStream = images[pageNumber - 1].Stream;
+                        
                         imageStream.Position = 0;
                         imageStream.CopyTo(memoryStream);
                         bytes = memoryStream.ToArray();
@@ -260,13 +249,17 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     }
                 }
                 string encodedImage = Convert.ToBase64String(bytes);
-                loadedPage.pageImage = encodedImage;
+                loadedPage.SetData(encodedImage);
+                DocumentInfoContainer documentDescription = AnnotationImageHandler.GetDocumentInfo(documentPath, password);
+                loadedPage.height = documentDescription.Pages[pageNumber - 1].Height;
+                loadedPage.width = documentDescription.Pages[pageNumber - 1].Width;                
                 // return loaded page object
                 return Request.CreateResponse(HttpStatusCode.OK, loadedPage);
             }
             catch (System.Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex));
+                // set exception message
+                return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex, password));
             }
         }
 
@@ -573,6 +566,25 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             {
                 throw ex;
             }
+        }
+
+        private string GetDocumentPath(string documentGuid)
+        {
+            string fileName = System.IO.Path.GetFileName(documentGuid);
+            FileInfo fi = new FileInfo(documentGuid);
+            DirectoryInfo parentDir = fi.Directory;
+
+            string documentPath = "";
+            string parentDirName = parentDir.Name;
+            if (parentDir.FullName == GlobalConfiguration.Annotation.GetFilesDirectory().Replace("/", "\\"))
+            {
+                documentPath = fileName;
+            }
+            else
+            {
+                documentPath = Path.Combine(parentDirName, fileName);
+            }
+            return documentPath;
         }
     }
 }
