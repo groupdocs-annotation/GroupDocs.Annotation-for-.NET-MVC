@@ -27,9 +27,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
         private bool isTextRedactionAnnotation = true;
         private bool isResourcesRedactionAnnotation = true;
         private bool isTextUnderlineAnnotation = true;
-        private bool isDistanceAnnotation = true;
-        private bool isDownloadOriginal = true;
-        private bool isDownloadAnnotated = true;     
+        private bool isDistanceAnnotation = true;    
 
         /// <summary>
         /// Get annotation configuration section from the Web.config
@@ -62,9 +60,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
             isTextRedactionAnnotation = valuesGetter.GetBooleanPropertyValue("textRedactionAnnotation", isTextRedactionAnnotation);
             isResourcesRedactionAnnotation = valuesGetter.GetBooleanPropertyValue("resourcesRedactionAnnotation", isResourcesRedactionAnnotation);
             isTextUnderlineAnnotation = valuesGetter.GetBooleanPropertyValue("textUnderlineAnnotation", isTextUnderlineAnnotation);
-            isDistanceAnnotation = valuesGetter.GetBooleanPropertyValue("distanceAnnotation", isDistanceAnnotation);
-            isDownloadOriginal = valuesGetter.GetBooleanPropertyValue("downloadOriginal", isDownloadOriginal);
-            isDownloadAnnotated = valuesGetter.GetBooleanPropertyValue("downloadAnnotated", isDownloadAnnotated);
+            isDistanceAnnotation = valuesGetter.GetBooleanPropertyValue("distanceAnnotation", isDistanceAnnotation);           
             PreloadPageCount = valuesGetter.GetIntegerPropertyValue("preloadPageCount", PreloadPageCount);
         }
 
@@ -243,26 +239,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
         public bool GetIsDistanceAnnotation()
         {
             return isDistanceAnnotation;
-        }
-
-        public void SetIsDownloadOriginal(bool isDownloadOriginal)
-        {
-            this.isDownloadOriginal = isDownloadOriginal;
-        }
-
-        public bool GetIsDownloadOriginal()
-        {
-            return isDownloadOriginal;
-        }
-
-        public void SetIsDownloadAnnotated(bool isDownloadAnnotated)
-        {
-            this.isDownloadAnnotated = isDownloadAnnotated;
-        }
-
-        public bool GetIsDownloadAnnotated()
-        {
-            return isDownloadAnnotated;
-        }
+        }        
     }
 }

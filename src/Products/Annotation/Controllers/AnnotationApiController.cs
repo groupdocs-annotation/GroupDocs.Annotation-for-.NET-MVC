@@ -46,13 +46,9 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             DirectoryUtils = new DirectoryUtils(GlobalConfiguration.Annotation);
 
             // create annotation application configuration
-            AnnotationConfig config = new AnnotationConfig
-            {
-                // set storage path
-                StoragePath = DirectoryUtils.FilesDirectory.GetPath()
-            };
-            // set directory to store annotted documents
-            GlobalConfiguration.Annotation.SetOutputDirectory(DirectoryUtils.OutputDirectory.GetPath());
+            AnnotationConfig config = new AnnotationConfig();
+            // set storage path
+            config.StoragePath = DirectoryUtils.FilesDirectory.GetPath();            
             // initialize Annotation instance for the Image mode
             AnnotationImageHandler = new AnnotationImageHandler(config);
         }
@@ -264,37 +260,28 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         }
 
         /// <summary>
-        /// Download document
+        /// Download curernt document
         /// </summary>
-        /// <param name="path">string</param>
-        /// <param name="annotated">bool</param>
-        /// <returns></returns>
+        /// <param name="path">Path of the document to download</param>
+        /// <returns>Document stream as attachement</returns>
         [HttpGet]
         [Route("downloadDocument")]
-        public HttpResponseMessage DownloadDocument(string path, bool annotated)
+        public HttpResponseMessage DownloadDocument(string path)
         {
-            // prepare response message
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
-            // check if signed document should be downloaded or original
-            string pathToDownload = annotated ?
-                 String.Format("{0}{1}{2}", DirectoryUtils.OutputDirectory.GetPath(), Path.DirectorySeparatorChar, Path.GetFileName(path)) :
-                 path;
-            // add file into the response
-            if (File.Exists(pathToDownload))
+            if (!string.IsNullOrEmpty(path))
             {
-                var fileStream = new FileStream(pathToDownload, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                response.Content = new StreamContent(fileStream);
-                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                if (File.Exists(path))
                 {
-                    FileName = Path.GetFileName(path)
-                };
-                return response;
+                    HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                    var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                    response.Content = new StreamContent(fileStream);
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                    response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                    response.Content.Headers.ContentDisposition.FileName = Path.GetFileName(path);
+                    return response;
+                }
             }
-            else
-            {
-                return new HttpResponseMessage(HttpStatusCode.NotFound);
-            }
+            return new HttpResponseMessage(HttpStatusCode.NotFound);
         }
 
         /// <summary>
@@ -436,25 +423,28 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
                 // Add annotation to the document
                 DocumentType type = DocumentTypesConverter.GetDocumentType(documentType);
-                // Save result stream to file.
-                string path = GlobalConfiguration.Annotation.GetOutputDirectory() + Path.DirectorySeparatorChar + fileName;
-                if (File.Exists(path))
+                string path = "";
+                if (annotateDocumentRequest.print)
                 {
-                    RemoveAnnotations(path);
+                    path = documentGuid.Replace(System.IO.Path.GetFileNameWithoutExtension(documentGuid), System.IO.Path.GetFileNameWithoutExtension(documentGuid) + "Temp");
+                    FileStream fileStream = new FileStream(path, FileMode.Create);
+                    fileStream.Close();
                 }
+                else
+                {
+                    path = documentGuid;
+                    RemoveAnnotations(path);
+                }               
+               
                 // check if annotations array contains at least one annotation to add
                 if (annotations.Count != 0)
                 {
                     Stream cleanDoc = new FileStream(documentGuid, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
                     Stream result = AnnotationImageHandler.ExportAnnotationsToDocument(cleanDoc, annotations, type);
                     cleanDoc.Dispose();
-                    cleanDoc.Close();
-                    // Save result stream to file.               
-                    if (annotateDocumentRequest.print)
-                    {
-                        path = path.Replace(System.IO.Path.GetFileNameWithoutExtension(path), System.IO.Path.GetFileNameWithoutExtension(path) + "Temp");
-                    }
-                    using (FileStream fileStream = new FileStream(path, FileMode.Create))
+                    cleanDoc.Close();    
+                    // Save result stream to file.                       
+                    using (FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
                     {
                         byte[] buffer = new byte[result.Length];
                         result.Seek(0, SeekOrigin.Begin);
@@ -467,8 +457,10 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 {
                     return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(new NotSupportedException(notSupportedMessage)));
                 }
-                annotatedDocument = new AnnotatedDocumentEntity();
-                annotatedDocument.guid = path;
+                annotatedDocument = new AnnotatedDocumentEntity
+                {
+                    guid = documentGuid,
+                };
                 if (annotateDocumentRequest.print)
                 {
                     annotatedDocument.pages = GetAnnotatedPagesForPrint(path);
@@ -550,7 +542,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 {
                     resultStream = AnnotationImageHandler.RemoveAnnotationStream(inputStream);
                     resultStream.Position = 0;
-                    tempFilePath = Resources.GetFreeFileName(GlobalConfiguration.Annotation.GetOutputDirectory(), Path.GetFileName(path));
+                    tempFilePath = Resources.GetFreeFileName(Path.GetDirectoryName(path), Path.GetFileName(path));
                     using (Stream tempFile = File.Create(tempFilePath))
                     {
                         resultStream.Seek(0, SeekOrigin.Begin);
@@ -558,6 +550,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     }
                     resultStream.Dispose();
                     resultStream.Close();
+                    inputStream.Dispose();
+                    inputStream.Close();
                 }
                 File.Delete(path);
                 File.Move(tempFilePath, path);

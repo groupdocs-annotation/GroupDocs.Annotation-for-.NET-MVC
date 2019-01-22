@@ -21,6 +21,6 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Config
             Application = new ApplicationConfiguration();
             Common = new CommonConfiguration();
             Annotation = new AnnotationConfiguration();
-        }
+         }
     }
 }
