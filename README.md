@@ -59,13 +59,32 @@ https://www.youtube.com/watch?v=TVb7GwSNDqw
 - Cross-platform support (Windows, Linux, MacOS)
 
 ## How to run
-1. Download/Clone GroupDocs.Annotation for .NET MVC Sample.
-2. Extract/Copy GroupDocs.Annotation for .NET MVC Sample to working directory.
-3. Navigate to GroupDocs.Annotation for .NET MVC Sample root directory.
-4. Open solution in the VisualStudio.
-5. Update common parameters in `web.config` and example related properties in the 'configuration.yml' to meet your requirements.
-6. Go to `http://localhost:{PORT}/annotation`.
-PORT - port number specified in `web.config` (by default http://localhost:8080).
+
+You can run this sample by one of following methods
+
+#### Build from source
+
+Download [source code](https://github.com/groupdocs-annotation/GroupDocs.Annotation-for-.NET-MVC/archive/master.zip) from github or clone this repository.
+
+```bash
+git clone https://github.com/groupdocs-annotation/GroupDocs.Annotation-for-.NET-MVC
+```
+
+Open solution in the VisualStudio.
+Update common parameters in `web.config` and example related properties in the `configuration.yml` to meet your requirements.
+
+Open http://localhost:8080/annotation in your favorite browser
+
+#### Docker image
+Use [docker](https://www.docker.com/) image.
+
+```bash
+mkdir DocumentSamples
+mkdir Licenses
+docker run -p 8080:8080 --env application.hostAddress=localhost -v `pwd`/DocumentSamples:/home/groupdocs/app/DocumentSamples -v `pwd`/Licenses:/home/groupdocs/app/Licenses groupdocs/annotation
+## Open http://localhost:8080/annotation in your favorite browser.
+```
+
 
 ## Resources
 - **Website:** [www.groupdocs.com](http://www.groupdocs.com)
