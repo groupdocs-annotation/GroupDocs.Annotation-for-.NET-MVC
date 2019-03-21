@@ -16,7 +16,7 @@ server:
 application:
     # License path
     # Absolute path to GroupDocs license file
-    licensePath: 'Licenses/GroupDocs.Annotation.NET.lic'
+    licensePath: 'Licenses/GroupDocs.Total.NET.lic'
 
 ################################################
 # Common configurations
@@ -43,6 +43,87 @@ common:
   browse: true
   # Set false to disable right mouse click
   enableRightClick: true
+
+################################################
+# GroupDocs.Viewer configurations
+################################################
+viewer:
+  # Files directory path
+  # Absolute path to files directory
+  filesDirectory: 'DocumentSamples/Viewer'
+  # Fonts path
+  # Absolute path to custom fonts directory
+  fontsDirectory: ''
+  # Default document
+  # Absolute path to default document
+  defaultDocument: ''
+  # Pages preload
+  # How many pages from a document should be loaded, remaining pages will be loaded on page scrolling
+  # Set 0 to load all pages at once
+  preloadPageCount: 0
+  # HTML rendering mode
+  # Set false for image mode
+  # Set true for HTML mode
+  htmlMode: true
+  # Document zoom
+  # Set false to disable document zooming
+  zoom: true
+  # Document search
+  # Set false to disable document text search
+  search: true
+  # Thumbnails
+  # Set false to disable thumbnails
+  thumbnails: true
+  # Page rotation
+  # Set false to disable pages rotation
+  rotate: true
+  # Using cache
+  # Set true to enable cache
+  cache: true
+  # Set true to enable page rotation saving
+  saveRotateState: true
+  # Enter text which will be used as a watermark
+  watermarkText: ""
+  # Print secured documents mode
+  # Set false to ignore document print security
+  # Set true to check document print security
+  printAllowed: true
+
+################################################
+# GroupDocs.Signature configurations
+################################################
+signature:
+  # Files directory path
+  # Absolute path to files directory
+  filesDirectory: 'DocumentSamples/Signature' 
+  # Default document
+  # Absolute or relative path to default document
+  defaultDocument: ''
+  # Pages preload
+  # How many pages from a document should be loaded, remaining pages will be loaded on page scrolling
+  # Set 0 to load all pages at once
+  preloadPageCount: 0
+  # Data directory path
+  # Absolute path to signature cache files directory
+  dataDirectory: ''
+  # Enable/disable text signature
+  textSignature: true
+  # Enable/disable image signature
+  imageSignature: true
+  # Enable/disable digital signature
+  digitalSignature: true
+  # Enable/disable QR-Code signature
+  qrCodeSignature: true
+  # Enable/disable Barcode signature
+  barCodeSignature: true
+  # Enable/disable Stamp signature
+  stampSignature: true
+  # Enable/disable Hand signature
+  handSignature: true
+  # Enable/disable original document downloading
+  downloadOriginal: true
+  # Enable/disable signed document downloading
+  downloadSigned: true
 
 ################################################
 # GroupDocs.Annotation configurations
@@ -94,3 +175,25 @@ annotation:
   downloadOriginal: true
   # Enable/disable signed document downloading
   downloadAnnotated: true
+  # Enable/disable zoom
+  zoom: true
+  # Enable/disable fit width
+  # set true to zoom document pages fit width
+  fitWidth: true
+
+################################################
+# GroupDocs.Comparison configurations
+################################################
+comparison:
+  # Files directory path
+  # Absolute path to files directory
+  filesDirectory: 'DocumentSamples/Comparison'
+  # FResult files directory path
+  # Absolute path to result files directory
+  resultDirectory: ''
+  # Result pages preload
+  # How many pages from a result document should be loaded, remaining pages will be loaded on page scrolling
+  # Set 0 to load all pages at once
+  preloadResultPageCount: 2
+  # Enable/disable multi comparing feature
+  multiComparing: true

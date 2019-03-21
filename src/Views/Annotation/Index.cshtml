@@ -57,7 +57,9 @@
                 dGetIstanceAnnotation: @config.Annotation.GetIsDistanceAnnotation().ToString().ToLowerInvariant(),
                 downloadOriginal:  @config.Annotation.GetIsDownloadOriginal().ToString().ToLowerInvariant(),
                 downloadAnnotated:  @config.Annotation.GetIsDownloadAnnotated().ToString().ToLowerInvariant(),
-                enableRightClick: @config.Common.enableRightClick.ToString().ToLowerInvariant()
+                enableRightClick: @config.Common.enableRightClick.ToString().ToLowerInvariant(),
+                zoom: @config.Annotation.GetIsZoom().ToString().ToLowerInvariant(),
+                fitWidth: @config.Annotation.GetIsFitWidth().ToString().ToLowerInvariant()
              });
     </script>
 </body>
