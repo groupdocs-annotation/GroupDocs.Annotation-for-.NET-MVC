@@ -29,7 +29,9 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
         private bool isTextUnderlineAnnotation = true;
         private bool isDistanceAnnotation = true;
         private bool isDownloadOriginal = true;
-        private bool isDownloadAnnotated = true;     
+        private bool isDownloadAnnotated = true;
+        private bool isZoom = true;
+        private bool isFitWidth = true;
 
         /// <summary>
         /// Get annotation configuration section from the Web.config
@@ -66,6 +68,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
             isDownloadOriginal = valuesGetter.GetBooleanPropertyValue("downloadOriginal", isDownloadOriginal);
             isDownloadAnnotated = valuesGetter.GetBooleanPropertyValue("downloadAnnotated", isDownloadAnnotated);
             PreloadPageCount = valuesGetter.GetIntegerPropertyValue("preloadPageCount", PreloadPageCount);
+            isZoom = valuesGetter.GetBooleanPropertyValue("zoom", isZoom);
+            isFitWidth = valuesGetter.GetBooleanPropertyValue("zoom", isFitWidth);
         }
 
         private static bool IsFullPath(string path)
@@ -263,6 +267,26 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
         public bool GetIsDownloadAnnotated()
         {
             return isDownloadAnnotated;
+        }
+
+        public void SetIsZoom(bool isZoom)
+        {
+            this.isZoom = isZoom;
+        }
+
+        public bool GetIsZoom()
+        {
+            return isZoom;
+        }
+
+        public void SetIsFitWidth(bool isFitWidth)
+        {
+            this.isFitWidth = isFitWidth;
+        }
+
+        public bool GetIsFitWidth()
+        {
+            return isFitWidth;
         }
     }
 }
