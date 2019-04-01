@@ -23,7 +23,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         protected new AnnotationInfo InitAnnotationInfo()
         {
             AnnotationInfo textAnnotation = base.InitAnnotationInfo();
-            textAnnotation.Guid = annotationData.id.ToString();
+            textAnnotation.Guid = annotationData.id.ToString();           
             return textAnnotation;
         }
         

@@ -5,8 +5,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util.Directory
 {
     public class DirectoryUtils
     {
-        public FilesDirectoryUtils FilesDirectory;
-        public OutputDirectoryUtils OutputDirectory;
+        public FilesDirectoryUtils FilesDirectory;       
 
         /// <summary>
         /// Constructor
@@ -14,8 +13,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util.Directory
         /// <param name="annotationConfiguration">AnnotationConfiguration</param>
         public DirectoryUtils(AnnotationConfiguration annotationConfiguration)
         {
-            FilesDirectory = new FilesDirectoryUtils(annotationConfiguration);
-            OutputDirectory = new OutputDirectoryUtils(annotationConfiguration);
+            FilesDirectory = new FilesDirectoryUtils(annotationConfiguration);            
         }
     }
 }
