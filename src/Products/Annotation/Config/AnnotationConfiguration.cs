@@ -11,8 +11,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
     /// </summary>
     public class AnnotationConfiguration
     {
-        private string FilesDirectory = "DocumentSamples/Annotation";
-        private string OutputDirectory = "";
+        private string FilesDirectory = "DocumentSamples/Annotation";      
         private string DefaultDocument = "";
         private int PreloadPageCount = 0;
         private bool isTextAnnotation = true;
@@ -50,8 +49,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
                 {                   
                     Directory.CreateDirectory(FilesDirectory);
                 }
-            }
-            OutputDirectory = valuesGetter.GetStringPropertyValue("outputDirectory", OutputDirectory);
+            }           
             isTextAnnotation = valuesGetter.GetBooleanPropertyValue("textAnnotation", isTextAnnotation);
             isAreaAnnotation = valuesGetter.GetBooleanPropertyValue("areaAnnotation", isAreaAnnotation);
             isPointAnnotation = valuesGetter.GetBooleanPropertyValue("pointAnnotation", isPointAnnotation);
@@ -87,17 +85,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
         public string GetFilesDirectory()
         {
             return FilesDirectory;
-        }
-
-        public void SetOutputDirectory(string outputDirectory)
-        {
-            this.OutputDirectory = outputDirectory;
-        }
-
-        public string GetOutputDirectory()
-        {
-            return OutputDirectory;
-        }
+        }       
 
         public void SetDefaultDocument(string defaultDocument)
         {

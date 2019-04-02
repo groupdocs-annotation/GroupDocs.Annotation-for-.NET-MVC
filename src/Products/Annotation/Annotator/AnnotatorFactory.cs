@@ -16,37 +16,47 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// <returns></returns>
         public static BaseAnnotator createAnnotator(AnnotationDataEntity annotationData, PageData pageData)
         {
-            switch (annotationData.type)
+            AnnotationDataEntity roundedAnnotationData = RoundCoordinates(annotationData);
+            switch (roundedAnnotationData.type)
             {
-                case "text":
-                    return new TextAnnotator(annotationData, pageData);
+                case "text":                    
+                    return new TextAnnotator(roundedAnnotationData, pageData);
                 case "area":
-                    return new AreaAnnotator(annotationData, pageData);
+                    return new AreaAnnotator(roundedAnnotationData, pageData);
                 case "point":
-                    return new PointAnnotator(annotationData, pageData);
+                    return new PointAnnotator(roundedAnnotationData, pageData);
                 case "textStrikeout":
-                    return new TexStrikeoutAnnotator(annotationData, pageData);
+                    return new TexStrikeoutAnnotator(roundedAnnotationData, pageData);
                 case "polyline":
-                    return new PolylineAnnotator(annotationData, pageData);
+                    return new PolylineAnnotator(roundedAnnotationData, pageData);
                 case "textField":
-                    return new TextFieldAnnotator(annotationData, pageData);
+                    return new TextFieldAnnotator(roundedAnnotationData, pageData);
                 case "watermark":
-                    return new WatermarkAnnotator(annotationData, pageData);
+                    return new WatermarkAnnotator(roundedAnnotationData, pageData);
                 case "textReplacement":
-                    return new TextReplacementAnnotator(annotationData, pageData);
+                    return new TextReplacementAnnotator(roundedAnnotationData, pageData);
                 case "arrow":
-                    return new ArrowAnnotator(annotationData, pageData);
+                    return new ArrowAnnotator(roundedAnnotationData, pageData);
                 case "textRedaction":
-                    return new TextRedactionAnnotator(annotationData, pageData);
+                    return new TextRedactionAnnotator(roundedAnnotationData, pageData);
                 case "resourcesRedaction":
-                    return new ResourceRedactionAnnotator(annotationData, pageData);
+                    return new ResourceRedactionAnnotator(roundedAnnotationData, pageData);
                 case "textUnderline":
-                    return new TexUnderlineAnnotator(annotationData, pageData);
+                    return new TexUnderlineAnnotator(roundedAnnotationData, pageData);
                 case "distance":
-                    return new DistanceAnnotator(annotationData, pageData);
+                    return new DistanceAnnotator(roundedAnnotationData, pageData);
                 default:
                     throw new ArgumentNullException("Wrong annotation data without annotation type!");
             }
+        }
+
+        private static AnnotationDataEntity RoundCoordinates(AnnotationDataEntity annotationData)
+        {
+            annotationData.height = (float)Math.Round(annotationData.height, 0);
+            annotationData.left = (float)Math.Round(annotationData.left, 0);
+            annotationData.top = (float)Math.Round(annotationData.top, 0);
+            annotationData.width = (float)Math.Round(annotationData.width, 0);
+            return annotationData;
         }
     }
 }
