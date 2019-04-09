@@ -16,7 +16,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             // init possible types of annotations
             AnnotationInfo watermarkAnnotation = InitAnnotationInfo();
-            watermarkAnnotation.AnnotationPosition = new Point(annotationData.left, annotationData.top);
+            watermarkAnnotation.AnnotationPosition = new Point(annotationData.left, annotationData.top);            
             return watermarkAnnotation;
         }
 
@@ -43,8 +43,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public override AnnotationInfo AnnotateImage()
         {
             // init possible types of annotations
-            AnnotationInfo watermarkAnnotation = InitAnnotationInfo();
-            watermarkAnnotation.FontColor = 15988609;
+            AnnotationInfo watermarkAnnotation = InitAnnotationInfo();            
             return watermarkAnnotation;
         }
         
