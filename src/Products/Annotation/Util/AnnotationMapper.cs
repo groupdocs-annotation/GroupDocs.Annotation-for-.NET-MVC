@@ -51,6 +51,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
             annotation.font = annotationInfo.FontFamily;
             double fontSize = Convert.ToDouble((annotationInfo.FontSize == null) ? 0 : annotationInfo.FontSize);
             annotation.fontSize = (float)fontSize;
+            annotation.fontColor = (annotationInfo.FontColor == null) ? 0 : (int)annotationInfo.FontColor;
             annotation.height = annotationInfo.Box.Height;
             annotation.left = annotationInfo.Box.X;
             annotation.pageNumber = (int)annotationInfo.PageNumber + 1;           

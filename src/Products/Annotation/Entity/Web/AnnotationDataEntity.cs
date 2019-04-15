@@ -5,6 +5,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web
     {
         public int id {get; set;}
         public int pageNumber {get; set;}
+        public int fontColor { get; set; }
         public float fontSize {get; set;}
         public float left {get; set;}
         public float top {get; set;}
@@ -14,7 +15,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web
         public string type {get; set;}
         public string documentType {get; set;}
         public string text {get; set;}
-        public string font {get; set;}
+        public string font {get; set;}        
         public bool imported { get; set; }
         public CommentsEntity[] comments {get; set;}
     }

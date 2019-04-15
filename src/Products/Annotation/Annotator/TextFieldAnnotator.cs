@@ -42,16 +42,14 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public override AnnotationInfo AnnotateImage()
         {
             // init possible types of annotations
-            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();
-            textFieldAnnotation.FontColor = -15988609;
+            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();           
             return textFieldAnnotation;
         }
         
         public override AnnotationInfo AnnotateDiagram()
         {
             // init possible types of annotations
-            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();
-            textFieldAnnotation.FontColor = -15988609;
+            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();           
             return textFieldAnnotation;
         }
         
