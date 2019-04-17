@@ -67,7 +67,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
             isDownloadAnnotated = valuesGetter.GetBooleanPropertyValue("downloadAnnotated", isDownloadAnnotated);
             PreloadPageCount = valuesGetter.GetIntegerPropertyValue("preloadPageCount", PreloadPageCount);
             isZoom = valuesGetter.GetBooleanPropertyValue("zoom", isZoom);
-            isFitWidth = valuesGetter.GetBooleanPropertyValue("zoom", isFitWidth);
+            isFitWidth = valuesGetter.GetBooleanPropertyValue("fitWidth", isFitWidth);
         }
 
         private static bool IsFullPath(string path)

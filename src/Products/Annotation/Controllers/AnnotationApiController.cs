@@ -235,7 +235,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     using (Stream document = File.Open(documentGuid, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                     {
                         List<PageImage> images = AnnotationImageHandler.GetPages(document, imageOptions);
-                        Stream imageStream = images[pageNumber - 1].Stream;
+                        Stream imageStream = images[0].Stream;
                         
                         imageStream.Position = 0;
                         imageStream.CopyTo(memoryStream);
