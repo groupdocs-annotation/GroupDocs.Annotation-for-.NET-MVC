@@ -11,7 +11,7 @@
 - Visual Studio 2015
 
 
-## Annotate & write on document with .NET Dropwizard
+## Annotate & write on document with .NET MVC
 
 **GroupDocs.Annotations for .NET** is a powerful library that provides flexible API which allows you to **annotate PDF**, DOCX, PPT, and over 90 document formats with no external dependencies or need to convert files to PDF. Using API you can write on documents using multiple annotation tools such as arrow annotation, text annotation or even draw on a document using freehand drawing tool.
 
