@@ -13,9 +13,9 @@
 
 ## Annotate & write on document with .NET MVC
 
-**GroupDocs.Annotations for .NET** is a powerful library that provides flexible API which allows you to **annotate PDF**, DOCX, PPT, and over 90 document formats with no external dependencies or need to convert files to PDF. Using API you can write on documents using multiple annotation tools such as arrow annotation, text annotation or even draw on a document using freehand drawing tool.
+**GroupDocs.Annotations for .NET** is a powerful library that provides flexible API which allows you to **annotate PDF**, DOCX, PPT, XLS, and over 90 document formats without external dependencies and/or additional document conversions such us (DOCX to PDF or PPT to PDF). With GroupDocs.Annotation API you can write on documents using various annotation tools such as arrow annotation, text annotation or even draw on a document with help of freehand annotation drawing tool.
 
-With this app, you can annotate and **write on document** using modern and responsive web UI interface. It is possible to use it as a standalone application or integrate it into your project.
+With GroupDocs.Annotation for .NET MVC application, you can annotate and **write on document** using our modern and responsive web UI interface. Thanks to flexible and highly customizable configuration it can be used as standalone application or can be integrated into your project within few simple steps.
 
 **Note:** without a license application will run in trial mode, purchase [GroupDocs.Annotation for .NET license](https://purchase.groupdocs.com/order-online-step-1-of-8.aspx) or request [GroupDocs.Annotation for .NET temporary license](https://purchase.groupdocs.com/temporary-license).
 
