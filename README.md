@@ -11,9 +11,9 @@
 - Visual Studio 2015
 
 
-## Annotate & write on document with Java Dropwizard
+## Annotate & write on document with .NET Dropwizard
 
-**GroupDocs.Annotations for Java** is a powerful library that provides flexible API which allows you to **annotate PDF**, DOCX, PPT, and over 90 document formats with no external dependencies or need to convert files to PDF. Using API you can write on documents using multiple annotation tools such as arrow annotation, text annotation or even draw on a document using freehand drawing tool.
+**GroupDocs.Annotations for .NET** is a powerful library that provides flexible API which allows you to **annotate PDF**, DOCX, PPT, and over 90 document formats with no external dependencies or need to convert files to PDF. Using API you can write on documents using multiple annotation tools such as arrow annotation, text annotation or even draw on a document using freehand drawing tool.
 
 With this app, you can annotate and **write on document** using modern and responsive web UI interface. It is possible to use it as a standalone application or integrate it into your project.
 
@@ -23,7 +23,7 @@ With this app, you can annotate and **write on document** using modern and respo
 ## Demo Video
 
 <p align="center">
-  <a title="Document annotation for JAVA " href="https://www.youtube.com/watch?v=TVb7GwSNDqw"> 
+  <a title="Document annotation for .NET " href="https://www.youtube.com/watch?v=TVb7GwSNDqw"> 
     <img src="https://raw.githubusercontent.com/groupdocs-annotation/groupdocs-annotation.github.io/master/resources/image/document-annotation-demo.gif" width="100%" style="width:100%;">
   </a>
 </p>
