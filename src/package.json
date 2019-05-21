@@ -17,9 +17,9 @@
   },
   "homepage": "https://github.com/groupdocs-annotation/GroupDocs.Annotation-for-.NET-MVC#readme",
   "dependencies": {
-    "@groupdocs.examples.jquery/annotation": "^0.15.0",
-    "@groupdocs.examples.jquery/common": "^0.15.0",
-    "@groupdocs.examples.jquery/viewer": "^0.15.0"
+    "@groupdocs.examples.jquery/annotation": "^0.16.0",
+    "@groupdocs.examples.jquery/common": "^0.16.0",
+    "@groupdocs.examples.jquery/viewer": "^0.16.0"
   },
   "devDependencies": {
     "gulp": "^4.0.0"
