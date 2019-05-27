@@ -19,7 +19,7 @@
   "dependencies": {
     "@groupdocs.examples.jquery/annotation": "^0.16.0",
     "@groupdocs.examples.jquery/common": "^0.16.0",
-    "@groupdocs.examples.jquery/viewer": "^0.16.0"
+    "@groupdocs.examples.jquery/viewer": "^0.16.1"
   },
   "devDependencies": {
     "gulp": "^4.0.0"
