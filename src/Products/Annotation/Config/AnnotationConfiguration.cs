@@ -49,7 +49,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
                 {                   
                     Directory.CreateDirectory(FilesDirectory);
                 }
-            }           
+            }
+            DefaultDocument = valuesGetter.GetStringPropertyValue("defaultDocument", DefaultDocument);
             isTextAnnotation = valuesGetter.GetBooleanPropertyValue("textAnnotation", isTextAnnotation);
             isAreaAnnotation = valuesGetter.GetBooleanPropertyValue("areaAnnotation", isAreaAnnotation);
             isPointAnnotation = valuesGetter.GetBooleanPropertyValue("pointAnnotation", isPointAnnotation);
