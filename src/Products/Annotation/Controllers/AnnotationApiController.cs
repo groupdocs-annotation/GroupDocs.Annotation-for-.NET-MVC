@@ -506,22 +506,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 // initiate AnnotatedDocument object
                 // initiate list of annotations to add
                 List<AnnotationInfo> annotations = new List<AnnotationInfo>();
-                // get document info - required to get document page height and calculate annotation top position
-                string fileName = System.IO.Path.GetFileName(documentGuid);
-                FileInfo fi = new FileInfo(documentGuid);
-                DirectoryInfo parentDir = fi.Directory;
-
-                string documentPath = "";
-                string parentDirName = parentDir.Name;
-                if (parentDir.FullName == GlobalConfiguration.Annotation.GetFilesDirectory().Replace("/", "\\"))
-                {
-                    documentPath = fileName;
-                }
-                else
-                {
-                    documentPath = Path.Combine(parentDirName, fileName);
-                }
-                DocumentInfoContainer documentInfo = AnnotationImageHandler.GetDocumentInfo(documentPath, password);
+              
+                DocumentInfoContainer documentInfo = AnnotationImageHandler.GetDocumentInfo(documentGuid, password);
                 // check if document type is image
                 if (SupportedImageFormats.Contains(Path.GetExtension(documentGuid)))
                 {
