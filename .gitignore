@@ -1,18 +1,33 @@
-/packages
-/.vs
-/src/GroupDocs.Total.MVC.csproj.user
-/src/bin
-/src/obj
-/App_Data/temp
-/App_Data/SignatureData
-/App_Data/Output
+# Tool Runtime Dir
+packages/
+node_modules/
+
+# Visual Studio
+.vs/
+
+# User-specific files
+*.user
+
+# Build results
+[Bb]in/
+[Oo]bj/
+*.zip
+package-lock.json
+
+# Resources
 src/Resources/*
 !src/Resources/.gitkeep
-node_modules
-src/package-lock.json
-/src/node 
-.DS_Store
-src/DocumentSamples
-!src/DocumentSamples/Annotation/.gitkeep
+
+# Licenses
 src/Licenses
 !src/Licenses/.gitkeep
+
+# Document samples
+src/DocumentSamples
+!src/DocumentSamples/.gitkeep
+
+# Git
+!.gitkeep
+
+# Finder in OSX
+.DS_Store
