@@ -207,6 +207,8 @@
     <Content Include="Global.asax" />
     <Content Include="Resources\annotation\css\annotation.css" />
     <Content Include="Resources\annotation\css\annotation.mobile.css" />
+    <Content Include="Resources\annotation\css\bcPicker.css" />
+    <Content Include="Resources\annotation\css\bcPicker.mobile.css" />
     <Content Include="Resources\annotation\images\area.png" />
     <Content Include="Resources\annotation\images\area_active.png" />
     <Content Include="Resources\annotation\images\arrow.png" />
@@ -235,10 +237,12 @@
     <Content Include="Resources\annotation\images\watermark.png" />
     <Content Include="Resources\annotation\images\watermark_active.png" />
     <Content Include="Resources\annotation\js\annotation.js" />
+    <Content Include="Resources\annotation\js\bcPicker.js" />
     <Content Include="Resources\annotation\js\drawSvgAnnotation.js" />
     <Content Include="Resources\annotation\js\drawTextAnnotation.js" />
     <Content Include="Resources\annotation\js\svg.draw.js" />
     <Content Include="Resources\annotation\js\svg.min.js" />
+    <Content Include="Resources\common\css\all.min.css" />
     <Content Include="Resources\common\css\circle-progress.css" />
     <Content Include="Resources\common\css\font-awesome.min.css" />
     <Content Include="Resources\common\css\images\ui-icons_444444_256x240.png" />
@@ -249,14 +253,17 @@
     <Content Include="Resources\common\css\images\ui-icons_ffffff_256x240.png" />
     <Content Include="Resources\common\css\jquery-ui.min.css" />
     <Content Include="Resources\common\css\swiper.min.css" />
+    <Content Include="Resources\common\css\v4-shims.min.css" />
     <Content Include="Resources\common\fonts\fontawesome-webfont.svg" />
     <Content Include="Resources\common\images\banner.png" />
     <Content Include="Resources\common\js\es6-promise.auto.js" />
     <Content Include="Resources\common\js\jquery-ui.min.js" />
     <Content Include="Resources\common\js\jquery.initialize.min.js" />
     <Content Include="Resources\common\js\jquery.min.js" />
+    <Content Include="Resources\common\js\jquery.timeago.js" />
     <Content Include="Resources\common\js\jquery.ui.touch-punch.min.js" />
     <Content Include="Resources\common\js\swiper.min.js" />
+    <Content Include="Resources\common\webfonts\fa-solid-900.woff2" />
     <Content Include="Resources\viewer\css\viewer-dark.css" />
     <Content Include="Resources\viewer\css\viewer-light.css" />
     <Content Include="Resources\viewer\css\viewer.css" />
@@ -287,6 +294,10 @@
     <Content Include="Resources\common\fonts\fontawesome-webfont.woff" />
     <Content Include="Resources\common\fonts\fontawesome-webfont.woff2" />
     <Content Include="Resources\common\fonts\FontAwesome.otf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Resources\common\webfonts\fa-regular-400.woff2" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
