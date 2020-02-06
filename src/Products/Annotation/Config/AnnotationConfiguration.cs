@@ -9,7 +9,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
     /// <summary>
     /// AnnotationConfiguration
     /// </summary>
-    public class AnnotationConfiguration
+    public class AnnotationConfiguration : CommonConfiguration
     {
         private string FilesDirectory = "DocumentSamples/Annotation";      
         private string DefaultDocument = "";

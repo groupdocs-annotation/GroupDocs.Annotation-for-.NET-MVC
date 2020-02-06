@@ -5,6 +5,7 @@ using GroupDocs.Annotation.Domain.Image;
 using GroupDocs.Annotation.Domain.Options;
 using GroupDocs.Annotation.Handler;
 using GroupDocs.Annotation.MVC.Products.Annotation.Annotator;
+using GroupDocs.Annotation.MVC.Products.Annotation.Config;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Request;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.MVC.Products.Annotation.Importer;
@@ -53,6 +54,17 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             };           
             // initialize Annotation instance for the Image mode
             AnnotationImageHandler = new AnnotationImageHandler(config);
+        }
+
+        /// <summary>
+        /// Load Conversion configuration
+        /// </summary>
+        /// <returns>Conversion configuration</returns>
+        [HttpGet]
+        [Route("loadConfig")]
+        public AnnotationConfiguration LoadConfig()
+        {
+            return GlobalConfiguration.Annotation;
         }
 
 
@@ -564,10 +576,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                         fileStream.Close();
                     }
                 }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(new NotSupportedException(notSupportedMessage)));
-                }
+
                 annotatedDocument = new AnnotatedDocumentEntity();
                 annotatedDocument.guid = documentGuid;
                 if (annotateDocumentRequest.print)
@@ -581,6 +590,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 // set exception message
                 return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex));
             }
+
             return Request.CreateResponse(HttpStatusCode.OK, annotatedDocument);
         }
 
