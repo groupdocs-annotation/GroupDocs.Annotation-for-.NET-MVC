@@ -57,16 +57,15 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         }
 
         /// <summary>
-        /// Load Conversion configuration
+        /// Load Annotation configuration
         /// </summary>
-        /// <returns>Conversion configuration</returns>
+        /// <returns>Annotation configuration</returns>
         [HttpGet]
         [Route("loadConfig")]
         public AnnotationConfiguration LoadConfig()
         {
             return GlobalConfiguration.Annotation;
         }
-
 
         /// <summary>
         /// Get all files and directories from storage
