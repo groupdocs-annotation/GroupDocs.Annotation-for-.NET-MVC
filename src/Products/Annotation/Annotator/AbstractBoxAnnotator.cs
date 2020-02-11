@@ -1,5 +1,6 @@
 ﻿using GroupDocs.Annotation.Domain;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using System.Globalization;
 using System.Text;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
@@ -34,11 +35,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             string startPoint = svgPath.Replace("[a-zA-Z]+", "").Split(' ')[0];
             string endPoint = svgPath.Replace("[a-zA-Z]+", "").Split(' ')[1];
             string[] start = startPoint.Split(',');
-            float startX = float.Parse(start.Length > 0 ? start[0].Replace("M", "") : "0");
-            float startY = float.Parse(start.Length > 0 ? start[1].Replace("M", "") : "0");
+            float startX = float.Parse(start.Length > 0 ? start[0].Replace("M", "") : "0", CultureInfo.InvariantCulture);
+            float startY = float.Parse(start.Length > 0 ? start[1].Replace("M", "") : "0", CultureInfo.InvariantCulture);
             string[] end = endPoint.Split(',');
-            float endX = float.Parse(end.Length > 0 ? end[0].Replace("L", "") : "0") - startX;
-            float endY = float.Parse(end.Length > 1 ? end[1].Replace("L", "") : "0") - startY;
+            float endX = float.Parse(end.Length > 0 ? end[0].Replace("L", "") : "0", CultureInfo.InvariantCulture) - startX;
+            float endY = float.Parse(end.Length > 1 ? end[1].Replace("L", "") : "0", CultureInfo.InvariantCulture) - startY;
             return new Rectangle(startX, startY, endX, endY);
         }
     }

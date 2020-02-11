@@ -6,7 +6,6 @@ using GroupDocs.Annotation.Domain.Options;
 using GroupDocs.Annotation.Handler;
 using GroupDocs.Annotation.MVC.Products.Annotation.Annotator;
 using GroupDocs.Annotation.MVC.Products.Annotation.Config;
-using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Request;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.MVC.Products.Annotation.Importer;
 using GroupDocs.Annotation.MVC.Products.Annotation.Util;
@@ -119,7 +118,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             catch (System.Exception ex)
             {
                 // set exception message
-                return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex));
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new Resources().GenerateException(ex));
             }
         }
 
@@ -211,7 +210,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             catch (System.Exception ex)
             {
                 // set exception message
-                return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex, password));
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new Resources().GenerateException(ex, password));
             }
         }      
 
@@ -268,7 +267,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             catch (System.Exception ex)
             {
                 // set exception message
-                return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex, password));
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new Resources().GenerateException(ex, password));
             }
         }
 
@@ -494,7 +493,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             catch (System.Exception ex)
             {
                 // set exception message
-                return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex));
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new Resources().GenerateException(ex));
             }
         }
 
@@ -587,7 +586,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             catch (System.Exception ex)
             {
                 // set exception message
-                return Request.CreateResponse(HttpStatusCode.OK, new Resources().GenerateException(ex));
+                return Request.CreateResponse(HttpStatusCode.InternalServerError, new Resources().GenerateException(ex));
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, annotatedDocument);
