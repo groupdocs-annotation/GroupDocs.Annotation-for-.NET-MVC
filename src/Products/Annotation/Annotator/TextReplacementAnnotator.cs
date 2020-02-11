@@ -40,9 +40,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             // init possible types of annotations
             AnnotationInfo textReplacementAnnotation = InitAnnotationInfo();
-            // we use such calculation since the GroupDocs.Annotation library takes text line position from the bottom of the page
-            float topPosition = pageData.Height - annotationData.top;
-            textReplacementAnnotation.Box = new Rectangle(annotationData.left, topPosition, annotationData.width, annotationData.height);
+            textReplacementAnnotation.Box = new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
             return textReplacementAnnotation;
         }
         

@@ -2,6 +2,8 @@
 using GroupDocs.Annotation.Domain;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
 {
@@ -25,7 +27,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
         public AnnotationDataEntity[] mapForPage(AnnotationInfo[] annotations, int pageNumber)
         {
             // initiate annotations data array
-            AnnotationDataEntity[] pageAnnotations = new AnnotationDataEntity[annotations.Length];
+            IList<AnnotationDataEntity> pageAnnotations = new List<AnnotationDataEntity>();
             //  each annotation data - this functionality used since annotations data returned by the
             // GroupDocs.Annotation library are obfuscated
             for (int n = 0; n < annotations.Length; n++)
@@ -34,10 +36,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
                 if (pageNumber == annotationInfo.PageNumber + 1)
                 {
                     AnnotationDataEntity annotation = mapAnnotationDataEntity(annotationInfo);
-                    pageAnnotations[n] = annotation;
+                    pageAnnotations.Add(annotation);
                 }
             }
-            return pageAnnotations;
+
+            return pageAnnotations.ToArray();
         }
 
         /// <summary>
