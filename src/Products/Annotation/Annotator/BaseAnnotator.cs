@@ -99,7 +99,17 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             AnnotationReplyInfo reply = new AnnotationReplyInfo();
             reply.Message = comment.text;
-            DateTime date = DateTime.Parse(comment.time);
+            DateTime date;
+            try
+            {
+                long unixDate = long.Parse(comment.time);
+                DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                date = start.AddMilliseconds(unixDate).ToLocalTime();
+            }
+            catch (System.Exception)
+            {
+                date = DateTime.Parse(comment.time);
+            }
             reply.RepliedOn = date;
             reply.UserName = comment.userName;
             return reply;
