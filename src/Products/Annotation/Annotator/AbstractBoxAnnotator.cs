@@ -19,8 +19,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             // set draw annotation properties
             Rectangle box = annotationInfo.Box;
             StringBuilder builder = new StringBuilder().
-                Append("M").Append(box.X).
-                Append(",").Append(box.Y).
+                Append("M").Append(box.X.ToString(CultureInfo.InvariantCulture)).
+                Append(",").Append(box.Y.ToString(CultureInfo.InvariantCulture)).
                 Append("L").Append(box.Width).
                 Append(",").Append(box.Height);
             annotationInfo.SvgPath = builder.ToString();
