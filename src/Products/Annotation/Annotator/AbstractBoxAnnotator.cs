@@ -21,8 +21,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             StringBuilder builder = new StringBuilder().
                 Append("M").Append(box.X.ToString(CultureInfo.InvariantCulture)).
                 Append(",").Append(box.Y.ToString(CultureInfo.InvariantCulture)).
-                Append("L").Append(box.Width).
-                Append(",").Append(box.Height);
+                Append("L").Append(box.Width.ToString(CultureInfo.InvariantCulture)).
+                Append(",").Append(box.Height.ToString(CultureInfo.InvariantCulture));
             annotationInfo.SvgPath = builder.ToString();
             // set annotation position
             annotationInfo.AnnotationPosition = new Point(annotationData.left, annotationData.top);
@@ -38,8 +38,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             float startX = float.Parse(start.Length > 0 ? start[0].Replace("M", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture);
             float startY = float.Parse(start.Length > 0 ? start[1].Replace("M", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture);
             string[] end = endPoint.Split(',');
-            float endX = float.Parse(end.Length > 0 ? end[0].Replace("L", "") : "0", CultureInfo.InvariantCulture) - startX;
-            float endY = float.Parse(end.Length > 1 ? end[1].Replace("L", "") : "0", CultureInfo.InvariantCulture) - startY;
+            float endX = float.Parse(end.Length > 0 ? end[0].Replace("L", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture) - startX;
+            float endY = float.Parse(end.Length > 1 ? end[1].Replace("L", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture) - startY;
             return new Rectangle(startX, startY, endX, endY);
         }
     }
