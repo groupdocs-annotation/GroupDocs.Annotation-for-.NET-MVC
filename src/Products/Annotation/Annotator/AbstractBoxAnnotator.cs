@@ -19,10 +19,10 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             // set draw annotation properties
             Rectangle box = annotationInfo.Box;
             StringBuilder builder = new StringBuilder().
-                Append("M").Append(box.X).
-                Append(",").Append(box.Y).
-                Append("L").Append(box.Width).
-                Append(",").Append(box.Height);
+                Append("M").Append(box.X.ToString(CultureInfo.InvariantCulture)).
+                Append(",").Append(box.Y.ToString(CultureInfo.InvariantCulture)).
+                Append("L").Append(box.Width.ToString(CultureInfo.InvariantCulture)).
+                Append(",").Append(box.Height.ToString(CultureInfo.InvariantCulture));
             annotationInfo.SvgPath = builder.ToString();
             // set annotation position
             annotationInfo.AnnotationPosition = new Point(annotationData.left, annotationData.top);
@@ -35,11 +35,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             string startPoint = svgPath.Replace("[a-zA-Z]+", "").Split(' ')[0];
             string endPoint = svgPath.Replace("[a-zA-Z]+", "").Split(' ')[1];
             string[] start = startPoint.Split(',');
-            float startX = float.Parse(start.Length > 0 ? start[0].Replace("M", "") : "0", CultureInfo.InvariantCulture);
-            float startY = float.Parse(start.Length > 0 ? start[1].Replace("M", "") : "0", CultureInfo.InvariantCulture);
+            float startX = float.Parse(start.Length > 0 ? start[0].Replace("M", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture);
+            float startY = float.Parse(start.Length > 0 ? start[1].Replace("M", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture);
             string[] end = endPoint.Split(',');
-            float endX = float.Parse(end.Length > 0 ? end[0].Replace("L", "") : "0", CultureInfo.InvariantCulture) - startX;
-            float endY = float.Parse(end.Length > 1 ? end[1].Replace("L", "") : "0", CultureInfo.InvariantCulture) - startY;
+            float endX = float.Parse(end.Length > 0 ? end[0].Replace("L", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture) - startX;
+            float endY = float.Parse(end.Length > 1 ? end[1].Replace("L", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture) - startY;
             return new Rectangle(startX, startY, endX, endY);
         }
     }
