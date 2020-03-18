@@ -1,81 +1,91 @@
-﻿using GroupDocs.Annotation.Domain;
-using GroupDocs.Annotation.Domain.Containers;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
 using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class DistanceAnnotator : AbstractBoxAnnotator
+    public class DistanceAnnotator : BaseAnnotator
     {
+        private DistanceAnnotation distanceAnnotation;
 
         public DistanceAnnotator(AnnotationDataEntity annotationData, PageData pageData)
             : base(annotationData, pageData)
         {
+            this.distanceAnnotation = new DistanceAnnotation()
+            {
+                Box = GetBox(),
+                Opacity = 0.7,
+                PenColor = 65535,
+                PenStyle = PenStyle.Dot,
+                PenWidth = 3
+            };
         }
 
-        public override AnnotationInfo AnnotateWord()
+        public override AnnotationBase AnnotateWord()
         {
-            AnnotationInfo distanceAnnotation = InitAnnotationInfo();
+            distanceAnnotation = InitAnnotationBase(distanceAnnotation) as DistanceAnnotation;
             return distanceAnnotation;
         }
 
-        public override AnnotationInfo AnnotatePdf()
+        public override AnnotationBase AnnotatePdf()
         {
-            AnnotationInfo distanceAnnotation = InitAnnotationInfo();
+            distanceAnnotation = InitAnnotationBase(distanceAnnotation) as DistanceAnnotation;
             return distanceAnnotation;
         }
 
-        public override AnnotationInfo AnnotateCells()
+        public override AnnotationBase AnnotateCells()
         {
             throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
 
-        public override AnnotationInfo AnnotateSlides()
+        public override AnnotationBase AnnotateSlides()
         {
             throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
 
-        public override AnnotationInfo AnnotateImage()
+        public override AnnotationBase AnnotateImage()
         {
             // init annotation object
-            AnnotationInfo distanceAnnotation = InitAnnotationInfo();
-            distanceAnnotation.BackgroundColor = 15988609;
+            distanceAnnotation = InitAnnotationBase(distanceAnnotation) as DistanceAnnotation;
             return distanceAnnotation;
         }
 
-        public override AnnotationInfo AnnotateDiagram()
+        public override AnnotationBase AnnotateDiagram()
         {
             // init annotation object
-            AnnotationInfo distanceAnnotation = InitAnnotationInfo();
-            distanceAnnotation.BackgroundColor = 15988609;
+            distanceAnnotation = InitAnnotationBase(distanceAnnotation) as DistanceAnnotation;
             return distanceAnnotation;
         }
 
-        protected new AnnotationInfo InitAnnotationInfo()
+        protected new AnnotationBase InitAnnotationBase(AnnotationBase annotationBase)
         {
-            AnnotationInfo distanceAnnotation = base.InitAnnotationInfo();
+            AnnotationBase distanceAnnotation = base.InitAnnotationBase(annotationBase);
             // add replies
-            String text = (annotationData.text == null) ? "" : annotationData.text;
+            string text = (annotationData.text == null) ? "" : annotationData.text;
             CommentsEntity[]
             comments = annotationData.comments;
             if (comments != null && comments.Length != 0)
             {
-                AnnotationReplyInfo reply = distanceAnnotation.Replies[0];
+                Reply reply = distanceAnnotation.Replies[0];
                 if (reply != null)
                 {
-                    reply.Message = String.Format("{0} {1}", annotationData.text, reply.Message);
+                    reply.Comment = String.Format("{0} {1}", text, reply.Comment);
                 }
             }
-            else
-            {
-                distanceAnnotation.FieldText = text;
-            }
+
             return distanceAnnotation;
         }
 
         protected override AnnotationType GetType()
         {
             return AnnotationType.Distance;
+        }
+
+        protected override Rectangle GetBox()
+        {
+            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
         }
     }
 }

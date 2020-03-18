@@ -1,32 +1,34 @@
-﻿using GroupDocs.Annotation.Domain;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
 using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class TextRedactionAnnotator : TextAnnotator
+    public class TextRedactionAnnotator : TextHighlightAnnotation
     {
         public TextRedactionAnnotator(AnnotationDataEntity annotationData, PageData pageData)
             : base(annotationData, pageData)
         {
         }
 
-        public AnnotationInfo annotateCells()
+        public AnnotationBase annotateCells()
         {
             throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
 
-        public AnnotationInfo annotateSlides()
+        public AnnotationBase annotateSlides()
         {
             throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
 
-        public AnnotationInfo annotateImage()
+        public AnnotationBase annotateImage()
         {
             throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
 
-        public AnnotationInfo annotateDiagram()
+        public AnnotationBase annotateDiagram()
         {
             throw new NotSupportedException(String.Format(Message, annotationData.type));
         }

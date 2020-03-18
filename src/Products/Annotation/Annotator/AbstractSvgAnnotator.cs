@@ -1,6 +1,7 @@
-﻿using GroupDocs.Annotation.Domain;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
-using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
@@ -14,17 +15,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
         }
 
-        protected new AnnotationInfo InitAnnotationInfo()
+        protected new AnnotationBase InitAnnotationBase(AnnotationBase annotationBase)
         {
-            AnnotationInfo annotationInfo = base.InitAnnotationInfo();
-            // set draw annotation properties
-            annotationInfo.SvgPath = BuildSvgPath();
-            if (fixTop)
-            {
-                double topPosition = pageData.Height - annotationData.top;
-                annotationInfo.Box = new Rectangle(annotationInfo.Box.X, (float)topPosition, annotationInfo.Box.Width, annotationInfo.Box.Height);
-            }
-            return annotationInfo;
+            annotationBase = base.InitAnnotationBase(annotationBase);
+
+            return annotationBase;
         }
 
         /// <summary>

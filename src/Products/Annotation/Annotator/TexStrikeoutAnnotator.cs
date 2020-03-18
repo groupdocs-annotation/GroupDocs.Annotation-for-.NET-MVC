@@ -1,58 +1,68 @@
-﻿using GroupDocs.Annotation.Domain;
-using GroupDocs.Annotation.Domain.Containers;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
 using System;
+using System.Collections.Generic;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class TexStrikeoutAnnotator : AbstractSvgAnnotator
+    public class TexStrikeoutAnnotator : BaseAnnotator
     {
+        private StrikeoutAnnotation strikeoutAnnotation;
+
         public TexStrikeoutAnnotator(AnnotationDataEntity annotationData, PageData pageData)
             : base(annotationData, pageData)
         {
+            this.strikeoutAnnotation = new StrikeoutAnnotation()
+            {
+                Opacity = 0.7,
+                FontColor = annotationData.fontColor == 0 ? 65535 : annotationData.fontColor,
+                Points = new List<Point>
+                {
+                    new Point(annotationData.left, annotationData.top + annotationData.height),
+                    new Point(annotationData.left + annotationData.width, annotationData.top + annotationData.height),
+                    new Point(annotationData.left, annotationData.top),
+                    new Point(annotationData.left + annotationData.width, annotationData.top)
+                }
+            };
         }
-        
-        public override AnnotationInfo AnnotateWord()
+
+        public override AnnotationBase AnnotateWord()
         {
-            SetFixTop(true);
+            //SetFixTop(true);
             // init possible types of annotations
-            AnnotationInfo strikeoutAnnotation = InitAnnotationInfo();
+            strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
             return strikeoutAnnotation;
         }
-        
-        public override AnnotationInfo AnnotatePdf()
+
+        public override AnnotationBase AnnotatePdf()
         {
-            SetFixTop(false);
-            AnnotationInfo strikeoutAnnotation = InitAnnotationInfo();
-            strikeoutAnnotation.AnnotationPosition = new Point(annotationData.left, annotationData.top);
-            strikeoutAnnotation.PenColor = 0;
-            strikeoutAnnotation.Guid = annotationData.id.ToString();
+            //SetFixTop(false);
+            strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
             return strikeoutAnnotation;
         }
-        
-        public override AnnotationInfo AnnotateCells()
+
+        public override AnnotationBase AnnotateCells()
         {
             throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
-        
-        public override AnnotationInfo AnnotateSlides()
+
+        public override AnnotationBase AnnotateSlides()
         {
-            SetFixTop(true);
-            AnnotationInfo strikeoutAnnotation = InitAnnotationInfo();
-            strikeoutAnnotation.AnnotationPosition = new Point(annotationData.left, annotationData.top);
-            strikeoutAnnotation.PenColor = 0;
+            //SetFixTop(true);
+            strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
             return strikeoutAnnotation;
         }
 
-        public override AnnotationInfo AnnotateImage()
+        public override AnnotationBase AnnotateImage()
         {
-            SetFixTop(false);
-            // init possible types of annotations
-            AnnotationInfo strikeoutAnnotation = InitAnnotationInfo();
+            //SetFixTop(false);
+            strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
             return strikeoutAnnotation;
         }
 
-        public override AnnotationInfo AnnotateDiagram()
+        public override AnnotationBase AnnotateDiagram()
         {
             throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
@@ -60,6 +70,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         protected override AnnotationType GetType()
         {
             return AnnotationType.TextStrikeout;
+        }
+
+        protected override Rectangle GetBox()
+        {
+            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
         }
     }
 }

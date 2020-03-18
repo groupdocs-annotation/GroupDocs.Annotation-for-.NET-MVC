@@ -1,8 +1,10 @@
 ﻿
-using GroupDocs.Annotation.Domain;
-using GroupDocs.Annotation.Domain.Containers;
+using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
 using System;
+using System.Linq;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
@@ -29,65 +31,66 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// <summary>
         /// Add area annotation into the Word document
         /// </summary>
-        /// <returns>AnnotationInfo</returns>
-        public abstract AnnotationInfo AnnotateWord();
+        /// <returns>AnnotationBase</returns>
+        public abstract AnnotationBase AnnotateWord();
 
         /// <summary>
         /// Add area annotation into the pdf document
         /// </summary>
-        /// <returns>AnnotationInfo</returns>
-        public abstract AnnotationInfo AnnotatePdf();
+        /// <returns>AnnotationBase</returns>
+        public abstract AnnotationBase AnnotatePdf();
 
-        /// <summary>
-        /// Add area annotation into the Excel document
-        /// </summary>
-        /// <returns>AnnotationInfo</returns>
-        public abstract AnnotationInfo AnnotateCells();
+        ///// <summary>
+        ///// Add area annotation into the Excel document
+        ///// </summary>
+        ///// <returns>AnnotationBase</returns>
+        public abstract AnnotationBase AnnotateCells();
 
         /// <summary>
         /// Add area annotation into the Power Point document
         /// </summary>
-        /// <returns>AnnotationInfo</returns>
-        public abstract AnnotationInfo AnnotateSlides();
+        /// <returns>AnnotationBase</returns>
+        public abstract AnnotationBase AnnotateSlides();
 
         /// <summary>
         /// Add area annotation into the image document
         /// </summary>
-        /// <returns>AnnotationInfo</returns>
-        public abstract AnnotationInfo AnnotateImage();
+        /// <returns>AnnotationBase</returns>
+        public abstract AnnotationBase AnnotateImage();
 
         /// <summary>
         /// Add area annotation into the document
         /// </summary>
-        /// <returns>AnnotationInfo</returns>
-        public abstract AnnotationInfo AnnotateDiagram();
+        /// <returns>AnnotationBase</returns>
+        public abstract AnnotationBase AnnotateDiagram();
 
         /// <summary>
         /// Initial for annotation info
         /// </summary>
-        /// <returns>AnnotationInfo</returns>
-        protected AnnotationInfo InitAnnotationInfo()
+        /// <returns>AnnotationBase</returns>
+        protected AnnotationBase InitAnnotationBase(AnnotationBase annotationBase)
         {
-            AnnotationInfo annotationInfo = new AnnotationInfo();
-            // draw annotation options
-            annotationInfo.Box = GetBox();
             // set page number to add annotation
-            annotationInfo.PageNumber = annotationData.pageNumber - 1;
+            annotationBase.PageNumber = annotationData.pageNumber - 1;
             // set annotation type
-            annotationInfo.Type = GetType();
+            annotationBase.Type = GetType();
+            annotationBase.CreatedOn = DateTime.UtcNow;
+            annotationBase.Id = annotationData.id;
+            // TODO: investigate possibe values of text
+            //annotationBase.Message = annotationData.text;
             // add replies
             CommentsEntity[] comments = annotationData.comments;
             if (comments != null && comments.Length != 0)
             {
-                AnnotationReplyInfo[] replies = new AnnotationReplyInfo[comments.Length];
+                Reply[] replies = new Reply[comments.Length];
                 for (int i = 0; i < comments.Length; i++)
                 {
-                    AnnotationReplyInfo reply = GetAnnotationReplyInfo(comments[i]);
+                    Reply reply = GetAnnotationReplyInfo(comments[i]);
                     replies[i] = reply;
                 }
-                annotationInfo.Replies = replies;
+                annotationBase.Replies = replies.ToList();
             }
-            return annotationInfo;
+            return annotationBase;
         }
 
         /// <summary>
@@ -95,10 +98,10 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// </summary>
         /// <param name="comment">CommentsEntity</param>
         /// <returns>AnnotationReplyInfo</returns>
-        protected AnnotationReplyInfo GetAnnotationReplyInfo(CommentsEntity comment)
+        protected Reply GetAnnotationReplyInfo(CommentsEntity comment)
         {
-            AnnotationReplyInfo reply = new AnnotationReplyInfo();
-            reply.Message = comment.text;
+            Reply reply = new Reply();
+            reply.Comment = comment.text;
             DateTime date;
             try
             {
@@ -111,7 +114,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 date = DateTime.Parse(comment.time);
             }
             reply.RepliedOn = date;
-            reply.UserName = comment.userName;
+            reply.User = new User() { Name = comment.userName };
             return reply;
         }
 
@@ -131,8 +134,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// Get Annotation info depending on document type
         /// </summary>
         /// <param name="documentType">string</param>
-        /// <returns>AnnotationInfo</returns>
-        public AnnotationInfo GetAnnotationInfo(string documentType)
+        /// <returns>AnnotationBase</returns>
+        public AnnotationBase GetAnnotationBase(string documentType)
         {
             switch (documentType)
             {
@@ -145,7 +148,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 case "image":
                     return AnnotateImage();
                 case "Microsoft Excel":
-                    return AnnotateCells();
+                //    return AnnotateCells();
                 case "AutoCAD Drawing File Format":
                     return AnnotateDiagram();
                 default:
@@ -162,12 +165,12 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             try
             {
-                AnnotatorFactory.createAnnotator(annotationData, pageData).GetAnnotationInfo(documentType);
+                AnnotatorFactory.createAnnotator(annotationData, pageData).GetAnnotationBase(documentType);
                 return true;
             }
             catch (NotSupportedException)
             {
-                Message = String.Format(Message, annotationData.type);
+                Message = string.Format(Message, annotationData.type);
                 return false;
             }
         }

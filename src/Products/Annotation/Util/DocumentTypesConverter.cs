@@ -1,5 +1,4 @@
-﻿using GroupDocs.Annotation.Domain;
-using System;
+﻿using GroupDocs.Annotation.Models;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
 {

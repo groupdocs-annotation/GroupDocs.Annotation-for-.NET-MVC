@@ -1,62 +1,71 @@
-﻿using GroupDocs.Annotation.Domain;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
 using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
     public class AreaAnnotator : BaseAnnotator
     {
+        private AreaAnnotation areaAnnotation;
 
         public AreaAnnotator(AnnotationDataEntity annotationData, PageData pageData)
             : base(annotationData, pageData)
         {
+            this.areaAnnotation = new AreaAnnotation() 
+            {
+                Box = GetBox(),
+                BackgroundColor = 65535,
+                Opacity = 0.7,
+                PenColor = 65535,
+                PenStyle = PenStyle.Dot,
+                PenWidth = 3
+            };
         }
-        
-        public override AnnotationInfo AnnotateWord()
+
+        public override AnnotationBase AnnotateWord()
         {
-            // initiate AnnotationInfo object
-            AnnotationInfo areaAnnotation = InitAnnotationInfo();
-            // set annotation X, Y position
-            areaAnnotation.AnnotationPosition = new Point(annotationData.left, annotationData.top);
-            // add replies
+            // initiate AnnotationBase object
+            areaAnnotation = InitAnnotationBase(areaAnnotation) as AreaAnnotation;
             return areaAnnotation;
         }
 
-        public override AnnotationInfo AnnotatePdf()
+        public override AnnotationBase AnnotatePdf()
         {
-            // initiate AnnotationInfo object
-            AnnotationInfo areaAnnotation = InitAnnotationInfo();
-            // set annotation X, Y position
-            areaAnnotation.AnnotationPosition = new Point(annotationData.left, annotationData.top);
-            // add replies
+            // initiate AnnotationBase object
+            areaAnnotation = InitAnnotationBase(areaAnnotation) as AreaAnnotation;
             return areaAnnotation;
         }
 
-        public override AnnotationInfo AnnotateCells()
+        public override AnnotationBase AnnotateCells()
         {
             throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
 
-        public override AnnotationInfo AnnotateSlides()
+        public override AnnotationBase AnnotateSlides()
         {
-            return InitAnnotationInfo();
+            areaAnnotation = InitAnnotationBase(areaAnnotation) as AreaAnnotation;
+            return areaAnnotation;
         }
 
-        public override AnnotationInfo AnnotateImage()
+        public override AnnotationBase AnnotateImage()
         {
-            return InitAnnotationInfo();
+            areaAnnotation = InitAnnotationBase(areaAnnotation) as AreaAnnotation;
+            return areaAnnotation;
         }
 
-        public override AnnotationInfo AnnotateDiagram()
+        public override AnnotationBase AnnotateDiagram()
         {
-            return InitAnnotationInfo();
+            areaAnnotation = InitAnnotationBase(areaAnnotation) as AreaAnnotation;
+            return areaAnnotation;
         }
-        
+
         protected override AnnotationType GetType()
         {
             return AnnotationType.Area;
         }
-        
+
         protected override Rectangle GetBox()
         {
             return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);

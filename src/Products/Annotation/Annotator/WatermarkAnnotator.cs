@@ -1,60 +1,75 @@
-﻿using GroupDocs.Annotation.Domain;
-using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+﻿using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.MVC.Products.Annotation;
 using System;
+using GroupDocs.Annotation.Options;
+using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class WatermarkAnnotator : AbstractTextAnnotator
+    public class WatermarkAnnotator : BaseAnnotator
     {
+        private WatermarkAnnotation watermarkAnnotation;
 
         public WatermarkAnnotator(AnnotationDataEntity annotationData, PageData pageData)
             : base(annotationData, pageData)
         {
+            this.watermarkAnnotation = new WatermarkAnnotation()
+            {
+                Box = GetBox(),
+                Opacity = 0.7,
+                FontColor = annotationData.fontColor == 0 ? 65535 : annotationData.fontColor,
+                FontSize = 12,
+                Text = annotationData.text
+            };
         }
-        
-        public override AnnotationInfo AnnotateWord()
+
+        public override AnnotationBase AnnotateWord()
         {
             // init possible types of annotations
-            AnnotationInfo watermarkAnnotation = InitAnnotationInfo();
-            watermarkAnnotation.AnnotationPosition = new Point(annotationData.left, annotationData.top);            
+            watermarkAnnotation = InitAnnotationBase(watermarkAnnotation) as WatermarkAnnotation;
             return watermarkAnnotation;
         }
 
-        public override AnnotationInfo AnnotatePdf()
+        public override AnnotationBase AnnotatePdf()
         {
             // init possible types of annotations
-            AnnotationInfo watermarkAnnotation = InitAnnotationInfo();
-            watermarkAnnotation.AnnotationPosition = new Point(annotationData.left, annotationData.top);
+            watermarkAnnotation = InitAnnotationBase(watermarkAnnotation) as WatermarkAnnotation;
             return watermarkAnnotation;
         }
-        
-        public override AnnotationInfo AnnotateCells()
+
+        public override AnnotationBase AnnotateCells()
         {
             throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
 
-        public override AnnotationInfo AnnotateSlides()
+        public override AnnotationBase AnnotateSlides()
         {
             // init possible types of annotations
-            AnnotationInfo watermarkAnnotation = InitAnnotationInfo();
+            watermarkAnnotation = InitAnnotationBase(watermarkAnnotation) as WatermarkAnnotation;
             return watermarkAnnotation;
         }
-        
-        public override AnnotationInfo AnnotateImage()
+
+        public override AnnotationBase AnnotateImage()
         {
             // init possible types of annotations
-            AnnotationInfo watermarkAnnotation = InitAnnotationInfo();            
+            watermarkAnnotation = InitAnnotationBase(watermarkAnnotation) as WatermarkAnnotation;
             return watermarkAnnotation;
         }
-        
-        public override AnnotationInfo AnnotateDiagram()
+
+        public override AnnotationBase AnnotateDiagram()
         {
             throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
-        
+
         protected override AnnotationType GetType()
         {
             return AnnotationType.Watermark;
+        }
+
+        protected override Rectangle GetBox()
+        {
+            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
         }
     }
 }

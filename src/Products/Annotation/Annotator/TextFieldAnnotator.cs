@@ -1,61 +1,76 @@
-﻿using GroupDocs.Annotation.Domain;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
 using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class TextFieldAnnotator : AbstractTextAnnotator
+    public class TextFieldAnnotator : BaseAnnotator
     {
+        private TextFieldAnnotation textFieldAnnotation;
+
         public TextFieldAnnotator(AnnotationDataEntity annotationData, PageData pageData)
             : base(annotationData, pageData)
         {
+            this.textFieldAnnotation = new TextFieldAnnotation() {
+                BackgroundColor = 65535,
+                Box = GetBox(),
+                Opacity = 0.7,
+                FontColor = annotationData.fontColor == 0 ? 65535 : annotationData.fontColor,
+                Text = annotationData.text
+            };
         }
         
-        public override AnnotationInfo AnnotateWord()
+        public override AnnotationBase AnnotateWord()
         {
             // init possible types of annotations
-            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();
+            textFieldAnnotation = InitAnnotationBase(textFieldAnnotation) as TextFieldAnnotation;
+
             return textFieldAnnotation;
         }
-        
-        public override AnnotationInfo AnnotatePdf()
+
+        public override AnnotationBase AnnotatePdf()
         {
             // init possible types of annotations
-            // Text field annotation
-            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();
-            textFieldAnnotation.AnnotationPosition = new Point(annotationData.left, annotationData.top);
+            textFieldAnnotation = InitAnnotationBase(textFieldAnnotation) as TextFieldAnnotation;
             return textFieldAnnotation;
         }
-        
-        public override AnnotationInfo AnnotateCells()
+
+        public override AnnotationBase AnnotateCells()
         {
             throw new NotSupportedException(String.Format(Message, annotationData.type));
         }
-        
-        public override AnnotationInfo AnnotateSlides()
+
+        public override AnnotationBase AnnotateSlides()
         {
             // init possible types of annotations
-            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();
+            textFieldAnnotation = InitAnnotationBase(textFieldAnnotation) as TextFieldAnnotation;
             return textFieldAnnotation;
         }
-        
-        public override AnnotationInfo AnnotateImage()
+
+        public override AnnotationBase AnnotateImage()
         {
             // init possible types of annotations
-            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();           
+            textFieldAnnotation = InitAnnotationBase(textFieldAnnotation) as TextFieldAnnotation;
             return textFieldAnnotation;
         }
-        
-        public override AnnotationInfo AnnotateDiagram()
+
+        public override AnnotationBase AnnotateDiagram()
         {
             // init possible types of annotations
-            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();           
+            textFieldAnnotation = InitAnnotationBase(textFieldAnnotation) as TextFieldAnnotation;
             return textFieldAnnotation;
         }
-        
+
         protected override AnnotationType GetType()
         {
             return AnnotationType.TextField;
+        }
+
+        protected override Rectangle GetBox()
+        {
+            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
         }
     }
 }

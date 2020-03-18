@@ -4,6 +4,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
 {
     public class SupportedAnnotations
     {
+        // TODO: re-check the passed documentType
         public string[] GetSupportedAnnotations(string documentType)
         {           
             Annotations annotations = new Annotations();

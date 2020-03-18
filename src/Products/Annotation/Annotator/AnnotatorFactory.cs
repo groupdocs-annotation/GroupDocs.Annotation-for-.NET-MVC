@@ -1,7 +1,4 @@
-﻿
-using GroupDocs.Annotation.Domain;
-using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
-using GroupDocs.Annotation.MVC.Products.Common.Resources;
+﻿using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
@@ -19,8 +16,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             AnnotationDataEntity roundedAnnotationData = RoundCoordinates(annotationData);
             switch (roundedAnnotationData.type)
             {
-                case "text":                    
-                    return new TextAnnotator(roundedAnnotationData, pageData);
+                case "text":
+                    return new TextHighlightAnnotation(roundedAnnotationData, pageData);
                 case "area":
                     return new AreaAnnotator(roundedAnnotationData, pageData);
                 case "point":
