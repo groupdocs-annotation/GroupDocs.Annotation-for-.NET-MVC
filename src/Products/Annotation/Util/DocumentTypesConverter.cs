@@ -18,6 +18,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
                     return DocumentType.Pdf;
                 case "Microsoft Word":
                 case "WORDS":
+                case "Microsoft Word Open XML format (.docx)":
                     return DocumentType.Words;
                 case "Microsoft PowerPoint":
                 case "SLIDES":

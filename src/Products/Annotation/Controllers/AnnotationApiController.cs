@@ -145,7 +145,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             string password = loadDocumentRequest.password;
 
             // check if document contains annotations
-            AnnotationBase[] annotations = GetAnnotations(loadDocumentRequest.guid, "image", password);
+          
             // initiate pages description list
             // initiate custom Document description object
             AnnotatedDocumentEntity description = new AnnotatedDocumentEntity();
@@ -154,9 +154,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
             using (FileStream outputStream = File.OpenRead(documentGuid))
             {
-                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, new LoadOptions() { ImportAnnotations = true }))
+                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, new LoadOptions() { ImportAnnotations = false }))
                 {
                     IDocumentInfo info = annotator.Document.GetDocumentInfo();
+
+                    AnnotationBase[] annotations = GetAnnotations(loadDocumentRequest.guid, info.FileType.ToString(), password);
 
                     description.guid = loadDocumentRequest.guid;
                     description.supportedAnnotations = new SupportedAnnotations().GetSupportedAnnotations(info.FileType.ToString());
@@ -247,7 +249,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         {
             MemoryStream result = new MemoryStream();
 
-            LoadOptions loadOptions = new LoadOptions() { Password = password };
+            LoadOptions loadOptions = new LoadOptions() { Password = password, ImportAnnotations = false };
 
             using (FileStream outputStream = File.OpenRead(documentGuid))
             {
@@ -419,7 +421,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 {
                     using (FileStream outputStream = File.OpenRead(documentGuid))
                     {
-                        using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream))
+                        using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, new LoadOptions { ImportAnnotations = false}))
                         {
                             foreach (var annotation in annotations)
                             {
@@ -464,7 +466,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             {
                 using (Stream inputStream = File.Open(documentGuid, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
                 {
-                    using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(inputStream))
+                    using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(inputStream, new LoadOptions { ImportAnnotations = false}))
                     {
                         annotator.Save(tempPath, new SaveOptions() { AnnotationTypes = AnnotationType.None });
                     }
