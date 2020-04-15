@@ -17,7 +17,9 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 BackgroundColor = 65535,
                 Box = GetBox(),
                 Opacity = 0.7,
+                FontFamily = !string.IsNullOrEmpty(annotationData.font) ? annotationData.font : "Arial",
                 FontColor = annotationData.fontColor == 0 ? 65535 : annotationData.fontColor,
+                FontSize = annotationData.fontSize == 0 ? 12 : annotationData.fontSize,
                 Text = annotationData.text
             };
         }

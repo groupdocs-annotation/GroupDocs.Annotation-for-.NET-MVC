@@ -19,10 +19,10 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             {
                 Points = new List<Point>
                 {
-                    new Point(annotationData.left, annotationData.top + annotationData.height),
-                    new Point(annotationData.left + annotationData.width, annotationData.top + annotationData.height),
-                    new Point(annotationData.left, annotationData.top),
-                    new Point(annotationData.left + annotationData.width, annotationData.top)
+                    new Point(annotationData.left, pageData.Height - annotationData.top),
+                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top),
+                    new Point(annotationData.left, pageData.Height - annotationData.top - annotationData.height),
+                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top - annotationData.height)
                 },
                 BackgroundColor = 65535,
                 Opacity = 0.5,
@@ -67,7 +67,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateDiagram()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
         protected Rectangle getBox()

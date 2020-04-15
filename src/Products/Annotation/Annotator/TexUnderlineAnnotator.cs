@@ -20,10 +20,10 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 FontColor = annotationData.fontColor == 0 ? 65535 : annotationData.fontColor,
                 Points = new List<Point>
                 {
-                    new Point(annotationData.left, annotationData.top + annotationData.height),
-                    new Point(annotationData.left + annotationData.width, annotationData.top + annotationData.height),
-                    new Point(annotationData.left, annotationData.top),
-                    new Point(annotationData.left + annotationData.width, annotationData.top)
+                    new Point(annotationData.left, pageData.Height - annotationData.top),
+                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top),
+                    new Point(annotationData.left, pageData.Height - annotationData.top - annotationData.height),
+                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top - annotationData.height)
                 }
             };
         }
@@ -53,6 +53,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             //SetFixTop(false);
             underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
+            underlineAnnotation.Points = GetPointsWithFixedTop();
             return underlineAnnotation;
         }
 

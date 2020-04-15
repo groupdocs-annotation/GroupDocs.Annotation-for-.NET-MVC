@@ -16,7 +16,6 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -33,7 +32,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
         /// <summary>
         /// Constructor
-        /// </summary>        
+        /// </summary>
         public AnnotationApiController()
         {
             GlobalConfiguration = new Common.Config.GlobalConfiguration();
@@ -59,7 +58,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         [Route("loadFileTree")]
         public HttpResponseMessage loadFileTree(PostedDataEntity postedData)
         {
-            // get request body       
+            // get request body
             string relDirPath = postedData.path;
             // get file list from storage path
             try
@@ -154,7 +153,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
             using (FileStream outputStream = File.OpenRead(documentGuid))
             {
-                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, new LoadOptions() { ImportAnnotations = true }))
+                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream/*, new LoadOptions() { ImportAnnotations = false }*/))
                 {
                     IDocumentInfo info = annotator.Document.GetDocumentInfo();
 
@@ -163,6 +162,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
                     List<string> pagesContent = new List<string>();
 
+                    // TODO: execute only if !loadAllPages
                     pagesContent = GetAllPagesContent(password, documentGuid, info);
 
                     for (int i = 0; i < info.PageCount; i++)
@@ -170,13 +170,13 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                         PageDataDescriptionEntity page = new PageDataDescriptionEntity
                         {
                             number = i + 1,
-                            height = 842,
-                            width = 595,
+                            height = info.PagesInfo[i].Height,
+                            width = info.PagesInfo[i].Width,
                         };
 
                         if (annotations != null && annotations.Length > 0)
                         {
-                            page.SetAnnotations(AnnotationMapper.instance.mapForPage(annotations, i+1));
+                            page.SetAnnotations(AnnotationMapper.instance.mapForPage(annotations, i+1, info.PagesInfo[i]));
                         }
 
                         //PageDataDescriptionEntity pageData = GetPageDescriptionEntities(i + 1);
@@ -208,7 +208,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 DocumentType docType = DocumentTypesConverter.GetDocumentType(documentType);
                 AnnotationBase[] annotations;
 
-                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(documentStream, new LoadOptions() { ImportAnnotations = true }))
+                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(documentStream/*, new LoadOptions() { ImportAnnotations = false }*/))
                 {
                     annotations = annotator.Get().ToArray();
                 }
@@ -247,7 +247,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         {
             MemoryStream result = new MemoryStream();
 
-            LoadOptions loadOptions = new LoadOptions() { Password = password };
+            LoadOptions loadOptions = new LoadOptions() { Password = password/*, ImportAnnotations = false*/ };
 
             using (FileStream outputStream = File.OpenRead(documentGuid))
             {
@@ -257,6 +257,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
                     previewOptions.PreviewFormat = PreviewFormats.PNG;
                     previewOptions.PageNumbers = new int[] { pageNumberToRender };
+                    previewOptions.RenderComments = false;
 
                     annotator.Document.GeneratePreview(previewOptions);
                 }
@@ -386,29 +387,38 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 // initiate AnnotatedDocument object
                 // initiate list of annotations to add
                 List<AnnotationBase> annotations = new List<AnnotationBase>();
- 
-                string notSupportedMessage = "";
-                for (int i = 0; i < annotationsData.Length; i++)
+
+                using (FileStream outputStream = File.OpenRead(documentGuid))
                 {
-                    // create annotator
-                    AnnotationDataEntity annotationData = annotationsData[i];
-                    PageData pageData = new PageData() { Height = 842, Width = 595 };
-                    // add annotation, if current annotation type isn't supported by the current document type it will be ignored
-                    try
+                    using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream))
                     {
-                        BaseAnnotator annotator = AnnotatorFactory.createAnnotator(annotationData, pageData);
-                        if (annotator.IsSupported(documentType))
+                        string notSupportedMessage = "";
+                        for (int i = 0; i < annotationsData.Length; i++)
                         {
-                            annotations.Add(annotator.GetAnnotationBase(documentType));
+                            // create annotator
+                            AnnotationDataEntity annotationData = annotationsData[i];
+                            //PageData pageData = new PageData() { Height = 842, Width = 595 };
+                            IDocumentInfo info = annotator.Document.GetDocumentInfo();
+                            PageInfo pageInfo = info.PagesInfo[annotationsData[i].pageNumber];
+                            PageData pageData = new PageData() { Height = pageInfo.Height, Width = pageInfo.Width };
+                            // add annotation, if current annotation type isn't supported by the current document type it will be ignored
+                            try
+                            {
+                                BaseAnnotator baseAnnotator = AnnotatorFactory.createAnnotator(annotationData, pageData);
+                                if (baseAnnotator.IsSupported(documentType))
+                                {
+                                    annotations.Add(baseAnnotator.GetAnnotationBase(documentType));
+                                }
+                                else
+                                {
+                                    notSupportedMessage = baseAnnotator.Message;
+                                }
+                            }
+                            catch (System.Exception ex)
+                            {
+                                throw new System.Exception(ex.Message, ex);
+                            }
                         }
-                        else
-                        {
-                            notSupportedMessage = annotator.Message;
-                        }
-                    }
-                    catch (System.Exception ex)
-                    {
-                        throw new System.Exception(ex.Message, ex);
                     }
                 }
 

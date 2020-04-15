@@ -143,6 +143,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                     return AnnotatePdf();
                 case "Microsoft Word":
                     return AnnotateWord();
+                case "Rich Text Format":
+                    return AnnotateWord();
                 case "Microsoft PowerPoint":
                     return AnnotateSlides();
                 case "image":

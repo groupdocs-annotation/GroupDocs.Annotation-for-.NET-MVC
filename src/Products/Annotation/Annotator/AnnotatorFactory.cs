@@ -16,7 +16,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             AnnotationDataEntity roundedAnnotationData = RoundCoordinates(annotationData);
             switch (roundedAnnotationData.type)
             {
-                case "text":
+                case "textHighlight":
                     return new TextHighlightAnnotation(roundedAnnotationData, pageData);
                 case "area":
                     return new AreaAnnotator(roundedAnnotationData, pageData);

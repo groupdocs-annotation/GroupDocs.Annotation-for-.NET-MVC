@@ -21,23 +21,18 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 FontColor = annotationData.fontColor == 0 ? 65535 : annotationData.fontColor,
                 Points = new List<Point>
                 {
-                    new Point(annotationData.left, annotationData.top + annotationData.height),
-                    new Point(annotationData.left + annotationData.width, annotationData.top + annotationData.height),
-                    new Point(annotationData.left, annotationData.top),
-                    new Point(annotationData.left + annotationData.width, annotationData.top)
-                }
+                    new Point(annotationData.left, pageData.Height - annotationData.top),
+                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top),
+                    new Point(annotationData.left, pageData.Height - annotationData.top - annotationData.height),
+                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top - annotationData.height)
+                },
+                TextToReplace = annotationData.text
             };
         }
 
         public override AnnotationBase AnnotateWord()
         {
             // init possible types of annotations
-            replacementAnnotation = InitAnnotationBase(replacementAnnotation) as ReplacementAnnotation;
-            return replacementAnnotation;
-        }
-
-        protected new AnnotationBase InitAnnotationBase()
-        {
             replacementAnnotation = InitAnnotationBase(replacementAnnotation) as ReplacementAnnotation;
             return replacementAnnotation;
         }

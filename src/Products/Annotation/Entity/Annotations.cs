@@ -3,7 +3,7 @@
     public class Annotations
     {
         internal string[] Cells = {
-            "text"
+            "textHighlight"
         };
         internal string[] Diagram = {
             "area",
@@ -28,7 +28,7 @@
             "resourcesRedaction",
             "textUnderline",
             "distance",
-            "text"
+            "textHighlight"
         };
         internal string[] Pdf = {
             "area",
@@ -43,7 +43,7 @@
             "resourcesRedaction",
             "textUnderline",
             "distance",
-            "text"
+            "textHighlight"
         };
         internal string[] Image = {
             "area",
@@ -57,7 +57,7 @@
             "resourcesRedaction",
             "textUnderline",
             "distance",
-            "text"
+            "textHighlight"
         };
         internal string[] Slides = {
             "area",
@@ -70,7 +70,7 @@
             "textRedaction",
             "resourcesRedaction",
             "textUnderline",           
-            "text"
+            "textHighlight"
         };
     }
 }
