@@ -3,8 +3,6 @@ using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.Options;
 using System;
-using System.Globalization;
-using System.Text;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
@@ -15,20 +13,12 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public PolylineAnnotator(AnnotationDataEntity annotationData, PageData pageData)
             : base(annotationData, pageData)
         {
-            StringBuilder builder = new StringBuilder().
-                Append("M").Append(annotationData.left.ToString(CultureInfo.InvariantCulture)).
-                Append(",").Append(annotationData.top.ToString(CultureInfo.InvariantCulture)).
-                Append("L").Append(annotationData.width.ToString(CultureInfo.InvariantCulture)).
-                Append(",").Append(annotationData.height.ToString(CultureInfo.InvariantCulture));
-
             this.polylineAnnotation = new PolylineAnnotation()
             {
                 Box = GetBox(),
-                Opacity = 0.7,
                 PenColor = 1201033,
-                PenStyle = PenStyle.Dot,
-                PenWidth = (byte)2,
-                SvgPath = builder.ToString()
+                PenWidth = 2,
+                SvgPath = annotationData.svgPath
             };
         }
 
@@ -46,13 +36,13 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateCells()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
         public override AnnotationBase AnnotateSlides()
         {
             polylineAnnotation = InitAnnotationBase(polylineAnnotation) as PolylineAnnotation;
-            fillCreatorName(polylineAnnotation);
+            FillCreatorName(polylineAnnotation);
             return polylineAnnotation;
         }
 
@@ -60,7 +50,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// Fill creator name field in annotation info
         /// </summary>
         /// <param name="polylineAnnotation">AnnotationBase</param>
-        protected void fillCreatorName(AnnotationBase polylineAnnotation)
+        protected void FillCreatorName(AnnotationBase polylineAnnotation)
         {
             CommentsEntity[] comments = annotationData.comments;
             if (comments != null && comments.Length > 0 && comments[0] != null)
@@ -75,20 +65,15 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public override AnnotationBase AnnotateImage()
         {
             polylineAnnotation = InitAnnotationBase(polylineAnnotation) as PolylineAnnotation;
-            fillCreatorName(polylineAnnotation);
+            FillCreatorName(polylineAnnotation);
             return polylineAnnotation;
         }
 
         public override AnnotationBase AnnotateDiagram()
         {
             polylineAnnotation = InitAnnotationBase(polylineAnnotation) as PolylineAnnotation;
-            fillCreatorName(polylineAnnotation);
+            FillCreatorName(polylineAnnotation);
             return polylineAnnotation;
-        }
-
-        protected override Rectangle GetBox()
-        {
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
         }
 
         protected override AnnotationType GetType()

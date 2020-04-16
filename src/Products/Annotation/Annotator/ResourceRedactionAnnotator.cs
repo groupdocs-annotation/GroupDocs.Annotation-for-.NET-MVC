@@ -1,5 +1,4 @@
-﻿using GroupDocs.Annotation.Models;
-using GroupDocs.Annotation.Models.AnnotationModels;
+﻿using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.Options;
 using System;
@@ -33,7 +32,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateCells()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
         public override AnnotationBase AnnotateSlides()
@@ -50,14 +49,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateDiagram()
         {
-            // init annotation object
             resourcesRedactionAnnotation = InitAnnotationBase(resourcesRedactionAnnotation) as ResourcesRedactionAnnotation;
             return resourcesRedactionAnnotation;
-        }
-
-        protected override Rectangle GetBox()
-        {
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
         }
 
         protected override AnnotationType GetType()

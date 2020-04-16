@@ -14,10 +14,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public TexUnderlineAnnotator(AnnotationDataEntity annotationData, PageData pageData)
             : base(annotationData, pageData)
         {
-            this.underlineAnnotation = new UnderlineAnnotation()
+            underlineAnnotation = new UnderlineAnnotation()
             {
-                Opacity = 0.7,
-                FontColor = annotationData.fontColor == 0 ? 65535 : annotationData.fontColor,
                 Points = new List<Point>
                 {
                     new Point(annotationData.left, pageData.Height - annotationData.top),
@@ -31,29 +29,16 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public override AnnotationBase AnnotateWord()
         {
             //SetFixTop(true);
-            // init possible types of annotations
             underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
-            underlineAnnotation.Points = GetPointsWithFixedTop();
+            underlineAnnotation.FontColor = 1201033;
             return underlineAnnotation;
-        }
-
-        // TODO: implement top fix only for specific annotation types
-        private List<Point> GetPointsWithFixedTop()
-        {
-            return new List<Point>
-                {
-                    new Point(annotationData.left, pageData.Height - annotationData.top + annotationData.height - 20),
-                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top + annotationData.height - 20),
-                    new Point(annotationData.left, pageData.Height - annotationData.top - 20),
-                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top - 20)
-                };
         }
 
         public override AnnotationBase AnnotatePdf()
         {
             //SetFixTop(false);
             underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
-            underlineAnnotation.Points = GetPointsWithFixedTop();
+            underlineAnnotation.FontColor = 1201033;
             return underlineAnnotation;
         }
 
@@ -66,6 +51,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             //SetFixTop(true);
             underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
+            underlineAnnotation.FontColor = 0;
             return underlineAnnotation;
         }
 
@@ -73,22 +59,18 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             //SetFixTop(false);
             underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
+            underlineAnnotation.FontColor = 1201033;
             return underlineAnnotation;
         }
 
         public override AnnotationBase AnnotateDiagram()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
         protected override AnnotationType GetType()
         {
             return AnnotationType.TextUnderline;
-        }
-
-        protected override Rectangle GetBox()
-        {
-            throw new NotImplementedException();
         }
     }
 }

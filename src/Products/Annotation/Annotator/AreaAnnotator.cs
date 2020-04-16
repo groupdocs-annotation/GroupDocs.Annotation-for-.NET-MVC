@@ -1,5 +1,4 @@
-﻿using GroupDocs.Annotation.Models;
-using GroupDocs.Annotation.Models.AnnotationModels;
+﻿using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.Options;
 using System;
@@ -13,27 +12,20 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public AreaAnnotator(AnnotationDataEntity annotationData, PageData pageData)
             : base(annotationData, pageData)
         {
-            this.areaAnnotation = new AreaAnnotation() 
+            areaAnnotation = new AreaAnnotation() 
             {
-                Box = GetBox(),
-                BackgroundColor = 65535,
-                Opacity = 0.7,
-                PenColor = 65535,
-                PenStyle = PenStyle.Dot,
-                PenWidth = 3
+                Box = GetBox()
             };
         }
 
         public override AnnotationBase AnnotateWord()
         {
-            // initiate AnnotationBase object
             areaAnnotation = InitAnnotationBase(areaAnnotation) as AreaAnnotation;
             return areaAnnotation;
         }
 
         public override AnnotationBase AnnotatePdf()
         {
-            // initiate AnnotationBase object
             areaAnnotation = InitAnnotationBase(areaAnnotation) as AreaAnnotation;
             return areaAnnotation;
         }
@@ -64,11 +56,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         protected override AnnotationType GetType()
         {
             return AnnotationType.Area;
-        }
-
-        protected override Rectangle GetBox()
-        {
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
         }
     }
 }

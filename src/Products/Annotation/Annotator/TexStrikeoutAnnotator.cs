@@ -14,10 +14,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public TexStrikeoutAnnotator(AnnotationDataEntity annotationData, PageData pageData)
             : base(annotationData, pageData)
         {
-            this.strikeoutAnnotation = new StrikeoutAnnotation()
+            strikeoutAnnotation = new StrikeoutAnnotation()
             {
-                Opacity = 0.7,
-                FontColor = annotationData.fontColor == 0 ? 65535 : annotationData.fontColor,
                 Points = new List<Point>
                 {
                     new Point(annotationData.left, pageData.Height - annotationData.top),
@@ -31,7 +29,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public override AnnotationBase AnnotateWord()
         {
             //SetFixTop(true);
-            // init possible types of annotations
             strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
             return strikeoutAnnotation;
         }
@@ -40,12 +37,13 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             //SetFixTop(false);
             strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
+            this.strikeoutAnnotation.FontColor = 0;
             return strikeoutAnnotation;
         }
 
         public override AnnotationBase AnnotateCells()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
         public override AnnotationBase AnnotateSlides()
@@ -64,17 +62,12 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateDiagram()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
         protected override AnnotationType GetType()
         {
             return AnnotationType.TextStrikeout;
-        }
-
-        protected override Rectangle GetBox()
-        {
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
         }
     }
 }

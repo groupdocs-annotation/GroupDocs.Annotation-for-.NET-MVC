@@ -1,7 +1,6 @@
 ﻿using GroupDocs.Annotation.Models;
 using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
-using System.Collections.Generic;
 using System.Text;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
@@ -57,11 +56,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                     Append("},{\"x\":").Append(right).
                     Append(",\"y\":").Append(bottom).
                     Append("}]").ToString();
-        }
-
-        protected override Rectangle GetBox()
-        {
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
         }
 
         public void SetFixTop(bool fixTop)

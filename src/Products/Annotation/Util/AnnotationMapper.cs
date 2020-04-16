@@ -6,7 +6,9 @@ using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.Options;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
 {
@@ -27,7 +29,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
         /// <param name="annotations">AnnotationInfo[]</param>
         /// <param name="pageNumber">int</param>
         /// <returns></returns>
-        public AnnotationDataEntity[] mapForPage(AnnotationBase[] annotations, int pageNumber, PageInfo pageInfo)
+        public AnnotationDataEntity[] MapForPage(AnnotationBase[] annotations, int pageNumber, PageInfo pageInfo)
         {
             // initiate annotations data array
             IList<AnnotationDataEntity> pageAnnotations = new List<AnnotationDataEntity>();
@@ -38,7 +40,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
                 AnnotationBase annotationInfo = annotations[n];
                 if (pageNumber == annotationInfo.PageNumber + 1)
                 {
-                    AnnotationDataEntity annotation = mapAnnotationDataEntity(annotationInfo, pageInfo);
+                    AnnotationDataEntity annotation = MapAnnotationDataEntity(annotationInfo, pageInfo);
                     pageAnnotations.Add(annotation);
                 }
             }
@@ -51,26 +53,37 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
         /// </summary>
         /// <param name="annotationInfo">AnnotationInfo</param>
         /// <returns>AnnotationDataEntity</returns>
-        public AnnotationDataEntity mapAnnotationDataEntity(AnnotationBase annotationInfo, PageInfo pageInfo)
+        public AnnotationDataEntity MapAnnotationDataEntity(AnnotationBase annotationInfo, PageInfo pageInfo)
         {
             string annotationTypeName = Enum.GetName(typeof(AnnotationType), annotationInfo.Type);
             float maxY = 0, minY = 0, maxX = 0, minX = 0;
             float boxX = 0, boxY = 0, boxHeight = 0, boxWidth = 0;
+            string svgPath = "";
 
             if (annotationInfo is IPoints)
             {
-                maxY = ((IPoints)annotationInfo).Points.Max(p => p.Y);
-                minY = ((IPoints)annotationInfo).Points.Min(p => p.Y);
-                maxX = ((IPoints)annotationInfo).Points.Max(p => p.X);
-                minX = ((IPoints)annotationInfo).Points.Min(p => p.X);
+                List<Point> points = ((IPoints)annotationInfo).Points;
+                maxY = points.Max(p => p.Y);
+                minY = points.Min(p => p.Y);
+                maxX = points.Max(p => p.X);
+                minX = points.Min(p => p.X);
             }
 
             if (annotationInfo is IBox)
             {
-                boxX = ((IBox)annotationInfo).Box.X;
-                boxY = ((IBox)annotationInfo).Box.Y;
-                boxHeight = ((IBox)annotationInfo).Box.Height;
-                boxWidth = ((IBox)annotationInfo).Box.Width;
+                Rectangle box = ((IBox)annotationInfo).Box;
+                boxX = box.X;
+                boxY = box.Y;
+                boxHeight = box.Height;
+                boxWidth = box.Width;
+
+                StringBuilder builder = new StringBuilder().
+                Append("M").Append(box.X.ToString(CultureInfo.InvariantCulture)).
+                Append(",").Append(box.Y.ToString(CultureInfo.InvariantCulture)).
+                Append("L").Append(box.Width.ToString(CultureInfo.InvariantCulture)).
+                Append(",").Append(box.Height.ToString(CultureInfo.InvariantCulture));
+
+                svgPath = builder.ToString();
             }
 
             AnnotationDataEntity annotation = new AnnotationDataEntity();
@@ -81,7 +94,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
             annotation.height = annotationInfo is IBox ? boxHeight : (annotationInfo is IPoints ? (maxY - minY) : 0);
             annotation.left = annotationInfo is IBox ? boxX : (annotationInfo is IPoints ? minX : 0);
             annotation.pageNumber = (int)annotationInfo.PageNumber + 1;
-            annotation.svgPath = annotationInfo is ISvgPath ? ((((ISvgPath)annotationInfo).SvgPath != null) ? ((ISvgPath)annotationInfo).SvgPath.Replace("l", "L") : null) : null;
+            annotation.svgPath = annotationInfo is ISvgPath ? (((ISvgPath)annotationInfo).SvgPath?.Replace("l", "L")) : svgPath;
             string text = annotationInfo is IText ? (((IText)annotationInfo).Text ?? (annotationInfo is ITextToReplace ? ((ITextToReplace)annotationInfo).TextToReplace : "")) : "";
             annotation.text = text;
             // TODO: implement backward top fix only for specific annotation types

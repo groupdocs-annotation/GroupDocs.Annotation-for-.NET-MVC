@@ -3,6 +3,7 @@ using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.Options;
 using System;
+using System.Globalization;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
@@ -16,17 +17,13 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             this.arrowAnnotation = new ArrowAnnotation()
             {
-                Box = GetBox(),
-                Opacity = 0.7,
-                PenColor = 65535,
-                PenStyle = PenStyle.Dot,
-                PenWidth = 3
+                Box = GetBox()
             };
         }
 
         public override AnnotationBase AnnotateWord()
         {
-            //withGuid = false;
+            withGuid = false;
             arrowAnnotation = InitAnnotationBase(arrowAnnotation) as ArrowAnnotation;
             return arrowAnnotation;
         }
@@ -40,13 +37,12 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateCells()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
         public override AnnotationBase AnnotateSlides()
         {
             withGuid = true;
-            // init annotation object
             arrowAnnotation = InitAnnotationBase(arrowAnnotation) as ArrowAnnotation;
             return arrowAnnotation;
         }
@@ -54,7 +50,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public override AnnotationBase AnnotateImage()
         {
             withGuid = false;
-            // init annotation object
             arrowAnnotation = InitAnnotationBase(arrowAnnotation) as ArrowAnnotation;
             return arrowAnnotation;
         }
@@ -62,12 +57,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public override AnnotationBase AnnotateDiagram()
         {
             withGuid = false;
-            // init annotation object
             arrowAnnotation = InitAnnotationBase(arrowAnnotation) as ArrowAnnotation;
             return arrowAnnotation;
         }
 
-        protected Reply getAnnotationReplyInfo(CommentsEntity comment)
+        protected override Reply GetAnnotationReplyInfo(CommentsEntity comment)
         {
             Reply annotationReplyInfo = base.GetAnnotationReplyInfo(comment);
             if (withGuid)
@@ -84,8 +78,16 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         protected override Rectangle GetBox()
         {
-            // TODO: check possiblity to move in base class
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
+            string svgPath = annotationData.svgPath;
+            string startPoint = svgPath.Replace("[a-zA-Z]+", "").Split(' ')[0];
+            string endPoint = svgPath.Replace("[a-zA-Z]+", "").Split(' ')[1];
+            string[] start = startPoint.Split(',');
+            float startX = float.Parse(start.Length > 0 ? start[0].Replace("M", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture);
+            float startY = float.Parse(start.Length > 0 ? start[1].Replace("M", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture);
+            string[] end = endPoint.Split(',');
+            float endX = float.Parse(end.Length > 0 ? end[0].Replace("L", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture) - startX;
+            float endY = float.Parse(end.Length > 1 ? end[1].Replace("L", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture) - startY;
+            return new Rectangle(startX, startY, endX, endY);
         }
     }
 }

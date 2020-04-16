@@ -22,7 +22,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// </summary>
         /// <param name="annotationData"></param>
         /// <param name="pageData"></param>
-        public BaseAnnotator(AnnotationDataEntity annotationData, PageData pageData)
+        protected BaseAnnotator(AnnotationDataEntity annotationData, PageData pageData)
         {
             this.annotationData = annotationData;
             this.pageData = pageData;
@@ -76,8 +76,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             annotationBase.Type = GetType();
             annotationBase.CreatedOn = DateTime.UtcNow;
             annotationBase.Id = annotationData.id;
-            // TODO: investigate possibe values of text
-            //annotationBase.Message = annotationData.text;
             // add replies
             CommentsEntity[] comments = annotationData.comments;
             if (comments != null && comments.Length != 0)
@@ -98,7 +96,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// </summary>
         /// <param name="comment">CommentsEntity</param>
         /// <returns>AnnotationReplyInfo</returns>
-        protected Reply GetAnnotationReplyInfo(CommentsEntity comment)
+        protected virtual Reply GetAnnotationReplyInfo(CommentsEntity comment)
         {
             Reply reply = new Reply();
             reply.Comment = comment.text;
@@ -122,7 +120,10 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// Get rectangle
         /// </summary>
         /// <returns>Rectangle</returns>
-        protected abstract Rectangle GetBox();
+        protected virtual Rectangle GetBox()
+        {
+            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
+        }
 
         /// <summary>
         /// Get type of annotation
@@ -150,7 +151,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 case "image":
                     return AnnotateImage();
                 case "Microsoft Excel":
-                //    return AnnotateCells();
+                    return AnnotateCells();
                 case "AutoCAD Drawing File Format":
                     return AnnotateDiagram();
                 default:

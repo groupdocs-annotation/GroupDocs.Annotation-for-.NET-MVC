@@ -23,44 +23,36 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                     new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top),
                     new Point(annotationData.left, pageData.Height - annotationData.top - annotationData.height),
                     new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top - annotationData.height)
-                },
-                BackgroundColor = 65535,
-                Opacity = 0.5,
-                FontColor = 0
+                }
             };
         }
 
         public override AnnotationBase AnnotateWord()
         {
-            // init possible types of annotations
             highlightAnnotation = InitAnnotationBase(highlightAnnotation) as HighlightAnnotation;
             return highlightAnnotation;
         }
 
         public override AnnotationBase AnnotatePdf()
         {
-            // init possible types of annotations
             highlightAnnotation = InitAnnotationBase(highlightAnnotation) as HighlightAnnotation;
             return highlightAnnotation;
         }
 
         public override AnnotationBase AnnotateCells()
         {
-            // we use such calculation since the GroupDocs.Annotation library takes text line position from the bottom of the page
             highlightAnnotation = InitAnnotationBase(highlightAnnotation) as HighlightAnnotation;
             return highlightAnnotation;
         }
 
         public override AnnotationBase AnnotateSlides()
         {
-            // init possible types of annotations
             highlightAnnotation = InitAnnotationBase(highlightAnnotation) as HighlightAnnotation;
             return highlightAnnotation;
         }
 
         public override AnnotationBase AnnotateImage()
         {
-            // init possible types of annotations
             highlightAnnotation = InitAnnotationBase(highlightAnnotation) as HighlightAnnotation;
             return highlightAnnotation;
         }
@@ -77,7 +69,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         protected override AnnotationType GetType()
         {
-            // TODO: check the type
             return AnnotationType.TextHighlight;
         }
     }

@@ -4,7 +4,6 @@ using GroupDocs.Annotation.MVC.Products.Annotation.Annotator;
 using GroupDocs.Annotation.MVC.Products.Annotation.Config;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.MVC.Products.Annotation.Util;
-using GroupDocs.Annotation.MVC.Products.Annotation.Util.Directory;
 using GroupDocs.Annotation.MVC.Products.Common.Config;
 using GroupDocs.Annotation.MVC.Products.Common.Entity.Web;
 using GroupDocs.Annotation.MVC.Products.Common.Resources;
@@ -86,7 +85,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     // check if current file/folder is hidden
                     if (fileInfo.Attributes.HasFlag(FileAttributes.Hidden) ||
                         Path.GetFileName(file).Equals(Path.GetFileName(GlobalConfiguration.Annotation.GetFilesDirectory())) ||
-                        Path.GetFileName(file).Equals(".gitkeep"))
+                        Path.GetFileName(file).StartsWith("."))
                     {
                         // ignore current file and skip to next one
                         continue;
@@ -153,7 +152,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
             using (FileStream outputStream = File.OpenRead(documentGuid))
             {
-                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream/*, new LoadOptions() { ImportAnnotations = false }*/))
+                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, GetLoadOptions(password)))
                 {
                     IDocumentInfo info = annotator.Document.GetDocumentInfo();
 
@@ -178,7 +177,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
                         if (annotations != null && annotations.Length > 0)
                         {
-                            page.SetAnnotations(AnnotationMapper.instance.mapForPage(annotations, i+1, info.PagesInfo[i]));
+                            page.SetAnnotations(AnnotationMapper.instance.MapForPage(annotations, i+1, info.PagesInfo[i]));
                         }
 
                         //PageDataDescriptionEntity pageData = GetPageDescriptionEntities(i + 1);
@@ -210,7 +209,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 DocumentType docType = DocumentTypesConverter.GetDocumentType(documentType);
                 AnnotationBase[] annotations;
 
-                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(documentStream/*, new LoadOptions() { ImportAnnotations = false }*/))
+                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(documentStream, GetLoadOptions(password, true)))
                 {
                     annotations = annotator.Get().ToArray();
                 }
@@ -249,11 +248,9 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         {
             MemoryStream result = new MemoryStream();
 
-            LoadOptions loadOptions = new LoadOptions() { Password = password/*, ImportAnnotations = false*/ };
-
             using (FileStream outputStream = File.OpenRead(documentGuid))
             {
-                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, loadOptions))
+                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, GetLoadOptions(password)))
                 {
                     PreviewOptions previewOptions = new PreviewOptions(pageNumber => result);
 
@@ -352,7 +349,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             // add file into the response
             if (File.Exists(path))
             {
-                this.RemoveAnnotations(path);
+                this.RemoveAnnotations(path, "");
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
                 var fileStream = new FileStream(path, FileMode.Open);
                 response.Content = new StreamContent(fileStream);
@@ -392,7 +389,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
                 using (FileStream outputStream = File.OpenRead(documentGuid))
                 {
-                    using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream))
+                    using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, GetLoadOptions(password)))
                     {
                         string notSupportedMessage = "";
                         for (int i = 0; i < annotationsData.Length; i++)
@@ -425,13 +422,13 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 }
 
                 // Add annotation to the document
-                RemoveAnnotations(documentGuid);
+                RemoveAnnotations(documentGuid, password);
                 // check if annotations array contains at least one annotation to add
                 if (annotations.Count != 0)
                 {
                     using (FileStream outputStream = File.OpenRead(documentGuid))
                     {
-                        using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, new LoadOptions { ImportAnnotations = false}))
+                        using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, GetLoadOptions(password)))
                         {
                             foreach (var annotation in annotations)
                             {
@@ -454,6 +451,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 annotatedDocument.guid = documentGuid;
                 if (annotateDocumentRequest.print)
                 {
+                    // TODO: reconsider following method
                     //annotatedDocument.pages = GetAnnotatedPagesForPrint(documentGuid);
                     File.Move(documentGuid, annotateDocumentRequest.guid);
                 }
@@ -467,8 +465,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, annotatedDocument);
         }
 
-        public void RemoveAnnotations(string documentGuid) {
-
+        public void RemoveAnnotations(string documentGuid, string password) {
+            // TODO: consider global properties
             string tempFilename = Path.GetFileNameWithoutExtension(documentGuid) + "_tmp";
             string tempPath = Path.Combine(Path.GetDirectoryName(documentGuid), tempFilename + Path.GetExtension(documentGuid));
 
@@ -476,19 +474,29 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             {
                 using (Stream inputStream = File.Open(documentGuid, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite))
                 {
-                    using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(inputStream, new LoadOptions { ImportAnnotations = false}))
+                    using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(inputStream, GetLoadOptions(password, true)))
                     {
                         annotator.Save(tempPath, new SaveOptions() { AnnotationTypes = AnnotationType.None });
                     }
                 }
                 File.Delete(documentGuid);
-                // TODO: make global property
                 File.Move(tempPath, documentGuid);
             }
             catch (System.Exception ex)
             {
                 throw ex;
             }
+        }
+
+        private static LoadOptions GetLoadOptions(string password, bool importAnnotations = false)
+        {
+            LoadOptions loadOptions = new LoadOptions
+            {
+                Password = password,
+                ImportAnnotations = importAnnotations
+            };
+
+            return loadOptions;
         }
     }
 }

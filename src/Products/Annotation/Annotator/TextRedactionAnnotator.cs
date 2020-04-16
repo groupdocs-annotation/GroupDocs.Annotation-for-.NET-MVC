@@ -13,29 +13,24 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
         }
 
-        public AnnotationBase annotateCells()
+        public override AnnotationBase AnnotateCells()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
-        public AnnotationBase annotateSlides()
+        public override AnnotationBase AnnotateSlides()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
-        public AnnotationBase annotateImage()
+        public override AnnotationBase AnnotateImage()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
-        public AnnotationBase annotateDiagram()
+        public override AnnotationBase AnnotateDiagram()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
-        }
-
-        protected override Rectangle GetBox()
-        {
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
         protected override AnnotationType GetType()

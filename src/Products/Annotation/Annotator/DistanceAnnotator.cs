@@ -3,6 +3,7 @@ using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.Options;
 using System;
+using System.Globalization;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
@@ -13,13 +14,9 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public DistanceAnnotator(AnnotationDataEntity annotationData, PageData pageData)
             : base(annotationData, pageData)
         {
-            this.distanceAnnotation = new DistanceAnnotation()
+            distanceAnnotation = new DistanceAnnotation()
             {
-                Box = GetBox(),
-                Opacity = 0.7,
-                PenColor = 65535,
-                PenStyle = PenStyle.Dot,
-                PenWidth = 3
+                Box = GetBox()
             };
         }
 
@@ -37,24 +34,22 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateCells()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
         public override AnnotationBase AnnotateSlides()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
         public override AnnotationBase AnnotateImage()
         {
-            // init annotation object
             distanceAnnotation = InitAnnotationBase(distanceAnnotation) as DistanceAnnotation;
             return distanceAnnotation;
         }
 
         public override AnnotationBase AnnotateDiagram()
         {
-            // init annotation object
             distanceAnnotation = InitAnnotationBase(distanceAnnotation) as DistanceAnnotation;
             return distanceAnnotation;
         }
@@ -63,7 +58,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             AnnotationBase distanceAnnotation = base.InitAnnotationBase(annotationBase);
             // add replies
-            string text = (annotationData.text == null) ? "" : annotationData.text;
+            string text = annotationData.text ?? "";
             CommentsEntity[]
             comments = annotationData.comments;
             if (comments != null && comments.Length != 0)
@@ -85,7 +80,16 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         protected override Rectangle GetBox()
         {
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
+            string svgPath = annotationData.svgPath;
+            string startPoint = svgPath.Replace("[a-zA-Z]+", "").Split(' ')[0];
+            string endPoint = svgPath.Replace("[a-zA-Z]+", "").Split(' ')[1];
+            string[] start = startPoint.Split(',');
+            float startX = float.Parse(start.Length > 0 ? start[0].Replace("M", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture);
+            float startY = float.Parse(start.Length > 0 ? start[1].Replace("M", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture);
+            string[] end = endPoint.Split(',');
+            float endX = float.Parse(end.Length > 0 ? end[0].Replace("L", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture) - startX;
+            float endY = float.Parse(end.Length > 1 ? end[1].Replace("L", "").Replace(",", ".") : "0", CultureInfo.InvariantCulture) - startY;
+            return new Rectangle(startX, startY, endX, endY);
         }
     }
 }

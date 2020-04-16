@@ -1,5 +1,4 @@
-﻿using GroupDocs.Annotation.Models;
-using GroupDocs.Annotation.Models.AnnotationModels;
+﻿using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.Options;
 using System;
@@ -13,7 +12,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public PointAnnotator(AnnotationDataEntity annotationData, PageData pageData)
             : base(annotationData, pageData)
         {
-            this.pointAnnotation = new PointAnnotation()
+            pointAnnotation = new PointAnnotation()
             {
                 Box = GetBox()
             };
@@ -52,11 +51,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             pointAnnotation = base.InitAnnotationBase(pointAnnotation) as PointAnnotation;
             return pointAnnotation;
-        }
-
-        protected override Rectangle GetBox()
-        {
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
         }
 
         protected override AnnotationType GetType()
