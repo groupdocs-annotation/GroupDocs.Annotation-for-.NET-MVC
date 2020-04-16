@@ -10,10 +10,10 @@ namespace GroupDocs.Annotation.MVC
         protected void Application_Start()
         {
             // Fix required to use several GroupDocs products in one project.
-            // Set GroupDocs products assemblies names            
-            string annotationAssemblyName = "GroupDocs.Annotation.dll";            
+            // Set GroupDocs products assemblies names
+            string annotationAssemblyName = "GroupDocs.Annotation.dll";
             // set GroupDocs.Annotation license
-            DomainGenerator annotationDomainGenerator = new DomainGenerator(annotationAssemblyName, "GroupDocs.Annotation.Common.License.License");
+            DomainGenerator annotationDomainGenerator = new DomainGenerator(annotationAssemblyName, "GroupDocs.Annotation.License");
             annotationDomainGenerator.SetAnnotationLicense();
            
             AreaRegistration.RegisterAllAreas();
