@@ -142,13 +142,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         public AnnotatedDocumentEntity LoadDocument(AnnotationPostedDataEntity loadDocumentRequest)
         {
             string password = loadDocumentRequest.password;
-
-            // check if document contains annotations
-          
-            // initiate pages description list
-            // initiate custom Document description object
             AnnotatedDocumentEntity description = new AnnotatedDocumentEntity();
-
             string documentGuid = loadDocumentRequest.guid;
 
             using (FileStream outputStream = File.OpenRead(documentGuid))
@@ -156,14 +150,13 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, GetLoadOptions(password)))
                 {
                     IDocumentInfo info = annotator.Document.GetDocumentInfo();
-
-                    AnnotationBase[] annotations = GetAnnotations(loadDocumentRequest.guid, info.FileType.ToString(), password);
+                    AnnotationBase[] annotations = annotator.Get().ToArray();
 
                     description.guid = loadDocumentRequest.guid;
                     string documentType = SupportedImageFormats.Contains(info.FileType.Extension) ? "image" : info.FileType.ToString();
                     description.supportedAnnotations = new SupportedAnnotations().GetSupportedAnnotations(documentType);
 
-                    List<string> pagesContent = new List<string>();
+                    List<string> pagesContent;
 
                     // TODO: execute only if !loadAllPages
                     pagesContent = GetAllPagesContent(password, documentGuid, info);
@@ -194,35 +187,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             description.guid = documentGuid;
             // return document description
             return description;
-        }
-
-        /// <summary>
-        /// Get all annotations from the document
-        /// </summary>
-        /// <param name="documentGuid">string</param>
-        /// <param name="documentType">string</param>
-        /// <returns>AnnotationInfo[]</returns>
-        private AnnotationBase[] GetAnnotations(string documentGuid, string documentType, string password)
-        {
-            try
-            {
-                FileStream documentStream = new FileStream(documentGuid, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                DocumentType docType = DocumentTypesConverter.GetDocumentType(documentType);
-                AnnotationBase[] annotations;
-
-                using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(documentStream, GetLoadOptions(password, true)))
-                {
-                    annotations = annotator.Get().ToArray();
-                }
-
-                documentStream.Dispose();
-                documentStream.Close();
-                return annotations;
-            }
-            catch (System.Exception ex)
-            {
-                throw ex;
-            }
         }
 
         private List<string> GetAllPagesContent(string password, string documentGuid, IDocumentInfo pages)
@@ -256,7 +220,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     PreviewOptions previewOptions = new PreviewOptions(pageNumber => result);
 
                     previewOptions.PreviewFormat = PreviewFormats.PNG;
-                    previewOptions.PageNumbers = new int[] { pageNumberToRender };
+                    previewOptions.PageNumbers = new [] { pageNumberToRender };
                     previewOptions.RenderComments = false;
 
                     annotator.Document.GeneratePreview(previewOptions);

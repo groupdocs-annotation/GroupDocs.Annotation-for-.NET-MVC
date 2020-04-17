@@ -13,7 +13,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public ResourceRedactionAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            this.resourcesRedactionAnnotation = new ResourcesRedactionAnnotation()
+            this.resourcesRedactionAnnotation = new ResourcesRedactionAnnotation
             {
                 Box = GetBox()
             };

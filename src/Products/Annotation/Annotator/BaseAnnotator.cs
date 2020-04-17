@@ -111,7 +111,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 date = DateTime.Parse(comment.time);
             }
             reply.RepliedOn = date;
-            reply.User = new User() { Name = comment.userName };
+            reply.User = new User { Name = comment.userName };
             return reply;
         }
 

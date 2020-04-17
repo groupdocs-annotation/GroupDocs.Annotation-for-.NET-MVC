@@ -14,7 +14,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public DistanceAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            distanceAnnotation = new DistanceAnnotation()
+            distanceAnnotation = new DistanceAnnotation
             {
                 Box = GetBox()
             };
@@ -56,7 +56,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         protected new AnnotationBase InitAnnotationBase(AnnotationBase annotationBase)
         {
-            AnnotationBase distanceAnnotation = base.InitAnnotationBase(annotationBase);
+            distanceAnnotation = base.InitAnnotationBase(annotationBase) as DistanceAnnotation;
             // add replies
             string text = annotationData.text ?? "";
             CommentsEntity[]
@@ -66,7 +66,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 Reply reply = distanceAnnotation.Replies[0];
                 if (reply != null)
                 {
-                    reply.Comment = String.Format("{0} {1}", text, reply.Comment);
+                    reply.Comment = string.Format("{0} {1}", text, reply.Comment);
                 }
             }
 

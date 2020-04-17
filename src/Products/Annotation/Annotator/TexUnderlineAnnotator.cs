@@ -28,7 +28,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateWord()
         {
-            //SetFixTop(true);
             underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
             underlineAnnotation.FontColor = 1201033;
             return underlineAnnotation;
@@ -36,7 +35,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotatePdf()
         {
-            //SetFixTop(false);
             underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
             underlineAnnotation.FontColor = 1201033;
             return underlineAnnotation;
@@ -49,7 +47,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateSlides()
         {
-            //SetFixTop(true);
             underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
             underlineAnnotation.FontColor = 0;
             return underlineAnnotation;
@@ -57,7 +54,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateImage()
         {
-            //SetFixTop(false);
             underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
             underlineAnnotation.FontColor = 1201033;
             return underlineAnnotation;

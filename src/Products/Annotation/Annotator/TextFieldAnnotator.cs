@@ -13,7 +13,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public TextFieldAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            textFieldAnnotation = new TextFieldAnnotation() {
+            textFieldAnnotation = new TextFieldAnnotation {
                 Box = GetBox(),
                 FontFamily = !string.IsNullOrEmpty(annotationData.font) ? annotationData.font : "Arial",
                 FontColor = annotationData.fontColor,

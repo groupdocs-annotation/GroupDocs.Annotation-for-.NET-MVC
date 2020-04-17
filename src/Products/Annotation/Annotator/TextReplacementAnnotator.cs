@@ -14,7 +14,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public TextReplacementAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            replacementAnnotation = new ReplacementAnnotation()
+            replacementAnnotation = new ReplacementAnnotation
             {
                 Points = new List<Point>
                 {

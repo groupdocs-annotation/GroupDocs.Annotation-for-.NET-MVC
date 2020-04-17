@@ -13,7 +13,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public WatermarkAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            watermarkAnnotation = new WatermarkAnnotation()
+            watermarkAnnotation = new WatermarkAnnotation
             {
                 Box = GetBox(),
                 FontFamily = !string.IsNullOrEmpty(annotationData.font) ? annotationData.font : "Arial",

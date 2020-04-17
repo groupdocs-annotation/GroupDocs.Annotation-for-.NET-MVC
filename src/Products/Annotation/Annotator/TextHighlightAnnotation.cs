@@ -14,8 +14,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public TextHighlightAnnotation(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            //SetFixTop(false);
-            this.highlightAnnotation = new HighlightAnnotation()
+            highlightAnnotation = new HighlightAnnotation
             {
                 Points = new List<Point>
                 {

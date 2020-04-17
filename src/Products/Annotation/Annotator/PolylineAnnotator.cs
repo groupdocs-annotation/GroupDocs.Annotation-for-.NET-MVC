@@ -13,7 +13,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public PolylineAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            this.polylineAnnotation = new PolylineAnnotation()
+            this.polylineAnnotation = new PolylineAnnotation
             {
                 Box = GetBox(),
                 PenColor = 1201033,
@@ -55,7 +55,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             CommentsEntity[] comments = annotationData.comments;
             if (comments != null && comments.Length > 0 && comments[0] != null)
             {
-                polylineAnnotation.User = new User() 
+                polylineAnnotation.User = new User 
                 { 
                     Name = comments[0].userName 
                 };

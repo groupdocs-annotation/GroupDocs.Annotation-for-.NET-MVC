@@ -15,7 +15,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public ArrowAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            this.arrowAnnotation = new ArrowAnnotation()
+            this.arrowAnnotation = new ArrowAnnotation
             {
                 Box = GetBox()
             };
@@ -66,7 +66,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             Reply annotationReplyInfo = base.GetAnnotationReplyInfo(comment);
             if (withGuid)
             {
-                annotationReplyInfo.ParentReply = new Reply() { Id = annotationData.id };
+                annotationReplyInfo.ParentReply = new Reply { Id = annotationData.id };
             }
             return annotationReplyInfo;
         }

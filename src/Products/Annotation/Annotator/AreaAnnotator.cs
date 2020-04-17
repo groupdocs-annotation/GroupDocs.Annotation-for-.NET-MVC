@@ -13,7 +13,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public AreaAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            areaAnnotation = new AreaAnnotation() 
+            areaAnnotation = new AreaAnnotation
             {
                 Box = GetBox()
             };

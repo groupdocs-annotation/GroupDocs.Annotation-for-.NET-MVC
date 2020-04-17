@@ -14,7 +14,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public TexStrikeoutAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            strikeoutAnnotation = new StrikeoutAnnotation()
+            strikeoutAnnotation = new StrikeoutAnnotation
             {
                 Points = new List<Point>
                 {
@@ -28,14 +28,12 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateWord()
         {
-            //SetFixTop(true);
             strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
             return strikeoutAnnotation;
         }
 
         public override AnnotationBase AnnotatePdf()
         {
-            //SetFixTop(false);
             strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
             this.strikeoutAnnotation.FontColor = 0;
             return strikeoutAnnotation;
@@ -48,14 +46,12 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateSlides()
         {
-            //SetFixTop(true);
             strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
             return strikeoutAnnotation;
         }
 
         public override AnnotationBase AnnotateImage()
         {
-            //SetFixTop(false);
             strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
             return strikeoutAnnotation;
         }
