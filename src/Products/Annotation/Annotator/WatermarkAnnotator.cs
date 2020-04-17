@@ -2,6 +2,7 @@
 using System;
 using GroupDocs.Annotation.Options;
 using GroupDocs.Annotation.Models.AnnotationModels;
+using GroupDocs.Annotation.Models;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
@@ -9,8 +10,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
     {
         private WatermarkAnnotation watermarkAnnotation;
 
-        public WatermarkAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        public WatermarkAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
             watermarkAnnotation = new WatermarkAnnotation()
             {

@@ -12,8 +12,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         private bool withGuid = false;
         private ArrowAnnotation arrowAnnotation;
 
-        public ArrowAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        public ArrowAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
             this.arrowAnnotation = new ArrowAnnotation()
             {

@@ -11,17 +11,17 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
     {
         private ReplacementAnnotation replacementAnnotation;
 
-        public TextReplacementAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        public TextReplacementAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
             replacementAnnotation = new ReplacementAnnotation()
             {
                 Points = new List<Point>
                 {
-                    new Point(annotationData.left, pageData.Height - annotationData.top),
-                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top),
-                    new Point(annotationData.left, pageData.Height - annotationData.top - annotationData.height),
-                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top - annotationData.height)
+                    new Point(annotationData.left, pageInfo.Height - annotationData.top),
+                    new Point(annotationData.left + annotationData.width, pageInfo.Height - annotationData.top),
+                    new Point(annotationData.left, pageInfo.Height - annotationData.top - annotationData.height),
+                    new Point(annotationData.left + annotationData.width, pageInfo.Height - annotationData.top - annotationData.height)
                 },
                 TextToReplace = annotationData.text
             };

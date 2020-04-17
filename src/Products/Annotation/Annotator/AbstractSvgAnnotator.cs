@@ -9,8 +9,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
     {
         private bool fixTop = false;
 
-        protected AbstractSvgAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        protected AbstractSvgAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
         }
 
@@ -28,7 +28,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         protected string BuildSvgPath()
         {
             // we use such calculation since the GroupDocs.Annotation library takes text line position from the bottom of the page
-            double topPosition = pageData.Height - annotationData.top;
+            double topPosition = pageInfo.Height - annotationData.top;
             // calculation of the X-shift
             double topRightX = annotationData.left + annotationData.width;
             // calculation of the Y-shift

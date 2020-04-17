@@ -1,4 +1,5 @@
-﻿using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
@@ -9,39 +10,39 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// Create annotator instance depending on type of annotation
         /// </summary>
         /// <param name="annotationData">AnnotationDataEntity</param>
-        /// <param name="pageData">PageData</param>
+        /// <param name="pageInfo">PageInfo</param>
         /// <returns></returns>
-        public static BaseAnnotator createAnnotator(AnnotationDataEntity annotationData, PageData pageData)
+        public static BaseAnnotator createAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
         {
             AnnotationDataEntity roundedAnnotationData = RoundCoordinates(annotationData);
             switch (roundedAnnotationData.type)
             {
                 case "textHighlight":
-                    return new TextHighlightAnnotation(roundedAnnotationData, pageData);
+                    return new TextHighlightAnnotation(roundedAnnotationData, pageInfo);
                 case "area":
-                    return new AreaAnnotator(roundedAnnotationData, pageData);
+                    return new AreaAnnotator(roundedAnnotationData, pageInfo);
                 case "point":
-                    return new PointAnnotator(roundedAnnotationData, pageData);
+                    return new PointAnnotator(roundedAnnotationData, pageInfo);
                 case "textStrikeout":
-                    return new TexStrikeoutAnnotator(roundedAnnotationData, pageData);
+                    return new TexStrikeoutAnnotator(roundedAnnotationData, pageInfo);
                 case "polyline":
-                    return new PolylineAnnotator(roundedAnnotationData, pageData);
+                    return new PolylineAnnotator(roundedAnnotationData, pageInfo);
                 case "textField":
-                    return new TextFieldAnnotator(roundedAnnotationData, pageData);
+                    return new TextFieldAnnotator(roundedAnnotationData, pageInfo);
                 case "watermark":
-                    return new WatermarkAnnotator(roundedAnnotationData, pageData);
+                    return new WatermarkAnnotator(roundedAnnotationData, pageInfo);
                 case "textReplacement":
-                    return new TextReplacementAnnotator(roundedAnnotationData, pageData);
+                    return new TextReplacementAnnotator(roundedAnnotationData, pageInfo);
                 case "arrow":
-                    return new ArrowAnnotator(roundedAnnotationData, pageData);
+                    return new ArrowAnnotator(roundedAnnotationData, pageInfo);
                 case "textRedaction":
-                    return new TextRedactionAnnotator(roundedAnnotationData, pageData);
+                    return new TextRedactionAnnotator(roundedAnnotationData, pageInfo);
                 case "resourcesRedaction":
-                    return new ResourceRedactionAnnotator(roundedAnnotationData, pageData);
+                    return new ResourceRedactionAnnotator(roundedAnnotationData, pageInfo);
                 case "textUnderline":
-                    return new TexUnderlineAnnotator(roundedAnnotationData, pageData);
+                    return new TexUnderlineAnnotator(roundedAnnotationData, pageInfo);
                 case "distance":
-                    return new DistanceAnnotator(roundedAnnotationData, pageData);
+                    return new DistanceAnnotator(roundedAnnotationData, pageInfo);
                 default:
                     throw new ArgumentNullException("Wrong annotation data without annotation type!");
             }

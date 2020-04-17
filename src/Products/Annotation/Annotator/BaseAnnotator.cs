@@ -14,17 +14,17 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
     {
         public string Message = "Annotation of type {0} for this file type is not supported";       
         protected AnnotationDataEntity annotationData;
-        protected PageData pageData;
+        protected PageInfo pageInfo;
 
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="annotationData"></param>
-        /// <param name="pageData"></param>
-        protected BaseAnnotator(AnnotationDataEntity annotationData, PageData pageData)
+        /// <param name="pageInfo"></param>
+        protected BaseAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
         {
             this.annotationData = annotationData;
-            this.pageData = pageData;
+            this.pageInfo = pageInfo;
         }
 
         /// <summary>
@@ -167,7 +167,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             try
             {
-                AnnotatorFactory.createAnnotator(annotationData, pageData).GetAnnotationBase(documentType);
+                AnnotatorFactory.createAnnotator(annotationData, pageInfo).GetAnnotationBase(documentType);
                 return true;
             }
             catch (NotSupportedException)

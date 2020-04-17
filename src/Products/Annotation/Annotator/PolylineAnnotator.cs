@@ -10,8 +10,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
     {
         private PolylineAnnotation polylineAnnotation;
 
-        public PolylineAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        public PolylineAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
             this.polylineAnnotation = new PolylineAnnotation()
             {

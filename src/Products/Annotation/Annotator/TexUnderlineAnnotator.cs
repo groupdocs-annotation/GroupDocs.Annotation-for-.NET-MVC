@@ -11,17 +11,17 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
     {
         private UnderlineAnnotation underlineAnnotation;
 
-        public TexUnderlineAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        public TexUnderlineAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
             underlineAnnotation = new UnderlineAnnotation()
             {
                 Points = new List<Point>
                 {
-                    new Point(annotationData.left, pageData.Height - annotationData.top),
-                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top),
-                    new Point(annotationData.left, pageData.Height - annotationData.top - annotationData.height),
-                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top - annotationData.height)
+                    new Point(annotationData.left, pageInfo.Height - annotationData.top),
+                    new Point(annotationData.left + annotationData.width, pageInfo.Height - annotationData.top),
+                    new Point(annotationData.left, pageInfo.Height - annotationData.top - annotationData.height),
+                    new Point(annotationData.left + annotationData.width, pageInfo.Height - annotationData.top - annotationData.height)
                 }
             };
         }

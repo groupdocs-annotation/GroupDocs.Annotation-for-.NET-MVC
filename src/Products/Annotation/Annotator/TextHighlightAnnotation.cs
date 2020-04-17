@@ -11,18 +11,18 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
     {
         private HighlightAnnotation highlightAnnotation;
 
-        public TextHighlightAnnotation(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        public TextHighlightAnnotation(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
             //SetFixTop(false);
             this.highlightAnnotation = new HighlightAnnotation()
             {
                 Points = new List<Point>
                 {
-                    new Point(annotationData.left, pageData.Height - annotationData.top),
-                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top),
-                    new Point(annotationData.left, pageData.Height - annotationData.top - annotationData.height),
-                    new Point(annotationData.left + annotationData.width, pageData.Height - annotationData.top - annotationData.height)
+                    new Point(annotationData.left, pageInfo.Height - annotationData.top),
+                    new Point(annotationData.left + annotationData.width, pageInfo.Height - annotationData.top),
+                    new Point(annotationData.left, pageInfo.Height - annotationData.top - annotationData.height),
+                    new Point(annotationData.left + annotationData.width, pageInfo.Height - annotationData.top - annotationData.height)
                 }
             };
         }

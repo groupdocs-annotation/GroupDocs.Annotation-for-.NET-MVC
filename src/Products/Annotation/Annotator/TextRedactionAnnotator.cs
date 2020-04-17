@@ -8,8 +8,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
     public class TextRedactionAnnotator : TextHighlightAnnotation
     {
-        public TextRedactionAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        public TextRedactionAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
         }
 

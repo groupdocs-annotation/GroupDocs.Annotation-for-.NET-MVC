@@ -1,4 +1,5 @@
-﻿using GroupDocs.Annotation.Models.AnnotationModels;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.Options;
 using System;
@@ -9,8 +10,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
     {
         private TextFieldAnnotation textFieldAnnotation;
 
-        public TextFieldAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        public TextFieldAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
             textFieldAnnotation = new TextFieldAnnotation() {
                 Box = GetBox(),

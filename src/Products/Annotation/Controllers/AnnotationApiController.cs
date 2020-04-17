@@ -28,6 +28,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
     public class AnnotationApiController : ApiController
     {
         private static Common.Config.GlobalConfiguration GlobalConfiguration;
+        private readonly List<string> SupportedImageFormats = new List<string> { ".bmp", ".jpeg", ".jpg", ".tiff", ".tif", ".png", ".dwg", ".dcm", ".dxf" };
 
         /// <summary>
         /// Constructor
@@ -159,7 +160,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     AnnotationBase[] annotations = GetAnnotations(loadDocumentRequest.guid, info.FileType.ToString(), password);
 
                     description.guid = loadDocumentRequest.guid;
-                    description.supportedAnnotations = new SupportedAnnotations().GetSupportedAnnotations(info.FileType.ToString());
+                    string documentType = SupportedImageFormats.Contains(info.FileType.Extension) ? "image" : info.FileType.ToString();
+                    description.supportedAnnotations = new SupportedAnnotations().GetSupportedAnnotations(documentType);
 
                     List<string> pagesContent = new List<string>();
 
@@ -180,7 +182,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                             page.SetAnnotations(AnnotationMapper.instance.MapForPage(annotations, i+1, info.PagesInfo[i]));
                         }
 
-                        //PageDataDescriptionEntity pageData = GetPageDescriptionEntities(i + 1);
                         if (pagesContent.Count > 0)
                         {
                             page.SetData(pagesContent[i]);
@@ -378,12 +379,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 // get/set parameters
                 string documentGuid = annotateDocumentRequest.guid;
                 string password = annotateDocumentRequest.password;
-                string documentType = annotateDocumentRequest.documentType;
+                string documentType = SupportedImageFormats.Contains(Path.GetExtension(annotateDocumentRequest.guid)) ? "image" : annotateDocumentRequest.documentType;
                 string tempFilename = Path.GetFileNameWithoutExtension(documentGuid) + "_tmp";
                 string tempPath = Path.Combine(Path.GetDirectoryName(documentGuid), tempFilename + Path.GetExtension(documentGuid));
 
                 AnnotationDataEntity[] annotationsData = annotateDocumentRequest.annotationsData;
-                // initiate AnnotatedDocument object
                 // initiate list of annotations to add
                 List<AnnotationBase> annotations = new List<AnnotationBase>();
 
@@ -392,18 +392,16 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, GetLoadOptions(password)))
                     {
                         string notSupportedMessage = "";
+                        IDocumentInfo info = annotator.Document.GetDocumentInfo();
+
                         for (int i = 0; i < annotationsData.Length; i++)
                         {
-                            // create annotator
                             AnnotationDataEntity annotationData = annotationsData[i];
-                            //PageData pageData = new PageData() { Height = 842, Width = 595 };
-                            IDocumentInfo info = annotator.Document.GetDocumentInfo();
-                            PageInfo pageInfo = info.PagesInfo[annotationsData[i].pageNumber];
-                            PageData pageData = new PageData() { Height = pageInfo.Height, Width = pageInfo.Width };
+                            PageInfo pageInfo = info.PagesInfo[annotationsData[i].pageNumber - 1];
                             // add annotation, if current annotation type isn't supported by the current document type it will be ignored
                             try
                             {
-                                BaseAnnotator baseAnnotator = AnnotatorFactory.createAnnotator(annotationData, pageData);
+                                BaseAnnotator baseAnnotator = AnnotatorFactory.createAnnotator(annotationData, pageInfo);
                                 if (baseAnnotator.IsSupported(documentType))
                                 {
                                     annotations.Add(baseAnnotator.GetAnnotationBase(documentType));

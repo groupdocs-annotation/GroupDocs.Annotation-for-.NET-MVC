@@ -11,8 +11,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
     {
         private DistanceAnnotation distanceAnnotation;
 
-        public DistanceAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        public DistanceAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
             distanceAnnotation = new DistanceAnnotation()
             {
