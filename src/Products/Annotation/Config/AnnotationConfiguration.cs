@@ -1,5 +1,6 @@
 ﻿using GroupDocs.Annotation.MVC.Products.Common.Config;
 using GroupDocs.Annotation.MVC.Products.Common.Util.Parser;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
@@ -11,25 +12,64 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
     /// </summary>
     public class AnnotationConfiguration : CommonConfiguration
     {
-        private string FilesDirectory = "DocumentSamples/Annotation";      
-        private string DefaultDocument = "";
-        private int PreloadPageCount = 0;
+        [JsonProperty]
+        private string filesDirectory = "DocumentSamples/Annotation";
+
+        [JsonProperty]
+        private string defaultDocument = "";
+
+        [JsonProperty]
+        private int preloadPageCount = 0;
+       
+        [JsonProperty]
         private bool isTextAnnotation = true;
+
+        [JsonProperty]
         private bool isAreaAnnotation = true;
+        
+        [JsonProperty]
         private bool isPointAnnotation = true;
+
+        [JsonProperty]
         private bool isTextStrikeoutAnnotation = true;
+
+        [JsonProperty]
         private bool isPolylineAnnotation = true;
+
+        [JsonProperty]
         private bool isTextFieldAnnotation = true;
+
+        [JsonProperty]
         private bool isWatermarkAnnotation = true;
+
+        [JsonProperty]
         private bool isTextReplacementAnnotation = true;
+
+        [JsonProperty]
         private bool isArrowAnnotation = true;
+
+        [JsonProperty]
         private bool isTextRedactionAnnotation = true;
+
+        [JsonProperty]
         private bool isResourcesRedactionAnnotation = true;
+
+        [JsonProperty]
         private bool isTextUnderlineAnnotation = true;
+
+        [JsonProperty]
         private bool isDistanceAnnotation = true;
+
+        [JsonProperty]
         private bool isDownloadOriginal = true;
+
+        [JsonProperty]
         private bool isDownloadAnnotated = true;
+
+        [JsonProperty]
         private bool isZoom = true;
+
+        [JsonProperty]
         private bool isFitWidth = true;
 
         /// <summary>
@@ -40,17 +80,17 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
             YamlParser parser = new YamlParser();
             dynamic configuration = parser.GetConfiguration("annotation");
             ConfigurationValuesGetter valuesGetter = new ConfigurationValuesGetter(configuration);
-            // get Viewer configuration section from the web.config
-            FilesDirectory = valuesGetter.GetStringPropertyValue("filesDirectory", FilesDirectory);
-            if (!IsFullPath(FilesDirectory))
+            // get Annotation configuration section from the web.config
+            filesDirectory = valuesGetter.GetStringPropertyValue("filesDirectory", filesDirectory);
+            if (!IsFullPath(filesDirectory))
             {
-                FilesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, FilesDirectory);
-                if (!Directory.Exists(FilesDirectory))
-                {                   
-                    Directory.CreateDirectory(FilesDirectory);
+                filesDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filesDirectory);
+                if (!Directory.Exists(filesDirectory))
+                {
+                    Directory.CreateDirectory(filesDirectory);
                 }
             }
-            DefaultDocument = valuesGetter.GetStringPropertyValue("defaultDocument", DefaultDocument).Replace(@"\", "/");
+            defaultDocument = valuesGetter.GetStringPropertyValue("defaultDocument", defaultDocument).Replace(@"\", "/");
             isTextAnnotation = valuesGetter.GetBooleanPropertyValue("textAnnotation", isTextAnnotation);
             isAreaAnnotation = valuesGetter.GetBooleanPropertyValue("areaAnnotation", isAreaAnnotation);
             isPointAnnotation = valuesGetter.GetBooleanPropertyValue("pointAnnotation", isPointAnnotation);
@@ -66,7 +106,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
             isDistanceAnnotation = valuesGetter.GetBooleanPropertyValue("distanceAnnotation", isDistanceAnnotation);
             isDownloadOriginal = valuesGetter.GetBooleanPropertyValue("downloadOriginal", isDownloadOriginal);
             isDownloadAnnotated = valuesGetter.GetBooleanPropertyValue("downloadAnnotated", isDownloadAnnotated);
-            PreloadPageCount = valuesGetter.GetIntegerPropertyValue("preloadPageCount", PreloadPageCount);
+            preloadPageCount = valuesGetter.GetIntegerPropertyValue("preloadPageCount", preloadPageCount);
             isZoom = valuesGetter.GetBooleanPropertyValue("zoom", isZoom);
             isFitWidth = valuesGetter.GetBooleanPropertyValue("fitWidth", isFitWidth);
         }
@@ -80,32 +120,32 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Config
         }
 
         public void SetFilesDirectory(string filesDirectory) {
-            this.FilesDirectory = filesDirectory;
+            this.filesDirectory = filesDirectory;
         }
 
         public string GetFilesDirectory()
         {
-            return FilesDirectory;
+            return filesDirectory;
         }       
 
         public void SetDefaultDocument(string defaultDocument)
         {
-            this.DefaultDocument = defaultDocument;
+            this.defaultDocument = defaultDocument;
         }
 
         public string GetDefaultDocument()
         {
-            return DefaultDocument;
+            return defaultDocument;
         }
 
         public void SetPreloadPageCount(int preloadPageCount)
         {
-            this.PreloadPageCount = preloadPageCount;
+            this.preloadPageCount = preloadPageCount;
         }
 
         public int GetPreloadPageCount()
         {
-            return PreloadPageCount;
+            return preloadPageCount;
         }
 
         public void SetIsTextAnnotation(bool isTextAnnotation)

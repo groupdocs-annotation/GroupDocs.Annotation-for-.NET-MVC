@@ -14,7 +14,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public TexUnderlineAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            underlineAnnotation = new UnderlineAnnotation()
+            underlineAnnotation = new UnderlineAnnotation
             {
                 Points = new List<Point>
                 {

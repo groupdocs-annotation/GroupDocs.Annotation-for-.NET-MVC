@@ -14,7 +14,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public TextRedactionAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            this.textRedactionAnnotation = new TextRedactionAnnotation()
+            textRedactionAnnotation = new TextRedactionAnnotation
             {
                 Points = new List<Point>
                 {
