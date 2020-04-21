@@ -30,8 +30,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotatePdf()
         {
-            polylineAnnotation = InitAnnotationBase(polylineAnnotation) as PolylineAnnotation;
-            return polylineAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateCells()
@@ -50,7 +49,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// Fill creator name field in annotation info
         /// </summary>
         /// <param name="polylineAnnotation">AnnotationBase</param>
-        protected void FillCreatorName(AnnotationBase polylineAnnotation)
+        protected static void FillCreatorName(AnnotationBase polylineAnnotation)
         {
             CommentsEntity[] comments = annotationData.comments;
             if (comments != null && comments.Length > 0 && comments[0] != null)
@@ -64,16 +63,12 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateImage()
         {
-            polylineAnnotation = InitAnnotationBase(polylineAnnotation) as PolylineAnnotation;
-            FillCreatorName(polylineAnnotation);
-            return polylineAnnotation;
+            return AnnotateSlides();
         }
 
         public override AnnotationBase AnnotateDiagram()
         {
-            polylineAnnotation = InitAnnotationBase(polylineAnnotation) as PolylineAnnotation;
-            FillCreatorName(polylineAnnotation);
-            return polylineAnnotation;
+            return AnnotateSlides();
         }
 
         protected override AnnotationType GetType()

@@ -53,7 +53,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
         /// </summary>
         /// <param name="annotationInfo">AnnotationInfo</param>
         /// <returns>AnnotationDataEntity</returns>
-        public AnnotationDataEntity MapAnnotationDataEntity(AnnotationBase annotationInfo, PageInfo pageInfo)
+        public static AnnotationDataEntity MapAnnotationDataEntity(AnnotationBase annotationInfo, PageInfo pageInfo)
         {
             string annotationTypeName = Enum.GetName(typeof(AnnotationType), annotationInfo.Type);
             float maxY = 0, minY = 0, maxX = 0, minX = 0;
@@ -97,8 +97,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
             annotation.svgPath = annotationInfo is ISvgPath ? (((ISvgPath)annotationInfo).SvgPath?.Replace("l", "L")) : svgPath;
             string text = annotationInfo is IText ? (((IText)annotationInfo).Text ?? (annotationInfo is ITextToReplace ? ((ITextToReplace)annotationInfo).TextToReplace : "")) : "";
             annotation.text = text;
-            // TODO: implement backward top fix only for specific annotation types
-            //annotation.top = annotationInfo is IBox ? boxY : (annotationInfo is IPoints ? minY : 0);
+            // TODO: remove comment after check all annotations types on main formats
             annotation.top = annotationInfo is IBox ? boxY : (annotationInfo is IPoints ? pageInfo.Height - maxY : 0);
             annotation.type = char.ToLowerInvariant(annotationTypeName[0]) + annotationTypeName.Substring(1);
             annotation.width = annotationInfo is IBox ? boxWidth : (annotationInfo is IPoints ? (maxX - minX) : 0);

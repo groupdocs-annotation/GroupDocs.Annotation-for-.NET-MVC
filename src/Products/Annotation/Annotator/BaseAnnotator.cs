@@ -13,7 +13,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
     public abstract class BaseAnnotator
     {
         public string Message = "Annotation of type {0} for this file type is not supported";       
-        protected AnnotationDataEntity annotationData;
+        protected static AnnotationDataEntity annotationData;
         protected PageInfo pageInfo;
 
         /// <summary>
@@ -21,9 +21,9 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// </summary>
         /// <param name="annotationData"></param>
         /// <param name="pageInfo"></param>
-        protected BaseAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+        protected BaseAnnotator(AnnotationDataEntity annotationDataArg, PageInfo pageInfo)
         {
-            this.annotationData = annotationData;
+            annotationData = annotationDataArg;
             this.pageInfo = pageInfo;
         }
 

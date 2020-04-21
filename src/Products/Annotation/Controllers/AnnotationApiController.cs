@@ -241,7 +241,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             }
         }
 
-        private List<string> GetAllPagesContent(string password, string documentGuid, IDocumentInfo pages)
+        private static List<string> GetAllPagesContent(string password, string documentGuid, IDocumentInfo pages)
         {
             List<string> allPages = new List<string>();
 
@@ -366,7 +366,34 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             // add file into the response
             if (File.Exists(path))
             {
-                this.RemoveAnnotations(path, "");
+                RemoveAnnotations(path, "");
+                HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                var fileStream = new FileStream(path, FileMode.Open);
+                response.Content = new StreamContent(fileStream);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName = Path.GetFileName(path);
+                return response;
+            }
+            else
+            {
+                return new HttpResponseMessage(HttpStatusCode.NotFound);
+            }
+        }
+
+        /// <summary>
+        /// Download document
+        /// </summary>
+        /// <param name="path">string</param>
+        /// <param name="annotated">bool</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Route("downloadAnnotated")]
+        public HttpResponseMessage DownloadAnnotated(string path)
+        {
+            // add file into the response
+            if (File.Exists(path))
+            {
                 HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
                 var fileStream = new FileStream(path, FileMode.Open);
                 response.Content = new StreamContent(fileStream);
@@ -396,8 +423,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 string documentGuid = annotateDocumentRequest.guid;
                 string password = annotateDocumentRequest.password;
                 string documentType = SupportedImageFormats.Contains(Path.GetExtension(annotateDocumentRequest.guid)) ? "image" : annotateDocumentRequest.documentType;
-                string tempFilename = Path.GetFileNameWithoutExtension(documentGuid) + "_tmp";
-                string tempPath = Path.Combine(Path.GetDirectoryName(documentGuid), tempFilename + Path.GetExtension(documentGuid));
+                string tempPath = GetTempPath(documentGuid);
 
                 AnnotationDataEntity[] annotationsData = annotateDocumentRequest.annotationsData;
                 // initiate list of annotations to add
@@ -465,8 +491,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 annotatedDocument.guid = documentGuid;
                 if (annotateDocumentRequest.print)
                 {
-                    // TODO: reconsider following method
-                    //annotatedDocument.pages = GetAnnotatedPagesForPrint(documentGuid);
+                    annotatedDocument.pages = GetAnnotatedPagesForPrint(password, documentGuid);
                     File.Move(documentGuid, annotateDocumentRequest.guid);
                 }
             }
@@ -479,10 +504,43 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, annotatedDocument);
         }
 
-        public void RemoveAnnotations(string documentGuid, string password) {
-            // TODO: consider global properties
-            string tempFilename = Path.GetFileNameWithoutExtension(documentGuid) + "_tmp";
-            string tempPath = Path.Combine(Path.GetDirectoryName(documentGuid), tempFilename + Path.GetExtension(documentGuid));
+        private List<PageDataDescriptionEntity> GetAnnotatedPagesForPrint(string password, string documentGuid)
+        {
+            AnnotatedDocumentEntity description = new AnnotatedDocumentEntity();
+            try
+            {
+                using (FileStream outputStream = File.OpenRead(documentGuid))
+                {
+                    using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, GetLoadOptions(password)))
+                    {
+                        IDocumentInfo info = annotator.Document.GetDocumentInfo();
+                        List<string> pagesContent = GetAllPagesContent(password, documentGuid, info);
+
+                        for (int i = 0; i < info.PageCount; i++)
+                        {
+                            PageDataDescriptionEntity page = new PageDataDescriptionEntity();
+
+                            if (pagesContent.Count > 0)
+                            {
+                                page.SetData(pagesContent[i]);
+                            }
+
+                            description.pages.Add(page);
+                        }
+                    }
+                }
+
+                return description.pages;
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static void RemoveAnnotations(string documentGuid, string password)
+        {
+            string tempPath = GetTempPath(documentGuid);
 
             try
             {
@@ -500,6 +558,13 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             {
                 throw ex;
             }
+        }
+
+        private static string GetTempPath(string documentGuid)
+        {
+            string tempFilename = Path.GetFileNameWithoutExtension(documentGuid) + "_tmp";
+            string tempPath = Path.Combine(Path.GetDirectoryName(documentGuid), tempFilename + Path.GetExtension(documentGuid));
+            return tempPath;
         }
 
         private static LoadOptions GetLoadOptions(string password, bool importAnnotations = false)

@@ -34,26 +34,22 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotatePdf()
         {
-            highlightAnnotation = InitAnnotationBase(highlightAnnotation) as HighlightAnnotation;
-            return highlightAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateCells()
         {
-            highlightAnnotation = InitAnnotationBase(highlightAnnotation) as HighlightAnnotation;
-            return highlightAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateSlides()
         {
-            highlightAnnotation = InitAnnotationBase(highlightAnnotation) as HighlightAnnotation;
-            return highlightAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateImage()
         {
-            highlightAnnotation = InitAnnotationBase(highlightAnnotation) as HighlightAnnotation;
-            return highlightAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateDiagram()
@@ -61,7 +57,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
-        protected Rectangle getBox()
+        protected static Rectangle getBox()
         {
             return new Rectangle(annotationData.left / 4, annotationData.top, annotationData.width, annotationData.height);
         }
