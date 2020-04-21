@@ -35,8 +35,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotatePdf()
         {
-            replacementAnnotation = InitAnnotationBase(replacementAnnotation) as ReplacementAnnotation;
-            return replacementAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateCells()

@@ -57,11 +57,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
-        protected static Rectangle getBox()
-        {
-            return new Rectangle(annotationData.left / 4, annotationData.top, annotationData.width, annotationData.height);
-        }
-
         protected override AnnotationType GetType()
         {
             return AnnotationType.TextHighlight;

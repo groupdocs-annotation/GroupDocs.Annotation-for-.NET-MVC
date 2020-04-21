@@ -28,8 +28,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotatePdf()
         {
-            distanceAnnotation = InitAnnotationBase(distanceAnnotation) as DistanceAnnotation;
-            return distanceAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateCells()
@@ -44,14 +43,12 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateImage()
         {
-            distanceAnnotation = InitAnnotationBase(distanceAnnotation) as DistanceAnnotation;
-            return distanceAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateDiagram()
         {
-            distanceAnnotation = InitAnnotationBase(distanceAnnotation) as DistanceAnnotation;
-            return distanceAnnotation;
+            return AnnotateWord();
         }
 
         protected new AnnotationBase InitAnnotationBase(AnnotationBase annotationBase)

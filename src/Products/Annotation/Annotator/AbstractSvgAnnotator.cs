@@ -7,8 +7,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
     public abstract class AbstractSvgAnnotator : BaseAnnotator
     {
-        private bool fixTop = false;
-
         protected AbstractSvgAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
@@ -44,7 +42,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// <param name="right">double</param>
         /// <param name="bottom">double</param>
         /// <returns>string</returns>
-        protected string GetSvgString(double top, double left, double right, double bottom)
+        protected static string GetSvgString(double top, double left, double right, double bottom)
         {
             return new StringBuilder().
                     Append("[{\"x\":").Append(left).
@@ -56,11 +54,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                     Append("},{\"x\":").Append(right).
                     Append(",\"y\":").Append(bottom).
                     Append("}]").ToString();
-        }
-
-        public void SetFixTop(bool fixTop)
-        {
-            this.fixTop = fixTop;
         }
     }
 }

@@ -30,9 +30,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotatePdf()
         {
-            withGuid = false;
-            arrowAnnotation = InitAnnotationBase(arrowAnnotation) as ArrowAnnotation;
-            return arrowAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateCells()
@@ -49,16 +47,12 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateImage()
         {
-            withGuid = false;
-            arrowAnnotation = InitAnnotationBase(arrowAnnotation) as ArrowAnnotation;
-            return arrowAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateDiagram()
         {
-            withGuid = false;
-            arrowAnnotation = InitAnnotationBase(arrowAnnotation) as ArrowAnnotation;
-            return arrowAnnotation;
+            return AnnotateWord();
         }
 
         protected override Reply GetAnnotationReplyInfo(CommentsEntity comment)

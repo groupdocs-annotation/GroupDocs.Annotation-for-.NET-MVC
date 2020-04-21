@@ -6,7 +6,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
     {
         // TODO: re-check the passed documentType
         public string[] GetSupportedAnnotations(string documentType)
-        {           
+        {
             Annotations annotations = new Annotations();
             switch (documentType)
             {
@@ -28,8 +28,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
                 case "diagram":
                     return annotations.Diagram;
                 default:
-                    return annotations.Pdf;              
-            }           
+                    return annotations.Pdf;
+            }
         }
     }
 }

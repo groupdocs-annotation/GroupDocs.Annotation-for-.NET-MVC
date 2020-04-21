@@ -27,8 +27,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotatePdf()
         {
-            pointAnnotation = base.InitAnnotationBase(pointAnnotation) as PointAnnotation;
-            return pointAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateCells()
@@ -38,20 +37,17 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateSlides()
         {
-            pointAnnotation = base.InitAnnotationBase(pointAnnotation) as PointAnnotation;
-            return pointAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateImage()
         {
-            pointAnnotation = base.InitAnnotationBase(pointAnnotation) as PointAnnotation;
-            return pointAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateDiagram()
         {
-            pointAnnotation = base.InitAnnotationBase(pointAnnotation) as PointAnnotation;
-            return pointAnnotation;
+            return AnnotateWord();
         }
 
         protected override AnnotationType GetType()

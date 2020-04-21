@@ -31,8 +31,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotatePdf()
         {
-            watermarkAnnotation = InitAnnotationBase(watermarkAnnotation) as WatermarkAnnotation;
-            return watermarkAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateCells()
@@ -42,14 +41,12 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateSlides()
         {
-            watermarkAnnotation = InitAnnotationBase(watermarkAnnotation) as WatermarkAnnotation;
-            return watermarkAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateImage()
         {
-            watermarkAnnotation = InitAnnotationBase(watermarkAnnotation) as WatermarkAnnotation;
-            return watermarkAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateDiagram()

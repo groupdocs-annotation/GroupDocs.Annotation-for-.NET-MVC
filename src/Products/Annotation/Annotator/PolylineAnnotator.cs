@@ -41,7 +41,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         public override AnnotationBase AnnotateSlides()
         {
             polylineAnnotation = InitAnnotationBase(polylineAnnotation) as PolylineAnnotation;
-            FillCreatorName(polylineAnnotation);
+            FillCreatorName(polylineAnnotation, annotationData);
             return polylineAnnotation;
         }
 
@@ -49,7 +49,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         /// Fill creator name field in annotation info
         /// </summary>
         /// <param name="polylineAnnotation">AnnotationBase</param>
-        protected static void FillCreatorName(AnnotationBase polylineAnnotation)
+        protected static void FillCreatorName(AnnotationBase polylineAnnotation, AnnotationDataEntity annotationData)
         {
             CommentsEntity[] comments = annotationData.comments;
             if (comments != null && comments.Length > 0 && comments[0] != null)

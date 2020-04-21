@@ -35,9 +35,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotatePdf()
         {
-            underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
-            underlineAnnotation.FontColor = 1201033;
-            return underlineAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateCells()
@@ -54,9 +52,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateImage()
         {
-            underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
-            underlineAnnotation.FontColor = 1201033;
-            return underlineAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateDiagram()

@@ -169,7 +169,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
                         if (annotations != null && annotations.Length > 0)
                         {
-                            page.SetAnnotations(AnnotationMapper.instance.MapForPage(annotations, i+1, info.PagesInfo[i]));
+                            page.SetAnnotations(AnnotationMapper.MapForPage(annotations, i+1, info.PagesInfo[i]));
                         }
 
                         if (pagesContent.Count > 0)
@@ -220,7 +220,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
                         if (annotations != null && annotations.Length > 0)
                         {
-                            loadedPage.SetAnnotations(AnnotationMapper.instance.MapForPage(annotations, pageNumber, info.PagesInfo[pageNumber - 1]));
+                            loadedPage.SetAnnotations(AnnotationMapper.MapForPage(annotations, pageNumber, info.PagesInfo[pageNumber - 1]));
                         }
 
                         string encodedImage = Convert.ToBase64String(bytes);
@@ -504,7 +504,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, annotatedDocument);
         }
 
-        private List<PageDataDescriptionEntity> GetAnnotatedPagesForPrint(string password, string documentGuid)
+        private static List<PageDataDescriptionEntity> GetAnnotatedPagesForPrint(string password, string documentGuid)
         {
             AnnotatedDocumentEntity description = new AnnotatedDocumentEntity();
             try

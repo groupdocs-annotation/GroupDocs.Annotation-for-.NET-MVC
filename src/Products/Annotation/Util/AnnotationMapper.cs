@@ -14,11 +14,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
 {
     public class AnnotationMapper
     {
-        /// <summary>
-        /// Instance of mapper
-        /// </summary>
-        public static readonly AnnotationMapper instance = new AnnotationMapper();
-
         private AnnotationMapper()
         {
         }
@@ -29,7 +24,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
         /// <param name="annotations">AnnotationInfo[]</param>
         /// <param name="pageNumber">int</param>
         /// <returns></returns>
-        public AnnotationDataEntity[] MapForPage(AnnotationBase[] annotations, int pageNumber, PageInfo pageInfo)
+        public static AnnotationDataEntity[] MapForPage(AnnotationBase[] annotations, int pageNumber, PageInfo pageInfo)
         {
             // initiate annotations data array
             IList<AnnotationDataEntity> pageAnnotations = new List<AnnotationDataEntity>();

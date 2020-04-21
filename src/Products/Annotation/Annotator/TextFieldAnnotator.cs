@@ -30,8 +30,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotatePdf()
         {
-            textFieldAnnotation = InitAnnotationBase(textFieldAnnotation) as TextFieldAnnotation;
-            return textFieldAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateCells()
@@ -41,20 +40,17 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateSlides()
         {
-            textFieldAnnotation = InitAnnotationBase(textFieldAnnotation) as TextFieldAnnotation;
-            return textFieldAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateImage()
         {
-            textFieldAnnotation = InitAnnotationBase(textFieldAnnotation) as TextFieldAnnotation;
-            return textFieldAnnotation;
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateDiagram()
         {
-            textFieldAnnotation = InitAnnotationBase(textFieldAnnotation) as TextFieldAnnotation;
-            return textFieldAnnotation;
+            return AnnotateWord();
         }
 
         protected override AnnotationType GetType()
