@@ -3,7 +3,6 @@ using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.Options;
 using System;
-using System.Collections.Generic;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
@@ -16,13 +15,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
         {
             textRedactionAnnotation = new TextRedactionAnnotation
             {
-                Points = new List<Point>
-                {
-                    new Point(annotationData.left, pageInfo.Height - annotationData.top),
-                    new Point(annotationData.left + annotationData.width, pageInfo.Height - annotationData.top),
-                    new Point(annotationData.left, pageInfo.Height - annotationData.top - annotationData.height),
-                    new Point(annotationData.left + annotationData.width, pageInfo.Height - annotationData.top - annotationData.height)
-                }
+                Points = GetPoints(annotationData, pageInfo)
             };
         }
 

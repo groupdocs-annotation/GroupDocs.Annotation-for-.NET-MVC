@@ -433,7 +433,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 {
                     using (GroupDocs.Annotation.Annotator annotator = new GroupDocs.Annotation.Annotator(outputStream, GetLoadOptions(password)))
                     {
-                        string notSupportedMessage = "";
                         IDocumentInfo info = annotator.Document.GetDocumentInfo();
 
                         for (int i = 0; i < annotationsData.Length; i++)
@@ -447,10 +446,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                                 if (baseAnnotator.IsSupported(documentType))
                                 {
                                     annotations.Add(baseAnnotator.GetAnnotationBase(documentType));
-                                }
-                                else
-                                {
-                                    notSupportedMessage = baseAnnotator.Message;
                                 }
                             }
                             catch (System.Exception ex)
