@@ -1,8 +1,6 @@
 ﻿using GroupDocs.Annotation.Models;
-using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
