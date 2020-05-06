@@ -6,11 +6,11 @@ using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class TextHighlightAnnotation : AbstractTextAnnotator
+    public class TextHighlightAnnotator : AbstractTextAnnotator
     {
         private HighlightAnnotation highlightAnnotation;
 
-        public TextHighlightAnnotation(AnnotationDataEntity annotationData, PageInfo pageInfo)
+        public TextHighlightAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
             highlightAnnotation = new HighlightAnnotation

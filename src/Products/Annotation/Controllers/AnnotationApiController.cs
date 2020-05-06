@@ -445,7 +445,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                         }
                         catch (Exception ex)
                         {
-                            throw new Exception(ex.Message, ex);
+                            throw new Exceptions.AnnotatorException(ex.Message, ex);
                         }
                     }
                 }

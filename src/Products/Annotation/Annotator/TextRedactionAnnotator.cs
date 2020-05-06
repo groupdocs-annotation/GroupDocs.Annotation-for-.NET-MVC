@@ -6,7 +6,7 @@ using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class TextRedactionAnnotator : TextHighlightAnnotation
+    public class TextRedactionAnnotator : TextHighlightAnnotator
     {
         private TextRedactionAnnotation textRedactionAnnotation;
 

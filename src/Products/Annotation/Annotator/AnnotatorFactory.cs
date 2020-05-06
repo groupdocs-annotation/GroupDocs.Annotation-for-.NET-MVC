@@ -18,7 +18,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
             switch (roundedAnnotationData.type)
             {
                 case "textHighlight":
-                    return new TextHighlightAnnotation(roundedAnnotationData, pageInfo);
+                    return new TextHighlightAnnotator(roundedAnnotationData, pageInfo);
                 case "area":
                     return new AreaAnnotator(roundedAnnotationData, pageInfo);
                 case "point":

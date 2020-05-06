@@ -157,7 +157,7 @@
     <Compile Include="Products\Annotation\Annotator\ResourceRedactionAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\TexStrikeoutAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\TextFieldAnnotator.cs" />
-    <Compile Include="Products\Annotation\Annotator\TextHighlightAnnotation.cs" />
+    <Compile Include="Products\Annotation\Annotator\TextHighlightAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\TextRedactionAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\TextReplacementAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\TexUnderlineAnnotator.cs" />
