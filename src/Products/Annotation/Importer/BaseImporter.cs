@@ -29,7 +29,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Importer
         /// <returns>AnnotationInfo[]</returns>
         public AnnotationInfo[] ImportAnnotations(DocumentType docType)
         {
-            AnnotationInfo[] annotations = null;
+            AnnotationInfo[] annotations;
 
             if (docType.Equals(DocumentType.Images))
             {
@@ -38,9 +38,9 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Importer
             else
             {
                annotations = annotator.ImportAnnotations(documentStream, docType, password);
-            }           
+            }
+
             return annotations;
         }
-
     }
 }
