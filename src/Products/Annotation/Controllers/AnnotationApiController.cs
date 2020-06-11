@@ -30,10 +30,10 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AnnotationApiController : ApiController
     {
-        private static Common.Config.GlobalConfiguration globalConfiguration;
+        private static Common.Config.GlobalConfiguration globalConfiguration = new Common.Config.GlobalConfiguration();
         private static AnnotationImageHandler annotationImageHandler;
-        private readonly List<string> supportedImageFormats = new List<string>() { ".bmp", ".jpeg", ".jpg", ".tiff", ".tif", ".png", ".gif", ".emf", ".wmf", ".dwg", ".dicom", ".djvu" };
-        private readonly List<string> supportedDiagrammFormats = new List<string>() { ".vsd", ".vdx", ".vss", ".vsx", ".vst", ".vtx", ".vsdx", ".vdw", ".vstx", ".vssx" };
+        private readonly List<string> supportedImageFormats = new List<string> { ".bmp", ".jpeg", ".jpg", ".tiff", ".tif", ".png", ".gif", ".emf", ".wmf", ".dwg", ".dicom", ".djvu" };
+        private readonly List<string> supportedDiagrammFormats = new List<string> { ".vsd", ".vdx", ".vss", ".vsx", ".vst", ".vtx", ".vsdx", ".vdw", ".vstx", ".vssx" };
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnnotationApiController"/> class.
@@ -41,8 +41,6 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// </summary>
         public AnnotationApiController()
         {
-            globalConfiguration = new Common.Config.GlobalConfiguration();
-
             // create annotation directories
             DirectoryUtils directoryUtils = new DirectoryUtils(globalConfiguration.Annotation);
 
