@@ -6,11 +6,11 @@ using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class TexUnderlineAnnotator : AbstractTextAnnotator
+    public class TextUnderlineAnnotator : AbstractTextAnnotator
     {
         private UnderlineAnnotation underlineAnnotation;
 
-        public TexUnderlineAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+        public TextUnderlineAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
             underlineAnnotation = new UnderlineAnnotation
@@ -33,7 +33,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateCells()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            return AnnotateWord();
         }
 
         public override AnnotationBase AnnotateSlides()

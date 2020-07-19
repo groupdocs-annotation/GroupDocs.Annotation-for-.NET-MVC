@@ -40,7 +40,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 case "resourcesRedaction":
                     return new ResourceRedactionAnnotator(roundedAnnotationData, pageInfo);
                 case "textUnderline":
-                    return new TexUnderlineAnnotator(roundedAnnotationData, pageInfo);
+                    return new TextUnderlineAnnotator(roundedAnnotationData, pageInfo);
                 case "distance":
                     return new DistanceAnnotator(roundedAnnotationData, pageInfo);
                 default:

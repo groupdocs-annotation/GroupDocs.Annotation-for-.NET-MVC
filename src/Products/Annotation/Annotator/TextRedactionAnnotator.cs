@@ -21,12 +21,12 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateCells()
         {
-            throw new NotSupportedException(string.Format(Message, annotationData.type));
+            return AnnotatePdf();
         }
 
         public override AnnotationBase AnnotateSlides()
         {
-            throw new NotSupportedException(string.Format(Message, annotationData.type));
+            return AnnotatePdf();
         }
 
         public override AnnotationBase AnnotateImage()
