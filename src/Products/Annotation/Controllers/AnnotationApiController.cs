@@ -4,7 +4,6 @@ using GroupDocs.Annotation.MVC.Products.Annotation.Annotator;
 using GroupDocs.Annotation.MVC.Products.Annotation.Config;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.MVC.Products.Annotation.Util;
-using GroupDocs.Annotation.MVC.Products.Common.Config;
 using GroupDocs.Annotation.MVC.Products.Common.Entity.Web;
 using GroupDocs.Annotation.MVC.Products.Common.Resources;
 using GroupDocs.Annotation.MVC.Products.Common.Util.Comparator;
@@ -27,16 +26,8 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class AnnotationApiController : ApiController
     {
-        private static Common.Config.GlobalConfiguration GlobalConfiguration;
+        private static Common.Config.GlobalConfiguration globalConfiguration = new Common.Config.GlobalConfiguration();
         private readonly List<string> SupportedImageFormats = new List<string> { ".bmp", ".jpeg", ".jpg", ".tiff", ".tif", ".png", ".dwg", ".dcm", ".dxf" };
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        public AnnotationApiController()
-        {
-            GlobalConfiguration = new Common.Config.GlobalConfiguration();
-        }
 
         /// <summary>
         /// Load Annotation configuration
@@ -46,7 +37,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         [Route("loadConfig")]
         public AnnotationConfiguration LoadConfig()
         {
-            return GlobalConfiguration.Annotation;
+            return globalConfiguration.Annotation;
         }
 
         /// <summary>
@@ -66,11 +57,11 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 // get all the files from a directory
                 if (string.IsNullOrEmpty(relDirPath))
                 {
-                    relDirPath = GlobalConfiguration.Annotation.GetFilesDirectory();
+                    relDirPath = globalConfiguration.Annotation.GetFilesDirectory();
                 }
                 else
                 {
-                    relDirPath = Path.Combine(GlobalConfiguration.Annotation.GetFilesDirectory(), relDirPath);
+                    relDirPath = Path.Combine(globalConfiguration.Annotation.GetFilesDirectory(), relDirPath);
                 }
 
                 List<FileDescriptionEntity> fileList = new List<FileDescriptionEntity>();
@@ -85,7 +76,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     FileInfo fileInfo = new FileInfo(file);
                     // check if current file/folder is hidden
                     if (!(fileInfo.Attributes.HasFlag(FileAttributes.Hidden) ||
-                        Path.GetFileName(file).Equals(Path.GetFileName(GlobalConfiguration.Annotation.GetFilesDirectory())) ||
+                        Path.GetFileName(file).Equals(Path.GetFileName(globalConfiguration.Annotation.GetFilesDirectory())) ||
                         Path.GetFileName(file).StartsWith(".")))
                     {
                         FileDescriptionEntity fileDescription = new FileDescriptionEntity();
@@ -122,7 +113,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             string password = "";
             try
             {
-                AnnotatedDocumentEntity loadDocumentEntity = LoadDocument(postedData, GlobalConfiguration.Annotation.GetPreloadPageCount() == 0);
+                AnnotatedDocumentEntity loadDocumentEntity = LoadDocument(postedData, globalConfiguration.Annotation.GetPreloadPageCount() == 0);
                 // return document description
                 return Request.CreateResponse(HttpStatusCode.OK, loadDocumentEntity);
             }
@@ -291,7 +282,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             {
                 string url = HttpContext.Current.Request.Form["url"];
                 // get documents storage path
-                string documentStoragePath = GlobalConfiguration.Annotation.GetFilesDirectory();
+                string documentStoragePath = globalConfiguration.Annotation.GetFilesDirectory();
                 bool rewrite = bool.Parse(HttpContext.Current.Request.Form["rewrite"]);
                 string fileSavePath = "";
                 if (string.IsNullOrEmpty(url))
