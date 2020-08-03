@@ -1,39 +1,48 @@
-﻿using GroupDocs.Annotation.Domain;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
 using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class TextRedactionAnnotator : TextAnnotator
+    public class TextRedactionAnnotator : TextHighlightAnnotator
     {
-        public TextRedactionAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        private TextRedactionAnnotation textRedactionAnnotation;
+
+        public TextRedactionAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
+            textRedactionAnnotation = new TextRedactionAnnotation
+            {
+                Points = GetPoints(annotationData, pageInfo)
+            };
         }
 
-        public AnnotationInfo annotateCells()
+        public override AnnotationBase AnnotateCells()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            return AnnotatePdf();
         }
 
-        public AnnotationInfo annotateSlides()
+        public override AnnotationBase AnnotateSlides()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            return AnnotatePdf();
         }
 
-        public AnnotationInfo annotateImage()
+        public override AnnotationBase AnnotateImage()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
-        public AnnotationInfo annotateDiagram()
+        public override AnnotationBase AnnotateDiagram()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
         }
 
-        protected override Rectangle GetBox()
+        public override AnnotationBase AnnotatePdf()
         {
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
+            textRedactionAnnotation = InitAnnotationBase(textRedactionAnnotation) as TextRedactionAnnotation;
+            return textRedactionAnnotation;
         }
 
         protected override AnnotationType GetType()

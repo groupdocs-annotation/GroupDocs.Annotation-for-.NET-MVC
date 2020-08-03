@@ -1,58 +1,58 @@
-﻿using GroupDocs.Annotation.Domain;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
 using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class TextFieldAnnotator : AbstractTextAnnotator
+    public class TextFieldAnnotator : BaseAnnotator
     {
-        public TextFieldAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        private TextFieldAnnotation textFieldAnnotation;
+
+        public TextFieldAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
+            textFieldAnnotation = new TextFieldAnnotation {
+                Box = GetBox(),
+                FontFamily = !string.IsNullOrEmpty(annotationData.font) ? annotationData.font : "Arial",
+                FontColor = annotationData.fontColor,
+                FontSize = annotationData.fontSize == 0 ? 12 : annotationData.fontSize,
+                Text = annotationData.text
+            };
         }
         
-        public override AnnotationInfo AnnotateWord()
+        public override AnnotationBase AnnotateWord()
         {
-            // init possible types of annotations
-            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();
+            textFieldAnnotation = InitAnnotationBase(textFieldAnnotation) as TextFieldAnnotation;
             return textFieldAnnotation;
         }
-        
-        public override AnnotationInfo AnnotatePdf()
+
+        public override AnnotationBase AnnotatePdf()
         {
-            // init possible types of annotations
-            // Text field annotation
-            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();
-            textFieldAnnotation.AnnotationPosition = new Point(annotationData.left, annotationData.top);
-            return textFieldAnnotation;
+            return AnnotateWord();
         }
-        
-        public override AnnotationInfo AnnotateCells()
+
+        public override AnnotationBase AnnotateCells()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            return AnnotateWord();
         }
-        
-        public override AnnotationInfo AnnotateSlides()
+
+        public override AnnotationBase AnnotateSlides()
         {
-            // init possible types of annotations
-            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();
-            return textFieldAnnotation;
+            return AnnotateWord();
         }
-        
-        public override AnnotationInfo AnnotateImage()
+
+        public override AnnotationBase AnnotateImage()
         {
-            // init possible types of annotations
-            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();           
-            return textFieldAnnotation;
+            return AnnotateWord();
         }
-        
-        public override AnnotationInfo AnnotateDiagram()
+
+        public override AnnotationBase AnnotateDiagram()
         {
-            // init possible types of annotations
-            AnnotationInfo textFieldAnnotation = InitAnnotationInfo();           
-            return textFieldAnnotation;
+            return AnnotateWord();
         }
-        
+
         protected override AnnotationType GetType()
         {
             return AnnotationType.TextField;

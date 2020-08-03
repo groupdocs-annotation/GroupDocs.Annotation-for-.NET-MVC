@@ -1,81 +1,76 @@
-﻿using GroupDocs.Annotation.Domain;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
 using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
     public class PolylineAnnotator : BaseAnnotator
     {
-        public PolylineAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        private PolylineAnnotation polylineAnnotation;
+
+        public PolylineAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
+            this.polylineAnnotation = new PolylineAnnotation
+            {
+                Box = GetBox(),
+                PenColor = 1201033,
+                PenWidth = 2,
+                SvgPath = annotationData.svgPath
+            };
         }
-        
-        public override AnnotationInfo AnnotateWord()
+
+        public override AnnotationBase AnnotateWord()
         {
-            AnnotationInfo polylineAnnotation = InitAnnotationInfo();
+            polylineAnnotation = InitAnnotationBase(polylineAnnotation) as PolylineAnnotation;
             return polylineAnnotation;
         }
-        
-        public override AnnotationInfo AnnotatePdf()
+
+        public override AnnotationBase AnnotatePdf()
         {
-            AnnotationInfo polylineAnnotation = InitAnnotationInfo();
-            return polylineAnnotation;
+            return AnnotateWord();
         }
-        
-        protected new AnnotationInfo InitAnnotationInfo()
+
+        public override AnnotationBase AnnotateCells()
         {
-            AnnotationInfo polylineAnnotation = base.InitAnnotationInfo();
-            polylineAnnotation.PenColor = 1201033;
-            polylineAnnotation.PenWidth = (byte)2;
-            polylineAnnotation.SvgPath = annotationData.svgPath;
-            return polylineAnnotation;
+            return AnnotateWord();
         }
-        
-        public override AnnotationInfo AnnotateCells()
+
+        public override AnnotationBase AnnotateSlides()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
-        }
-        
-        public override AnnotationInfo AnnotateSlides()
-        {
-            AnnotationInfo polylineAnnotation = InitAnnotationInfo();
-            fillCreatorName(polylineAnnotation);
+            polylineAnnotation = InitAnnotationBase(polylineAnnotation) as PolylineAnnotation;
+            FillCreatorName(polylineAnnotation, annotationData);
             return polylineAnnotation;
         }
 
         /// <summary>
         /// Fill creator name field in annotation info
         /// </summary>
-        /// <param name="polylineAnnotation">AnnotationInfo</param>
-        protected void fillCreatorName(AnnotationInfo polylineAnnotation)
+        /// <param name="polylineAnnotation">AnnotationBase</param>
+        protected static void FillCreatorName(AnnotationBase polylineAnnotation, AnnotationDataEntity annotationData)
         {
             CommentsEntity[] comments = annotationData.comments;
             if (comments != null && comments.Length > 0 && comments[0] != null)
             {
-                polylineAnnotation.CreatorName = comments[0].userName;
+                polylineAnnotation.User = new User 
+                { 
+                    Name = comments[0].userName 
+                };
             }
         }
-        
-        public override AnnotationInfo AnnotateImage()
+
+        public override AnnotationBase AnnotateImage()
         {
-            AnnotationInfo polylineAnnotation = InitAnnotationInfo();
-            fillCreatorName(polylineAnnotation);
-            return polylineAnnotation;
+            return AnnotateSlides();
         }
-        
-        public override AnnotationInfo AnnotateDiagram()
+
+        public override AnnotationBase AnnotateDiagram()
         {
-            AnnotationInfo polylineAnnotation = InitAnnotationInfo();
-            fillCreatorName(polylineAnnotation);
-            return polylineAnnotation;
+            return AnnotateSlides();
         }
-        
-        protected override Rectangle GetBox()
-        {
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
-        }
-        
+
         protected override AnnotationType GetType()
         {
             return AnnotationType.Polyline;

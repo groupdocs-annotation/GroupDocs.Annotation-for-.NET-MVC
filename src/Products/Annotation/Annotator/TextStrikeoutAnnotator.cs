@@ -1,37 +1,35 @@
-﻿using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
-using System;
-using GroupDocs.Annotation.Options;
+﻿using GroupDocs.Annotation.Models;
 using GroupDocs.Annotation.Models.AnnotationModels;
-using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
+using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class WatermarkAnnotator : BaseAnnotator
+    public class TexStrikeoutAnnotator : AbstractTextAnnotator
     {
-        private WatermarkAnnotation watermarkAnnotation;
+        private StrikeoutAnnotation strikeoutAnnotation;
 
-        public WatermarkAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+        public TexStrikeoutAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            watermarkAnnotation = new WatermarkAnnotation
+            strikeoutAnnotation = new StrikeoutAnnotation
             {
-                Box = GetBox(),
-                FontFamily = !string.IsNullOrEmpty(annotationData.font) ? annotationData.font : "Arial",
-                FontColor = annotationData.fontColor,
-                FontSize = annotationData.fontSize == 0 ? 12 : annotationData.fontSize,
-                Text = annotationData.text
+                Points = GetPoints(annotationData, pageInfo)
             };
         }
 
         public override AnnotationBase AnnotateWord()
         {
-            watermarkAnnotation = InitAnnotationBase(watermarkAnnotation) as WatermarkAnnotation;
-            return watermarkAnnotation;
+            strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
+            return strikeoutAnnotation;
         }
 
         public override AnnotationBase AnnotatePdf()
         {
-            return AnnotateWord();
+            strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
+            this.strikeoutAnnotation.FontColor = 0;
+            return strikeoutAnnotation;
         }
 
         public override AnnotationBase AnnotateCells()
@@ -56,7 +54,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         protected override AnnotationType GetType()
         {
-            return AnnotationType.Watermark;
+            return AnnotationType.TextStrikeout;
         }
     }
 }

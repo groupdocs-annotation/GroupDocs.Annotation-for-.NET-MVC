@@ -1,74 +1,56 @@
-﻿using GroupDocs.Annotation.Domain;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
 using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class TextReplacementAnnotator : AbstractSvgAnnotator
+    public class TextReplacementAnnotator : AbstractTextAnnotator
     {
+        private ReplacementAnnotation replacementAnnotation;
 
-        public TextReplacementAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        public TextReplacementAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
-        }
-        
-        public override AnnotationInfo AnnotateWord()
-        {
-            // init possible types of annotations
-            AnnotationInfo textReplacementAnnotation = InitAnnotationInfo();
-            return textReplacementAnnotation;
-        }
-        
-        protected new AnnotationInfo InitAnnotationInfo()
-        {
-            AnnotationInfo textReplacementAnnotation = base.InitAnnotationInfo();
-            textReplacementAnnotation.Guid = annotationData.id.ToString();
-            textReplacementAnnotation.FieldText = annotationData.text;
-            return textReplacementAnnotation;
-        }
-        
-        protected String buildSvgPath()
-        {
-            double topPosition = pageData.Height - annotationData.top;
-            double leftPosition = pageData.Width - annotationData.left;
-            double topRightX = annotationData.left + annotationData.width;
-            double bottomRightY = topPosition - annotationData.height;
-            return base.GetSvgString(topPosition, leftPosition, topRightX, bottomRightY);
-        }
-        
-        public override AnnotationInfo AnnotatePdf()
-        {
-            // init possible types of annotations
-            AnnotationInfo textReplacementAnnotation = InitAnnotationInfo();
-            textReplacementAnnotation.Box = new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
-            return textReplacementAnnotation;
-        }
-        
-        public override AnnotationInfo AnnotateCells()
-        {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
-        }
-        
-        public override AnnotationInfo AnnotateSlides()
-        {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
-        }
-        
-        public override AnnotationInfo AnnotateImage()
-        {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            replacementAnnotation = new ReplacementAnnotation
+            {
+                Points = GetPoints(annotationData, pageInfo),
+                TextToReplace = annotationData.text
+            };
         }
 
-        public override AnnotationInfo AnnotateDiagram()
+        public override AnnotationBase AnnotateWord()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            replacementAnnotation = InitAnnotationBase(replacementAnnotation) as ReplacementAnnotation;
+            return replacementAnnotation;
         }
-        
-        protected override Rectangle GetBox()
+
+        public override AnnotationBase AnnotatePdf()
         {
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
+            return AnnotateWord();
         }
-        
+
+        public override AnnotationBase AnnotateCells()
+        {
+            return AnnotateWord();
+        }
+
+        public override AnnotationBase AnnotateSlides()
+        {
+            return AnnotateWord();
+        }
+
+        public override AnnotationBase AnnotateImage()
+        {
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
+        }
+
+        public override AnnotationBase AnnotateDiagram()
+        {
+            throw new NotSupportedException(string.Format(Message, annotationData.type));
+        }
+
         protected override AnnotationType GetType()
         {
             return AnnotationType.TextReplacement;

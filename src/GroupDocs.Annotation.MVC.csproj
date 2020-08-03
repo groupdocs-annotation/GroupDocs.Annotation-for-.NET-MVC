@@ -45,12 +45,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GroupDocs.Annotation, Version=19.6.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
-      <HintPath>..\packages\GroupDocs.Annotation.19.6.0\lib\GroupDocs.Annotation.dll</HintPath>
+    <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="GroupDocs.Annotation, Version=20.6.0.0, Culture=neutral, PublicKeyToken=716fcc553a201e56, processorArchitecture=MSIL">
+      <HintPath>..\packages\GroupDocs.Annotation.20.6.0\lib\net20\GroupDocs.Annotation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -134,10 +136,6 @@
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
     </Reference>
-    <Reference Include="Antlr3.Runtime">
-      <Private>True</Private>
-      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="YamlDotNet, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\YamlDotNet.5.2.1\lib\net45\YamlDotNet.dll</HintPath>
     </Reference>
@@ -148,8 +146,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AnnotationController.cs" />
-    <Compile Include="Products\Annotation\Annotator\AbstractBoxAnnotator.cs" />
-    <Compile Include="Products\Annotation\Annotator\AbstractSvgAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\AbstractTextAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\AnnotatorFactory.cs" />
     <Compile Include="Products\Annotation\Annotator\AreaAnnotator.cs" />
@@ -159,12 +155,12 @@
     <Compile Include="Products\Annotation\Annotator\PointAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\PolylineAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\ResourceRedactionAnnotator.cs" />
-    <Compile Include="Products\Annotation\Annotator\TexStrikeoutAnnotator.cs" />
-    <Compile Include="Products\Annotation\Annotator\TextAnnotator.cs" />
+    <Compile Include="Products\Annotation\Annotator\TextStrikeoutAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\TextFieldAnnotator.cs" />
+    <Compile Include="Products\Annotation\Annotator\TextHighlightAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\TextRedactionAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\TextReplacementAnnotator.cs" />
-    <Compile Include="Products\Annotation\Annotator\TexUnderlineAnnotator.cs" />
+    <Compile Include="Products\Annotation\Annotator\TextUnderlineAnnotator.cs" />
     <Compile Include="Products\Annotation\Annotator\WatermarkAnnotator.cs" />
     <Compile Include="Products\Annotation\Config\AnnotationConfiguration.cs" />
     <Compile Include="Products\Annotation\Controllers\AnnotationApiController.cs" />
@@ -176,7 +172,6 @@
     <Compile Include="Products\Annotation\Entity\Web\AnnotationPostedDataEntity.cs" />
     <Compile Include="Products\Annotation\Entity\Web\PageDataDescriptionEntity.cs" />
     <Compile Include="Products\Annotation\Entity\Web\TextRowEntity.cs" />
-    <Compile Include="Products\Annotation\Importer\BaseImporter.cs" />
     <Compile Include="Products\Annotation\Util\AnnotationMapper.cs" />
     <Compile Include="Products\Annotation\Util\Directory\DirectoryUtils.cs" />
     <Compile Include="Products\Annotation\Util\Directory\FilesDirectoryUtils.cs" />

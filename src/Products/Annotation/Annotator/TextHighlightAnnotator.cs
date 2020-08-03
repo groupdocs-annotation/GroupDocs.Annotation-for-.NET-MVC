@@ -1,32 +1,28 @@
-﻿using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
-using System;
-using GroupDocs.Annotation.Options;
+﻿using GroupDocs.Annotation.Models;
 using GroupDocs.Annotation.Models.AnnotationModels;
-using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
+using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class WatermarkAnnotator : BaseAnnotator
+    public class TextHighlightAnnotator : AbstractTextAnnotator
     {
-        private WatermarkAnnotation watermarkAnnotation;
+        private HighlightAnnotation highlightAnnotation;
 
-        public WatermarkAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+        public TextHighlightAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            watermarkAnnotation = new WatermarkAnnotation
+            highlightAnnotation = new HighlightAnnotation
             {
-                Box = GetBox(),
-                FontFamily = !string.IsNullOrEmpty(annotationData.font) ? annotationData.font : "Arial",
-                FontColor = annotationData.fontColor,
-                FontSize = annotationData.fontSize == 0 ? 12 : annotationData.fontSize,
-                Text = annotationData.text
+                Points = GetPoints(annotationData, pageInfo)
             };
         }
 
         public override AnnotationBase AnnotateWord()
         {
-            watermarkAnnotation = InitAnnotationBase(watermarkAnnotation) as WatermarkAnnotation;
-            return watermarkAnnotation;
+            highlightAnnotation = InitAnnotationBase(highlightAnnotation) as HighlightAnnotation;
+            return highlightAnnotation;
         }
 
         public override AnnotationBase AnnotatePdf()
@@ -56,7 +52,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         protected override AnnotationType GetType()
         {
-            return AnnotationType.Watermark;
+            return AnnotationType.TextHighlight;
         }
     }
 }

@@ -1,62 +1,55 @@
-﻿
-using GroupDocs.Annotation.Domain;
-using GroupDocs.Annotation.Domain.Containers;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
 using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
     public class PointAnnotator : BaseAnnotator
     {
-        public PointAnnotator(AnnotationDataEntity annotationData, PageData pageData)
-            : base(annotationData, pageData)
+        private PointAnnotation pointAnnotation;
+
+        public PointAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+            : base(annotationData, pageInfo)
         {
+            pointAnnotation = new PointAnnotation
+            {
+                Box = GetBox()
+            };
         }
-        
-        public override AnnotationInfo AnnotateWord()
+
+        public override AnnotationBase AnnotateWord()
         {
-            return InitAnnotationInfo();
-        }
-        
-        public override AnnotationInfo AnnotatePdf()
-        {
-            return InitAnnotationInfo();
-        }
-        
-        protected new AnnotationInfo InitAnnotationInfo()
-        {
-            // init annotation object
-            AnnotationInfo pointAnnotation = base.InitAnnotationInfo();
-            // set annotation position
-            pointAnnotation.AnnotationPosition = new Point(annotationData.left, annotationData.top);
+            pointAnnotation = base.InitAnnotationBase(pointAnnotation) as PointAnnotation;
             return pointAnnotation;
         }
 
-        public override AnnotationInfo AnnotateCells()
+        public override AnnotationBase AnnotatePdf()
         {
-            throw new NotSupportedException(String.Format(Message, annotationData.type));
+            return AnnotateWord();
         }
-        
-        public override AnnotationInfo AnnotateSlides()
+
+        public override AnnotationBase AnnotateCells()
         {
-            return InitAnnotationInfo();
+            return AnnotateWord();
         }
-        
-        public override AnnotationInfo AnnotateImage()
+
+        public override AnnotationBase AnnotateSlides()
         {
-            return InitAnnotationInfo();
+            return AnnotateWord();
         }
-        
-        public override AnnotationInfo AnnotateDiagram()
+
+        public override AnnotationBase AnnotateImage()
         {
-            return InitAnnotationInfo();
+            return AnnotateWord();
         }
-        
-        protected override Rectangle GetBox()
+
+        public override AnnotationBase AnnotateDiagram()
         {
-            return new Rectangle(annotationData.left, annotationData.top, annotationData.width, annotationData.height);
+            return AnnotateWord();
         }
-        
+
         protected override AnnotationType GetType()
         {
             return AnnotationType.Point;

@@ -1,32 +1,29 @@
-﻿using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
-using System;
-using GroupDocs.Annotation.Options;
+﻿using GroupDocs.Annotation.Models;
 using GroupDocs.Annotation.Models.AnnotationModels;
-using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
+using System;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
-    public class WatermarkAnnotator : BaseAnnotator
+    public class TextUnderlineAnnotator : AbstractTextAnnotator
     {
-        private WatermarkAnnotation watermarkAnnotation;
+        private UnderlineAnnotation underlineAnnotation;
 
-        public WatermarkAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
+        public TextUnderlineAnnotator(AnnotationDataEntity annotationData, PageInfo pageInfo)
             : base(annotationData, pageInfo)
         {
-            watermarkAnnotation = new WatermarkAnnotation
+            underlineAnnotation = new UnderlineAnnotation
             {
-                Box = GetBox(),
-                FontFamily = !string.IsNullOrEmpty(annotationData.font) ? annotationData.font : "Arial",
-                FontColor = annotationData.fontColor,
-                FontSize = annotationData.fontSize == 0 ? 12 : annotationData.fontSize,
-                Text = annotationData.text
+                Points = GetPoints(annotationData, pageInfo)
             };
         }
 
         public override AnnotationBase AnnotateWord()
         {
-            watermarkAnnotation = InitAnnotationBase(watermarkAnnotation) as WatermarkAnnotation;
-            return watermarkAnnotation;
+            underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
+            underlineAnnotation.FontColor = 1201033;
+            return underlineAnnotation;
         }
 
         public override AnnotationBase AnnotatePdf()
@@ -41,7 +38,9 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateSlides()
         {
-            return AnnotateWord();
+            underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
+            underlineAnnotation.FontColor = 0;
+            return underlineAnnotation;
         }
 
         public override AnnotationBase AnnotateImage()
@@ -56,7 +55,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         protected override AnnotationType GetType()
         {
-            return AnnotationType.Watermark;
+            return AnnotationType.TextUnderline;
         }
     }
 }

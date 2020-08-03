@@ -1,19 +1,18 @@
-﻿
-using GroupDocs.Annotation.Domain;
+﻿using GroupDocs.Annotation.Models;
+using GroupDocs.Annotation.Models.AnnotationModels;
+using GroupDocs.Annotation.Models.AnnotationModels.Interfaces.Properties;
 using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
+using GroupDocs.Annotation.Options;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
 {
     public class AnnotationMapper
     {
-        /// <summary>
-        /// Instance of mapper
-        /// </summary>
-        public static readonly AnnotationMapper instance = new AnnotationMapper();
-
         private AnnotationMapper()
         {
         }
@@ -24,7 +23,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
         /// <param name="annotations">AnnotationInfo[]</param>
         /// <param name="pageNumber">int</param>
         /// <returns></returns>
-        public AnnotationDataEntity[] mapForPage(AnnotationInfo[] annotations, int pageNumber)
+        public static AnnotationDataEntity[] MapForPage(AnnotationBase[] annotations, int pageNumber, PageInfo pageInfo)
         {
             // initiate annotations data array
             IList<AnnotationDataEntity> pageAnnotations = new List<AnnotationDataEntity>();
@@ -32,10 +31,10 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
             // GroupDocs.Annotation library are obfuscated
             for (int n = 0; n < annotations.Length; n++)
             {
-                AnnotationInfo annotationInfo = annotations[n];
+                AnnotationBase annotationInfo = annotations[n];
                 if (pageNumber == annotationInfo.PageNumber + 1)
                 {
-                    AnnotationDataEntity annotation = mapAnnotationDataEntity(annotationInfo);
+                    AnnotationDataEntity annotation = MapAnnotationDataEntity(annotationInfo, pageInfo);
                     pageAnnotations.Add(annotation);
                 }
             }
@@ -48,34 +47,66 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
         /// </summary>
         /// <param name="annotationInfo">AnnotationInfo</param>
         /// <returns>AnnotationDataEntity</returns>
-        public AnnotationDataEntity mapAnnotationDataEntity(AnnotationInfo annotationInfo)
+        public static AnnotationDataEntity MapAnnotationDataEntity(AnnotationBase annotationInfo, PageInfo pageInfo)
         {
+            string annotationTypeName = Enum.GetName(typeof(AnnotationType), annotationInfo.Type);
+            float maxY = 0, minY = 0, maxX = 0, minX = 0;
+            float boxX = 0, boxY = 0, boxHeight = 0, boxWidth = 0;
+            string svgPath = "";
+
+            if (annotationInfo is IPoints)
+            {
+                List<Point> points = ((IPoints)annotationInfo).Points;
+                maxY = points.Max(p => p.Y);
+                minY = points.Min(p => p.Y);
+                maxX = points.Max(p => p.X);
+                minX = points.Min(p => p.X);
+            }
+
+            if (annotationInfo is IBox)
+            {
+                Rectangle box = ((IBox)annotationInfo).Box;
+                boxX = box.X;
+                boxY = box.Y;
+                boxHeight = box.Height;
+                boxWidth = box.Width;
+
+                StringBuilder builder = new StringBuilder().
+                Append("M").Append(box.X.ToString(CultureInfo.InvariantCulture)).
+                Append(",").Append(box.Y.ToString(CultureInfo.InvariantCulture)).
+                Append("L").Append(box.Width.ToString(CultureInfo.InvariantCulture)).
+                Append(",").Append(box.Height.ToString(CultureInfo.InvariantCulture));
+
+                svgPath = builder.ToString();
+            }
+
             AnnotationDataEntity annotation = new AnnotationDataEntity();
-            annotation.font = annotationInfo.FontFamily;
-            double fontSize = Convert.ToDouble((annotationInfo.FontSize == null) ? 0 : annotationInfo.FontSize);
+            annotation.font = annotationInfo is IFontFamily ? ((IFontFamily)annotationInfo).FontFamily : "";
+            double fontSize = annotationInfo is IFontSize ? Convert.ToDouble((((IFontSize)annotationInfo).FontSize == null) ? 0 : ((IFontSize)annotationInfo).FontSize) : 0;
             annotation.fontSize = (float)fontSize;
-            annotation.fontColor = (annotationInfo.FontColor == null) ? 0 : (int)annotationInfo.FontColor;
-            annotation.height = annotationInfo.Box.Height;
-            annotation.left = annotationInfo.Box.X;
-            annotation.pageNumber = (int)annotationInfo.PageNumber + 1;           
-            annotation.svgPath = (annotationInfo.SvgPath != null) ? annotationInfo.SvgPath.Replace("l", "L") : null;
-            string text = (annotationInfo.Text == null) ? annotationInfo.FieldText : annotationInfo.Text;
+            annotation.fontColor = annotationInfo is IFontColor ? ((((IFontColor)annotationInfo).FontColor == null) ? 0 : (int)((IFontColor)annotationInfo).FontColor) : 0;
+            annotation.height = annotationInfo is IBox ? boxHeight : (annotationInfo is IPoints ? (maxY - minY) : 0);
+            annotation.left = annotationInfo is IBox ? boxX : (annotationInfo is IPoints ? minX : 0);
+            annotation.pageNumber = (int)annotationInfo.PageNumber + 1;
+            annotation.svgPath = annotationInfo is ISvgPath ? (((ISvgPath)annotationInfo).SvgPath?.Replace("l", "L")) : svgPath;
+            string text = annotationInfo is IText ? (((IText)annotationInfo).Text ?? (annotationInfo is ITextToReplace ? ((ITextToReplace)annotationInfo).TextToReplace : "")) : "";
             annotation.text = text;
-            annotation.top = annotationInfo.Box.Y;
-            annotation.type = Char.ToLowerInvariant(Enum.GetName(typeof(AnnotationType), annotationInfo.Type)[0]) + Enum.GetName(typeof(AnnotationType), annotationInfo.Type).Substring(1);
-            annotation.width = annotationInfo.Box.Width;
+            // TODO: remove comment after check all annotations types on main formats
+            annotation.top = annotationInfo is IBox ? boxY : (annotationInfo is IPoints ? pageInfo.Height - maxY : 0);
+            annotation.type = char.ToLowerInvariant(annotationTypeName[0]) + annotationTypeName.Substring(1);
+            annotation.width = annotationInfo is IBox ? boxWidth : (annotationInfo is IPoints ? (maxX - minX) : 0);
             //  each reply data
-            AnnotationReplyInfo[] replies = annotationInfo.Replies;
+            Reply[] replies = annotationInfo.Replies.ToArray();
             if (replies != null && replies.Length > 0)
             {
                 CommentsEntity[] comments = new CommentsEntity[replies.Length];
                 for (int m = 0; m < replies.Length; m++)
                 {
                     CommentsEntity comment = new CommentsEntity();
-                    AnnotationReplyInfo reply = replies[m];
-                    comment.text = reply.Message;
+                    Reply reply = replies[m];
+                    comment.text = reply.Comment;
                     comment.time = reply.RepliedOn.ToString("yyyy-MM-dd HH:mm:ss");
-                    comment.userName = reply.UserName;
+                    comment.userName = reply.User.Name;
                     comments[m] = comment;
                 }
                 annotation.comments = comments;
