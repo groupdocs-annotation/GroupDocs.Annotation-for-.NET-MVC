@@ -4,6 +4,7 @@ using GroupDocs.Annotation.MVC.Products.Annotation.Entity.Web;
 using GroupDocs.Annotation.Options;
 using System;
 using System.Linq;
+using System.Runtime;
 
 namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 {
@@ -142,6 +143,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 case "Portable Document Format":
                     return AnnotatePdf();
                 case "Microsoft Word":
+                case "Open Document Text":
                     return AnnotateWord();
                 case "Rich Text Format":
                     return AnnotateWord();
