@@ -7,16 +7,16 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Config
     /// </summary>
     public class GlobalConfiguration
     {
-        public ServerConfiguration Server;
-        public ApplicationConfiguration Application;
-        public CommonConfiguration Common;
-        public AnnotationConfiguration Annotation;
+        public ServerConfiguration Server { get; set; }
+        public ApplicationConfiguration Application { get; set; }
+        public CommonConfiguration Common { get; set; }
+        public AnnotationConfiguration Annotation { get; set; }
 
         /// <summary>
         /// Get all configurations
         /// </summary>
         public GlobalConfiguration()
-        {            
+        {
             Server = new ServerConfiguration();
             Application = new ApplicationConfiguration();
             Common = new CommonConfiguration();
