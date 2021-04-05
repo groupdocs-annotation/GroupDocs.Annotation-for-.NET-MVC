@@ -13,9 +13,10 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
     /// </summary>
     public abstract class BaseAnnotator
     {
-        public string Message = "Annotation of type {0} for this file type is not supported";
         protected AnnotationDataEntity annotationData;
         protected PageInfo pageInfo;
+
+        public string Message { get; set; } = "Annotation of type {0} for this file type is not supported";
 
         /// <summary>
         /// Constructor
@@ -156,7 +157,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                 case "AutoCAD Drawing File Format":
                     return AnnotateDiagram();
                 default:
-                    throw new System.Exception("Wrong annotation data without document type!");
+                    throw new Exceptions.AnnotatorException("Wrong annotation data without document type!");
             }
         }
 

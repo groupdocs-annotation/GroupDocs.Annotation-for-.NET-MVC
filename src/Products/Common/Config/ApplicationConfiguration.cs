@@ -1,8 +1,5 @@
 ﻿using GroupDocs.Annotation.MVC.Products.Common.Util.Parser;
 using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -14,8 +11,6 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Config
     /// </summary>
     public class ApplicationConfiguration
     {
-        public string LicensePath = "Licenses";
-
         /// <summary>
         /// Get license path from the application configuration section of the web.config
         /// </summary>
@@ -42,17 +37,19 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Config
                 }
                 LicensePath = license;
                 if (!File.Exists(LicensePath))
-                {                    
+                {
                     Debug.WriteLine("License file path is incorrect, launched in trial mode");
                     LicensePath = "";
                 }
             }
         }
 
+        public string LicensePath { get; set; } = "Licenses";
+
         private static bool IsFullPath(string path)
         {
             return !String.IsNullOrWhiteSpace(path)
-                && path.IndexOfAny(System.IO.Path.GetInvalidPathChars().ToArray()) == -1
+                && path.IndexOfAny(Path.GetInvalidPathChars().ToArray()) == -1
                 && Path.IsPathRooted(path)
                 && !Path.GetPathRoot(path).Equals(Path.DirectorySeparatorChar.ToString(), StringComparison.Ordinal);
         }

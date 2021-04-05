@@ -175,7 +175,6 @@
     <Compile Include="Products\Annotation\Util\AnnotationMapper.cs" />
     <Compile Include="Products\Annotation\Util\Directory\DirectoryUtils.cs" />
     <Compile Include="Products\Annotation\Util\Directory\FilesDirectoryUtils.cs" />
-    <Compile Include="Products\Annotation\Util\DocumentTypesConverter.cs" />
     <Compile Include="Products\Annotation\Util\SupportedAnnotations.cs" />
     <Compile Include="Products\Common\Config\ApplicationConfiguration.cs" />
     <Compile Include="Products\Common\Config\ConfigurationValuesGetter.cs" />

@@ -1,9 +1,6 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Specialized;
 using System.IO;
-using System.Reflection;
 using YamlDotNet.Serialization;
 
 namespace GroupDocs.Annotation.MVC.Products.Common.Util.Parser
@@ -11,7 +8,7 @@ namespace GroupDocs.Annotation.MVC.Products.Common.Util.Parser
     public class YamlParser
     {
         private static string YamlPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "configuration.yml");
-        private dynamic ConfiguationData;
+        private readonly dynamic ConfiguationData;
 
         public YamlParser()
         {           
