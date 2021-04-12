@@ -1,0 +1,109 @@
+@import (css) url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import "variables";
+
+:host * {
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+::ng-deep .page {
+  position: relative;
+}
+
+::ng-deep .gd-page-image {
+  width : unset;
+  height: unset;
+}
+
+::ng-deep .top-panel {
+  align-content: flex-start;
+}
+
+.wrapper {
+  align-items: stretch;
+  height     : 100%;
+  width      : 100%;
+  position   : fixed;
+  top        : 0;
+  bottom     : 0;
+  left       : 0;
+  right      : 0;
+}
+
+.doc-panel {
+  display: flex;
+  height : inherit;
+}
+
+.gd-document {
+  width : 100%;
+  height:~"calc(100% - @{editor-nav-height})";
+}
+
+.toolbar-panel {
+  width      : 100%;
+  display    : flex;
+  align-items: center;
+}
+
+.annotation-wrapper {
+  ::ng-deep .button {
+    color: @primary  !important;
+
+    .text {
+      padding: 0px !important;
+    }
+  }
+
+  ::ng-deep .select {
+    color: @primary  !important;
+  }
+}
+
+.desktop-hide {
+  display: none;
+}
+
+@media @phone-down {
+  ::ng-deep .logo {
+    ::ng-deep .icon {
+      font-size: 24px !important;
+    }
+  }
+
+  ::ng-deep .top-panel {
+    height: 120px !important;
+  }
+
+  ::ng-deep .toolbar-panel {
+    ::ng-deep .button, .gd-tab {
+      height: 60px;
+      line-height: 60px;
+      width: 60px;
+      margin: 0px !important;
+    }
+  }
+
+  .desktop-hide {
+    display: block;
+  }
+
+  .gd-document {
+    height:~"calc(100% - 120px)";
+  }
+
+  ::ng-deep .bcPicker-palette {
+    position: absolute;
+    left: -80px !important;
+    top: -170px !important;
+  }
+
+  ::ng-deep .gd-comments-panel {
+    .gd-comments-body {
+      justify-content: center;
+      .gd-empty-comments-list {
+        width: unset !important;
+        margin-top: unset !important;
+      }
+    }
+  }
+}

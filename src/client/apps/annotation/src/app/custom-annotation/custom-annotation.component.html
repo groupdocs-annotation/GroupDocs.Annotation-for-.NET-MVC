@@ -1,0 +1,93 @@
+<gd-loading-mask [loadingMask]="isLoading"></gd-loading-mask>
+<div class="wrapper" (contextmenu)="onRightClick($event)">
+  <div class="annotation-wrapper wrapper">
+    <gd-tabbed-toolbars [logo]="'annotation'" [icon]="'pen-square'">
+      <gd-tabs>
+        <gd-tab [tabTitle]="'File'" [icon]="'folder-open'" [id]="'1'" [active]="true">
+          <div id="files-tools" class="toolbar-panel">
+            <gd-button [icon]="'folder-open'" [tooltip]="'Browse files'" (click)="openModal(browseFilesModal)"
+                       *ngIf="browseConfig"></gd-button>
+
+            <gd-button [disabled]="formatDisabled" [icon]="'download'" [tooltip]="'Download'"
+                       (click)="downloadFile()" *ngIf="downloadConfig"></gd-button>
+            <gd-button [disabled]="formatDisabled" [icon]="'save'" [tooltip]="'Save'" (click)="annotate()"></gd-button>
+            <gd-button class="desktop-hide" [disabled]="formatDisabled" [icon]="'search-plus'" [tooltip]="'Zoom In'"
+                       (click)="zoomIn()" *ngIf="zoomConfig"></gd-button>
+            <gd-button class="desktop-hide" [disabled]="formatDisabled" [icon]="'search-minus'" [tooltip]="'Zoom Out'"
+                       (click)="zoomOut()" *ngIf="zoomConfig"></gd-button>
+          </div>
+        </gd-tab>
+        <gd-tab [tabTitle]="'Annotations'" [icon]="'highlighter'" [id]="'2'"
+                *ngIf="isDesktop || (!isDesktop && codesConfigFirst())">
+          <div class="toolbar-panel">
+            <div *ngFor="let annotationType of (isDesktop ? annotationTypes : annotationTypeFirst)">
+              <gd-top-tab [disabled]="!file" *ngIf="isVisible(annotationType.id)"
+                          [icon]="annotationType.icon" (activeTab)="activeTab($event)"
+                          [id]="annotationType.id" [tooltip]="annotationType.name">
+              </gd-top-tab>
+            </div>
+          </div>
+        </gd-tab>
+        <gd-tab [tabTitle]="''" [icon]="'vector-square'" [id]="'3'" *ngIf="!isDesktop && codesConfigSecond()">
+          <div class="toolbar-panel">
+            <div *ngFor="let annotationType of annotationTypeSecond">
+              <gd-top-tab [disabled]="!file" *ngIf="isVisible(annotationType.id)"
+                          [icon]="annotationType.icon" (activeTab)="activeTab($event)"
+                          [id]="annotationType.id" [tooltip]="annotationType.name">
+              </gd-top-tab>
+            </div>
+          </div>
+        </gd-tab>
+        <gd-tab [tabTitle]="''" [icon]="'i-cursor'" [id]="'4'" *ngIf="!isDesktop && codesConfigThird()">
+          <div class="toolbar-panel">
+            <div *ngFor="let annotationType of annotationTypeThird">
+              <gd-top-tab [disabled]="!file" *ngIf="isVisible(annotationType.id)"
+                          [icon]="annotationType.icon" (activeTab)="activeTab($event)"
+                          [id]="annotationType.id" [tooltip]="annotationType.name">
+              </gd-top-tab>
+            </div>
+          </div>
+        </gd-tab>
+      </gd-tabs>
+    </gd-tabbed-toolbars>
+    <div class="doc-panel" *ngIf="file" (mousedown)="createAnnotation($event)"
+         (mousemove)="resizingCreatingAnnotation($event)" (mouseup)="finishCreatingAnnotation($event)"
+         (touchstart)="createAnnotation($event)" (touchmove)="resizingCreatingAnnotation($event)"
+         (touchend)="finishCreatingAnnotation($event)"
+         (panstart)="createAnnotation($event)" (panmove)="resizingCreatingAnnotation($event)"
+         (panend)="finishCreatingAnnotation($event)">
+      <gd-document class="gd-document" *ngIf="file" [file]="file" [mode]="htmlModeConfig" gdScrollable
+                   [preloadPageCount]="preloadPageCountConfig" gdRenderPrint [htmlMode]="htmlModeConfig" (onpan)="onPan($event)"></gd-document>
+    </div>
+    <gd-comment-panel *ngIf="commentOpenedId" [annotationId]="commentOpenedId"
+                      [comments]="getComments()" (closeComments)="closeComments()">
+    </gd-comment-panel>
+
+    <gd-init-state [icon]="'highlighter'" [text]="'Drop file here to upload'" *ngIf="!file"
+                   (fileDropped)="fileDropped($event)">
+      Click
+      <fa-icon [icon]="['fas','folder-open']"></fa-icon>
+      to open file<br>
+      Or drop file here
+    </gd-init-state>
+  </div>
+  <gd-browse-files-modal (urlForUpload)="upload($event)" [files]="files" (selectedDirectory)="selectDir($event)"
+                         (selectedFileGuid)="selectFile($event, null, browseFilesModal)"
+                         [uploadConfig]="uploadConfig"></gd-browse-files-modal>
+
+  <gd-error-modal></gd-error-modal>
+  <gd-password-required></gd-password-required>
+  <gd-success-modal></gd-success-modal>
+  <svg class="svg" xmlns="http://www.w3.org/2000/svg">
+    <defs xmlns="http://www.w3.org/2000/svg">
+      <marker id="end" orient='auto' markerWidth='20' markerHeight='20'
+              refX="10" refY="10" markerUnits="strokeWidth">
+        <path d='M0,7 L0,13 L12,10 z' fill='#579AF0'></path>
+      </marker>
+      <marker id="start" orient='auto' markerWidth='20' markerHeight='20'
+              refX="0" refY="10" markerUnits="strokeWidth">
+        <path d='M12,7 L12,13 L0,10 z' fill='#579AF0'></path>
+      </marker>
+    </defs>
+  </svg>
+</div>
