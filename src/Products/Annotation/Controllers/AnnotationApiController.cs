@@ -378,7 +378,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
         /// <param name="path">string</param>
         /// <param name="annotated">bool</param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("downloadAnnotated")]
         public HttpResponseMessage DownloadAnnotated(string path)
         {
