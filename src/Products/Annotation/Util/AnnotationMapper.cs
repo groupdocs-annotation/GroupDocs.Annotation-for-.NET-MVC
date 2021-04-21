@@ -82,14 +82,14 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Util
 
             AnnotationDataEntity annotation = new AnnotationDataEntity();
             annotation.font = annotationInfo is IFontFamily ? ((IFontFamily)annotationInfo).FontFamily : "";
-            double fontSize = annotationInfo is IFontSize ? Convert.ToDouble((((IFontSize)annotationInfo).FontSize == null) ? 0 : ((IFontSize)annotationInfo).FontSize) : 0;
+            double fontSize = annotationInfo is IFontSize ? Convert.ToDouble((((IFontSize)annotationInfo).FontSize == null) ? 0 : ((IFontSize)annotationInfo).FontSize) : (annotationInfo is ITextToReplace ? 10 : 0);
             annotation.fontSize = (float)fontSize;
             annotation.fontColor = annotationInfo is IFontColor ? ((((IFontColor)annotationInfo).FontColor == null) ? 0 : (int)((IFontColor)annotationInfo).FontColor) : 0;
             annotation.height = annotationInfo is IBox ? boxHeight : (annotationInfo is IPoints ? (maxY - minY) : 0);
             annotation.left = annotationInfo is IBox ? boxX : (annotationInfo is IPoints ? minX : 0);
             annotation.pageNumber = (int)annotationInfo.PageNumber + 1;
             annotation.svgPath = annotationInfo is ISvgPath ? (((ISvgPath)annotationInfo).SvgPath?.Replace("l", "L")) : svgPath;
-            string text = annotationInfo is IText ? (((IText)annotationInfo).Text ?? (annotationInfo is ITextToReplace ? ((ITextToReplace)annotationInfo).TextToReplace : "")) : "";
+            string text = annotationInfo is IText ? ((IText)annotationInfo).Text : (annotationInfo is ITextToReplace ? ((ITextToReplace)annotationInfo).TextToReplace : "");
             annotation.text = text;
             // TODO: remove comment after check all annotations types on main formats
             annotation.top = annotationInfo is IBox ? boxY : (annotationInfo is IPoints ? pageInfo.Height - maxY : 0);
