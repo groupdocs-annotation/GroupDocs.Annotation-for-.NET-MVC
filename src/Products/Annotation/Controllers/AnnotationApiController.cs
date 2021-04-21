@@ -156,7 +156,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                     pagesContent = GetAllPagesContent(annotator, info);
                 }
 
-                for (int i = 0; i < info.PageCount; i++)
+                for (int i = 0; i < info.PagesInfo.Count; i++)
                 {
                     PageDataDescriptionEntity page = new PageDataDescriptionEntity
                     {
@@ -242,7 +242,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
             List<string> allPages = new List<string>();
 
             //get page HTML
-            for (int i = 0; i < pages.PageCount; i++)
+            for (int i = 0; i < pages.PagesInfo.Count; i++)
             {
                 byte[] bytes;
                 using (var memoryStream = RenderPageToMemoryStream(annotator, i + 1))
