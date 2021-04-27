@@ -136,16 +136,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 IDocumentInfo info = annotator.Document.GetDocumentInfo();
                 AnnotationBase[] annotations = annotator.Get().ToArray();
                 description.guid = loadDocumentRequest.guid;
-
-                string documentType = string.Empty;
-                if (info.FileType != null)
-                {
-                    documentType = SupportedImageFormats.Contains(info.FileType.Extension) ? "image" : info.FileType.ToString();
-                }
-                else
-                {
-                    documentType = "Portable Document Format";
-                }
+                string documentType = getDocumentType(info);
 
                 description.supportedAnnotations = new SupportedAnnotations().GetSupportedAnnotations(documentType);
 
@@ -167,7 +158,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
                     if (annotations != null && annotations.Length > 0)
                     {
-                        page.SetAnnotations(AnnotationMapper.MapForPage(annotations, i+1, info.PagesInfo[i]));
+                        page.SetAnnotations(AnnotationMapper.MapForPage(annotations, i+1, info.PagesInfo[i], documentType));
                     }
 
                     if (pagesContent.Count > 0)
@@ -213,15 +204,16 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
 
                     IDocumentInfo info = annotator.Document.GetDocumentInfo();
                     AnnotationBase[] annotations = annotator.Get().ToArray();
+                    string documentType = getDocumentType(info);
 
                     if (annotations != null && annotations.Length > 0)
                     {
-                        loadedPage.SetAnnotations(AnnotationMapper.MapForPage(annotations, pageNumber, info.PagesInfo[pageNumber - 1]));
+                        loadedPage.SetAnnotations(AnnotationMapper.MapForPage(annotations, pageNumber, info.PagesInfo[pageNumber - 1], documentType));
                     }
 
                     string encodedImage = Convert.ToBase64String(bytes);
                     loadedPage.SetData(encodedImage);
-                        
+
                     loadedPage.height = info.PagesInfo[pageNumber - 1].Height;
                     loadedPage.width = info.PagesInfo[pageNumber - 1].Width;
                     loadedPage.number = pageNumber;
@@ -235,6 +227,21 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 // set exception message
                 return Request.CreateResponse(HttpStatusCode.InternalServerError, new Resources().GenerateException(ex, password));
             }
+        }
+
+        private string getDocumentType(IDocumentInfo info)
+        {
+            string documentType = string.Empty;
+            if (info.FileType != null)
+            {
+                documentType = SupportedImageFormats.Contains(info.FileType.Extension) ? "image" : info.FileType.ToString();
+            }
+            else
+            {
+                documentType = "Portable Document Format";
+            }
+
+            return documentType;
         }
 
         private static List<string> GetAllPagesContent(GroupDocs.Annotation.Annotator annotator, IDocumentInfo pages)

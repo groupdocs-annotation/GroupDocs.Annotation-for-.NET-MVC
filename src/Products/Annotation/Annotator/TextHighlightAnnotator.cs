@@ -42,7 +42,9 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateImage()
         {
-            return AnnotateWord();
+            highlightAnnotation = InitAnnotationBase(highlightAnnotation) as HighlightAnnotation;
+            highlightAnnotation.Points = GetPointsForImages(annotationData, pageInfo);
+            return highlightAnnotation;
         }
 
         public override AnnotationBase AnnotateDiagram()
