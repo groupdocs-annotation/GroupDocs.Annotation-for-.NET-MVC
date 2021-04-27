@@ -413,7 +413,7 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Controllers
                 // get/set parameters
                 string documentGuid = annotateDocumentRequest.guid;
                 string password = annotateDocumentRequest.password;
-                string documentType = SupportedImageFormats.Contains(Path.GetExtension(annotateDocumentRequest.guid)) ? "image" : annotateDocumentRequest.documentType;
+                string documentType = SupportedImageFormats.Contains(Path.GetExtension(annotateDocumentRequest.guid).ToLowerInvariant()) ? "image" : annotateDocumentRequest.documentType;
                 string tempPath = GetTempPath(documentGuid);
 
                 AnnotationDataEntity[] annotationsData = annotateDocumentRequest.annotationsData;
