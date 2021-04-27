@@ -31,7 +31,9 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateImage()
         {
-            throw new NotSupportedException(string.Format(Message, annotationData.type));
+            textRedactionAnnotation = InitAnnotationBase(textRedactionAnnotation) as TextRedactionAnnotation;
+            textRedactionAnnotation.Points = GetPointsForImages(annotationData, pageInfo);
+            return textRedactionAnnotation;
         }
 
         public override AnnotationBase AnnotateDiagram()
