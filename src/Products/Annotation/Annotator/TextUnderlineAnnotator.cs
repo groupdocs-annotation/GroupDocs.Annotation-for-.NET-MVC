@@ -45,7 +45,10 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateImage()
         {
-            return AnnotateWord();
+            underlineAnnotation = InitAnnotationBase(underlineAnnotation) as UnderlineAnnotation;
+            underlineAnnotation.FontColor = 1201033;
+            underlineAnnotation.Points = GetPointsForImages(annotationData, pageInfo);
+            return underlineAnnotation;
         }
 
         public override AnnotationBase AnnotateDiagram()

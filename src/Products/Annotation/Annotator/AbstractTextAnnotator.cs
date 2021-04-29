@@ -21,5 +21,16 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
                     new Point(annotationData.left + annotationData.width, pageInfo.Height - annotationData.top - annotationData.height)
                 };
         }
+
+        protected static List<Point> GetPointsForImages(AnnotationDataEntity annotationData, PageInfo pageInfo)
+        {
+            return new List<Point>
+                {
+                    new Point(annotationData.left, annotationData.top + annotationData.height),
+                    new Point(annotationData.left + annotationData.width, annotationData.top + annotationData.height),
+                    new Point(annotationData.left, annotationData.top),
+                    new Point(annotationData.left + annotationData.width, annotationData.top)
+                };
+        }
     }
 }

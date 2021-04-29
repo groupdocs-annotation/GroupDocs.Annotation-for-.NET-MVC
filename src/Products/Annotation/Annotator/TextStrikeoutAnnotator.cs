@@ -44,7 +44,9 @@ namespace GroupDocs.Annotation.MVC.Products.Annotation.Annotator
 
         public override AnnotationBase AnnotateImage()
         {
-            return AnnotateWord();
+            strikeoutAnnotation = InitAnnotationBase(strikeoutAnnotation) as StrikeoutAnnotation;
+            strikeoutAnnotation.Points = GetPointsForImages(annotationData, pageInfo);
+            return strikeoutAnnotation;
         }
 
         public override AnnotationBase AnnotateDiagram()
