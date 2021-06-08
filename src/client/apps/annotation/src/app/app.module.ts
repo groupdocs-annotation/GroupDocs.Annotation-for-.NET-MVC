@@ -7,7 +7,7 @@ import { AnnotationModule } from "@groupdocs.examples.angular/annotation";
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule,
-    AnnotationModule.forRoot("http://localhost:8080")],
+    AnnotationModule],
   providers: [],
   bootstrap: [AppComponent]
 })

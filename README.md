@@ -157,6 +157,19 @@ For all methods above you can adjust settings in `configuration.yml`. By default
 | **`zoom`**                         | Boolean |      `true`       | Enable/disable zoom                                                                                                                          |
 | **`fitWidth`**                     | Boolean |      `true`       | Enable/disable fit width. Set true to zoom document pages fit width                                                                          | 
 
+
+### Configuration
+For all methods above you can adjust settings in `configuration.yml`. By default in this sample will lookup for license file in `./Licenses` folder, so you can simply put your license file in that folder or specify relative/absolute path by setting `licensePath` value in `configuration.yml`. 
+
+## Troubleshooting
+### How to set custom baseURL
+BaseURL is fetched from address bar however you can set custom baseURL by adding *forRoot* parameter at [app.module.ts](https://github.com/groupdocs-annotation/GroupDocs.Annotation-for-NET-MVC/blob/master/src/client/apps/viewer/src/app/app.module.ts#L9)
+
+**Example:**
+```js
+ViewerModule.forRoot("http://localhost:8080")
+```
+
 ## License
 The MIT License (MIT). 
 
