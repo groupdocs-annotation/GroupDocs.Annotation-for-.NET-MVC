@@ -163,7 +163,7 @@ For all methods above you can adjust settings in `configuration.yml`. By default
 
 ## Troubleshooting
 ### How to set custom baseURL
-BaseURL is fetched from address bar however you can set custom baseURL by adding *forRoot* parameter at [app.module.ts](https://github.com/groupdocs-annotation/GroupDocs.Annotation-for-NET-MVC/blob/master/src/client/apps/viewer/src/app/app.module.ts#L9)
+BaseURL is fetched from address bar however you can set custom baseURL by adding *forRoot* parameter at [app.module.ts](https://github.com/groupdocs-annotation/GroupDocs.Annotation-for-.NET-MVC/blob/master/src/client/apps/annotation/src/app/app.module.ts#L10)
 
 **Example:**
 ```js
