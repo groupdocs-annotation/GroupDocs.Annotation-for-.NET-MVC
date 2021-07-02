@@ -6,10 +6,11 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c27a7fb14b20448b86aa9e6e881f977f)](https://www.codacy.com/app/egorovpavel/GroupDocs.Annotation-for-.NET-MVC?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=groupdocs-annotation/GroupDocs.Annotation-for-.NET-MVC&amp;utm_campaign=Badge_Grade)
 [![GitHub license](https://img.shields.io/github/license/groupdocs-annotation/GroupDocs.Annotation-for-.NET-MVC.svg)](https://github.com/groupdocs-annotation/GroupDocs.Annotation-for-.NET-MVC/blob/master/LICENSE)
 
+:warning: **This repository has moved to https://github.com/groupdocs-annotation/GroupDocs.Annotation-for-.NET/tree/master/Demos/MVC**
+
 ## System Requirements
 - .NET Framework 4.5
 - Visual Studio 2015
-
 
 ## Annotate & write on document with .NET MVC
 
